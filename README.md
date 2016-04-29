@@ -56,3 +56,6 @@ Total Views {
 	7. User Data
 	8. Comments View
 }
+
+
+^ Sergei took these notes ... 
