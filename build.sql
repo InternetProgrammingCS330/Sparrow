@@ -5,7 +5,7 @@
 #===== build.sql enter the mysql database as root =====
 #============ and run the following script ============
 #======================================================
-DROP DATABASE sergeiDB;
+DROP DATABASE IF EXISTS sergeiDB;
 
 DROP USER master;
 
@@ -35,21 +35,24 @@ CREATE TABLE CommentsDB (
 	commentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	time_stamp DATE NOT NULL,
 	projectID INT NOT NULL,
-	email varchar(30) NOT NULL PRIMARY KEY,
+	email varchar(30) NOT NULL,
 	comment LONGTEXT NOT NULL,
 	FOREIGN KEY (projectID) REFERENCES ProjectDB(projectID),
 	FOREIGN KEY (email) REFERENCES UserDB(email)
-	) ENGINE=MyISAM;
+	) ENGINE=InnoDB;
 
 CREATE TABLE InterestID (
-	interestID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	) engine=MyISAM;
+	interestID INT NOT NULL PRIMARY KEY AUTO_INCREMENT 
+	) engine=InnoDB;
 
 CREATE TABLE UserInterests (
-	FOREIGN KEY (email) REFERENCES UserDB(email)
-	FOREIGN KEY (interestID) REFERENCES InterestID(interestID),
-	PRIMARY KEY (email, interestID)
-	) engine=MyISAM;
+	email varchar(30) NOT NULL,
+	interestID INT NOT NULL,
+	UNIQUE INDEX (email,interestID),
+	PRIMARY KEY (email, interestID),
+	FOREIGN KEY (email) REFERENCES UserDB(email),
+	FOREIGN KEY (interestID) REFERENCES InterestID(interestID)
+	) engine=InnoDB;
 
 USE sergeiDB;
 
