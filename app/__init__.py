@@ -7,5 +7,5 @@ app.config.from_object('flaskconfig')
 def not_found(error):
     return "404 error", 404
 
-from SparrowApp.views import general
+from app.views import general
 app.register_blueprint(general.mod)
