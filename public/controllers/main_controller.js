@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('projectListApp',[]);
+angular.module('projectApp',[]);
 angular.module('userApp',[]);
 angular.module('navBarApp',[]);
 angular.module('searchProjectApp',[]);
 angular.module('statsApp',[]);
 
 var myApp = angular.module('SparrowApp', ['ui.router', 'ngMaterial',
-    'projectListApp','userApp','navBarApp', 'searchProjectApp', 'statsApp']);
+    'projectListApp','projectApp','userApp','navBarApp', 'searchProjectApp', 'statsApp']);
 
 myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function($stateProvider,$urlRouterProvider, $httpProvider) {
@@ -43,7 +44,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     },
                     'projectlist': {
                         templateUrl : '../partials/projectList/projectList.html',
-                        action : 'projectListApp.projectListController'
+                        action : 'projectListApp.projectListCtrl'
                     }
                 }
             })
@@ -57,11 +58,11 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     },
                     'userPage': {
                         templateUrl : '../partials/userView/userView.html',
-                        action : 'userApp.userController'
+                        action : 'userApp.userCtrl'
                     }
                     'sideNav': {
                         templateUrl : '../partials/stats/stats.html',
-                        action : 'statsApp.statsController'
+                        action : 'statsApp.statsCtrl'
                     }
                 }
             })
