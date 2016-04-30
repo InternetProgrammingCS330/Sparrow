@@ -58,4 +58,4 @@ Total Views {
 }
 
 
-^ Sergei took these notes ... 
+^ Sergei took these notes ... well
