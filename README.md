@@ -63,3 +63,12 @@ Total Views {
 https://kkschick.wordpress.com/2014/12/12/setting-up-the-structure-and-routing-of-an-app-using-flask-and-angularjs/
 
 https://github.com/shea256/angular-flask/tree/master/angular_flask
+
+#D3 Graphing with Angular
+
+http://phloxblog.in/angulard3/start.html#.VyVEWrorJQI
+http://bl.ocks.org/biovisualize/5372077
+https://www.dashingd3js.com/d3-resources/d3-and-angular
+
+
+
