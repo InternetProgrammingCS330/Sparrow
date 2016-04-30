@@ -48,3 +48,12 @@ md-radio-button:focus {
     outline: none;
     border: 0;
 }
+
+#avatar {
+
+    background-size: cover;
+
+    background-position: center;
+
+    border-radius: 50%;
+}

@@ -27,8 +27,7 @@ CREATE TABLE ProjectDB (
 CREATE TABLE UserDB (
 	email varchar(30) NOT NULL PRIMARY KEY,
 	first_name VARCHAR(30)  NOT NULL,
-	last_name VARCHAR(30) NOT NULL,
-	password VARCHAR(128) NOT NULL
+	last_name VARCHAR(30) NOT NULL
 	) engine=InnoDB;
 
 CREATE TABLE CommentsDB (
