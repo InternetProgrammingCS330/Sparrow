@@ -24,7 +24,10 @@ def rest_pages(model_name, item_id=None):
             return make_response(open(
                 'SparrowApp/templates/index.html').read())
     abort(404)
-
+@app.route('/test')
+def test():
+    print("HEY tesST WORKS")
+    return "HEW TEST WORKS"
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')

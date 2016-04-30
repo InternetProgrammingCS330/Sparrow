@@ -44,19 +44,19 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 }
             })
 
-            .state('userView', {
+            .state('userview', {
                 url:'/userview',
                 views: {
                     'navBar': {
-                        templateUrl : '../partials/navBar/navBar.html',
+                        templateUrl : 'static/partials/navBar/navBar.html',
                         action : 'navBarApp.NavBarCtrl'
                     },
-                    'userPage': {
-                        templateUrl : '../partials/userView/userView.html',
+                    'userView': {
+                        templateUrl : 'static/partials/userView/userView.html',
                         action : 'userApp.userCtrl'
                     },
-                    'sideNav': {
-                        templateUrl : '../partials/stats/stats.html',
+                    'stats': {
+                        templateUrl : 'static/partials/stats/stats.html',
                         action : 'statsApp.statsCtrl'
                     }
                 }

@@ -1,11 +1,11 @@
 var app = angular.module('navBarApp',['ngMaterial']);
 
-var CLIENT_ID = '403395753267-m5bosciaf32n6tmr4otncqigvfd3b2lr.apps.googleusercontent.com';
-var apiKey = 'AIzaSyAQSFbNgx0Xs-faGH6o2YxTrlQe9Ds-d94';
-var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
-	'https://www.googleapis.com/auth/gmail.send',
-	'https://www.googleapis.com/auth/gmail.modify',
-	'https://www.googleapis.com/auth/gmail.compose'
+var CLIENT_ID = '403395753267-0vbv21q2j00qcf47thho0ukqs05oohgs.apps.googleusercontent.com';
+var CLIENT_SECRET = 'VKl854VxVa8d-jWn4o94ru3t';
+var apiKey = 'AIzaSyBweB8JeMXGhfIInSZF9ve8x_wN-iwVVnE';
+var SCOPES = ['https://www.googleapis.com/auth/plus.login',
+		'https://www.googleapis.com/auth/userinfo.email',
+		'https://www.googleapis.com/auth/userinfo.profile'
 ];
 
 function handleClientLoad() {
@@ -47,15 +47,26 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 
     console.log("HELLO FROM THE navBarCtrl");
 
+    $scope.test = function(){
+    	console.log("TEST BEFORE TEST");
+    	$http.get("/test").success(function(response){
+	      	console.log(response);
+	    });
+    };
+
+
+    $scope.toProfile = function(){
+		console.log("To Profile Page");
+		$location.url("/userview");
+	}
+
 
     var postInitiation = function() {
 		console.log("authorized");
 	}
-
 	$window.initGapi = function() {
 	    gapiService.initGapi(postInitiation);
 	}
-
 });
 
 app.service('gapiService', function() {
