@@ -47,13 +47,12 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 
     console.log("HELLO FROM THE navBarCtrl");
 
-    $scope.test = function(){
-    	console.log("TEST BEFORE TEST");
-    	$http.get("/test").success(function(response){
+    $scope.addProject = function(){
+    	console.log("ADDING PROJECT");
+    	$http.get("/addProject/"+"hell").success(function(response){
 	      	console.log(response);
 	    });
-    };
-
+    }
 
     $scope.toProfile = function(){
 		console.log("To Profile Page");

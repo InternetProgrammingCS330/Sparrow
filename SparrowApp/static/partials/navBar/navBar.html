@@ -4,6 +4,9 @@
       <div class="md-toolbar-tools md-toolbar-top">  
         <md-button class="md-raised md-primary" aria-label="home" ng-click="home()" >home</md-button>
         <md-button class="md-raised md-primary" aria-label="toProfile" ng-click="toProfile()" >profile</md-button>
+        <md-button class="md-fab md-primary md-hue-2 md-mini" id="add-button" aria-label="Add Project" ng-click="addProject($event)">
+			<md-icon class="buttonstyle" md-svg-icon="static/img/add.svg"></md-icon>
+		</md-button>
         <md-button class="md-raised md-primary" id="authorize-button" style="visibility: hidden" >login</md-button>
       </div>
     </md-toolbar>

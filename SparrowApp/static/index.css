@@ -1,6 +1,6 @@
 .top {
 	position: absolute;
-	height: 100px;
+	height:5%;
 	width: auto;
 	left: 0;
 	right: 0;
@@ -13,13 +13,15 @@
 	width: auto;
 	left: 0;
 	right: 0;
-	top: 100px;
+	top: 10%;
 	bottom: 0;
 }
 .right {
 	position: absolute;
+	/*z-index:1000;*/
+	/*top:10%;*/
 	height: auto;
-	width: 200px;
+	width: auto;
 	left: auto;
 	right: 0;
 	top: 0;
@@ -29,8 +31,8 @@
 	position: absolute;
 	height: auto;
 	width: auto;
-	left: 0px;
-	right: 200px;
+	left: 0;
+	right: auto;
 	top: 0;
 	bottom: 0;
 } 
