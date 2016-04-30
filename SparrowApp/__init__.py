@@ -2,9 +2,13 @@
 
 from flask import Flask, request, Blueprint, render_template, \
                   flash, g, session, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object('SparrowApp.flaskconfig')
+db = SQLAlchemy(app)
+
+from SparrowApp import models
 
 @app.errorhandler(404)
 def not_found(error):
@@ -16,6 +20,5 @@ def not_found(error):
 
 # from app.views import general
 
-app.config.from_object('SparrowApp.flaskconfig')
 app.url_map.strict_slashes = False
 import SparrowApp.controllers

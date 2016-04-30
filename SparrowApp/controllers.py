@@ -7,7 +7,7 @@ from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
 from flask import send_file, make_response, abort, jsonify
 
-from SparrowApp import app
+from SparrowApp import app, db, models
 
 @app.after_request
 def add_header(response):
@@ -45,7 +45,16 @@ def view_of_test():
 
 @app.route('/addProject', methods=['POST'])
 def test():
-	print("REQUEST", request.get_json());
+	req = request.get_json()
+	print("REQUEST", req["title"]);
+	users = models.ProjectDB.query.all()
+	print("QUERY", users)
+
+	project = models.ProjectDB(title=req["title"], description=req["description"])
+	db.session.add(project)
+	db.session.commit()
+
+
 	# print("HEY tesST WORKS:  ", info)
 	# data = {"id": info, "title": info}
 	# return jsonify(data), 200
