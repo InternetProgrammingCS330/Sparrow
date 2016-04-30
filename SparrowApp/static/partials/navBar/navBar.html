@@ -2,6 +2,7 @@
   <md-content class="fixed" ng-controller= "NavBarCtrl as ctrl" ng-cloak>
     <md-toolbar class="navBarClass" md-scroll-shrink ng-if="true" layout="row" layout-align="space-between center">
       <div class="md-toolbar-tools md-toolbar-top">  
+        <md-button class="md-raised md-primary" aria-label="home" ng-click="home()" >home</md-button>
         <md-button class="md-raised md-primary" aria-label="toProfile" ng-click="toProfile()" >profile</md-button>
         <md-button class="md-raised md-primary" id="authorize-button" style="visibility: hidden" >login</md-button>
       </div>

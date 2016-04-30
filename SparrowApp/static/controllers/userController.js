@@ -1,6 +1,6 @@
 var app = angular.module('userApp',['ngMaterial']);
 
-angular.module('userCtrl', ['$rootScope',
+app.controller('UserCtrl', ['$rootScope',
   '$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
   function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
 

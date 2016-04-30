@@ -1,5 +1,12 @@
-<div ng-app="statsApp">
-  <md-content class="fixed" ng-controller= "statsCtrl as ctrl" ng-cloak>
-    <h1>HELLO STATS</h1>
-  </md-content>
+<div ng-app="statsApp" ng-controller="StatsCtrl" ng-cloak>
+    <div layout="vertical">
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
+            <md-toolbar class="md-theme-light">
+		          <h1 class="md-toolbar-tools" ng-cloak>Hello!</h1>        
+            </md-toolbar>
+            <md-content>
+        	   <h1>HI</h1>
+            </md-content>
+        </md-sidenav>
+    </div>
 </div>

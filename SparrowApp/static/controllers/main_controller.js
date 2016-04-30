@@ -30,34 +30,53 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
         $httpProvider.interceptors.push(interceptor);
 
         $stateProvider
-            .state('projectlist', {
+            .state('index', {
+                abstract: true,
+                // url: '/',
+                views: {
+                    'main' : {
+                        templateUrl: 'static/partials/tpl/main/layoutIL.html',
+                        action: 'indexApp.rootController'
+                    },
+                    // 'top@index' : { templateUrl: 'static/partials/tpl/main/tpl.top.html',},
+                    // 'main@index' : { templateUrl: 'static/partials/tpl/main/tpl.main.html',},
+                    // 'right@index' : { templateUrl: 'static/partials/tpl/main/tpl.main.html',},
+                },
+            })
+            .state('index.projectlist', {
+                parent:'index',
                 url:'/',
                 views: {
-                    'navBar': {
+                    'top@index': {
                         templateUrl : 'static/partials/navBar/navBar.html',
                         action : 'navBarApp.NavBarCtrl'
                     },
-                    'projectlist': {
+                    'main1@index': {
                         templateUrl : 'static/partials/projectList/projectList.html',
                         action : 'projectListApp.projectListCtrl'
+                    },
+                    'right@index': {
+                        templateUrl : 'static/partials/stats/stats.html',
+                        action : 'statsApp.StatsCtrl'
                     }
                 }
             })
 
-            .state('userview', {
+            .state('index.userview', {
+                parent:'index',
                 url:'/userview',
                 views: {
-                    'navBar': {
+                    'top@index': {
                         templateUrl : 'static/partials/navBar/navBar.html',
                         action : 'navBarApp.NavBarCtrl'
                     },
-                    'userView': {
+                    'main1@index': {
                         templateUrl : 'static/partials/userView/userView.html',
-                        action : 'userApp.userCtrl'
+                        action : 'userApp.UserCtrl'
                     },
-                    'stats': {
+                    'right@index': {
                         templateUrl : 'static/partials/stats/stats.html',
-                        action : 'statsApp.statsCtrl'
+                        action : 'statsApp.StatsCtrl'
                     }
                 }
             })

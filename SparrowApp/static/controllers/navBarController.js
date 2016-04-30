@@ -60,6 +60,10 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 		$location.url("/userview");
 	}
 
+	$scope.home = function(){
+		console.log("To Home Page");
+		$location.url("/");
+	}
 
     var postInitiation = function() {
 		console.log("authorized");
