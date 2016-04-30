@@ -82,6 +82,8 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 			$scope.$applyAsync(function(){
 				$rootScope.user.profpic = resp.image.url;
 				$rootScope.user.fullName = resp.displayName;
+				$rootScope.user.firstName = resp.name.givenName;
+				$rootScope.user.lastName = resp.name.familyName;
 				$rootScope.user.email = resp.emails[0].value;
 				$rootScope.user.ready = true;	    		
 			});
@@ -114,11 +116,18 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 
 		$scope.project.email = $rootScope.user.email;
 		$scope.project.userFullName = $rootScope.user.fullName;
+		$scope.project.firstName = $rootScope.user.firstName;
+		$scope.project.LastName = $rootScope.user.lastName;
 
-		$http.get("/addProject/"+JSON.stringify($scope.project)).success(function(response){
-			console.log(response);
-			$mdDialog.cancel();
-		});
+		$http({
+	      	url: '/addProject',
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify($scope.project)
+	    }).success(function(data) {
+	      	console.log(data);
+	      	$mdDialog.cancel();
+	    });
 	}
 
 	$scope.errorMessage = "";

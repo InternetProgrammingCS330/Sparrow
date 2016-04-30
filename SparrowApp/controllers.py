@@ -14,10 +14,6 @@ def add_header(response):
 	response.cache_control.max_age = 0
 	now = datetime.datetime.now()
 	expires_time = now + datetime.timedelta(seconds=1)
-
-	# if false:
-	# 	expires_time = expires_time.replace(second=0, microsecond=0)
-
 	response.headers['Cache-Control'] = 'public'
 	response.headers['Expires'] = format_date_time(time.mktime(expires_time.timetuple()))
 	return response
@@ -32,10 +28,6 @@ def view_of_test():
 	response.cache_control.max_age = 0
 	now = datetime.datetime.now()
 	expires_time = now + datetime.timedelta(seconds=1)
-
-	# if false:
-	# 	expires_time = expires_time.replace(second=0, microsecond=0)
-
 	response.headers['Cache-Control'] = 'public'
 	response.headers['Expires'] = format_date_time(time.mktime(expires_time.timetuple()))
 	return response
@@ -51,12 +43,13 @@ def view_of_test():
 # 			return response
 # 	abort(404)
 
-@app.route('/addProject/<info>', methods=['GET'])
-def test(info):
-	print("HEY tesST WORKS:  ", info)
-	data = {"id": info, "title": info}
-	# return "HEW TEST WORKS"+info
-	return jsonify(data), 200
+@app.route('/addProject', methods=['POST'])
+def test():
+	print("REQUEST", request.get_json());
+	# print("HEY tesST WORKS:  ", info)
+	# data = {"id": info, "title": info}
+	# return jsonify(data), 200
+	return "hello"
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')
