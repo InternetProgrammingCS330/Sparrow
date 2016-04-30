@@ -13,4 +13,4 @@ def index():
 
 @mod.route('/')
 def view_of_test():
-	return make_response(open('public/index.html').read())
+	return make_response(open('app/templates/index.html').read())

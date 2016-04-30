@@ -36,14 +36,14 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 
         $stateProvider
             .state('projectlist', {
-                url:'/projectlist',
+                url:'/',
                 views: {
                     'navBar': {
-                        templateUrl : '../partials/navBar/navBar.html',
+                        templateUrl : 'static/partials/navBar/navBar.html',
                         action : 'navBarApp.NavBarCtrl'
                     },
                     'projectlist': {
-                        templateUrl : '../partials/projectList/projectList.html',
+                        templateUrl : 'static/partials/projectList/projectList.html',
                         action : 'projectListApp.projectListCtrl'
                     }
                 }
@@ -59,7 +59,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                     'userPage': {
                         templateUrl : '../partials/userView/userView.html',
                         action : 'userApp.userCtrl'
-                    }
+                    },
                     'sideNav': {
                         templateUrl : '../partials/stats/stats.html',
                         action : 'statsApp.statsCtrl'
@@ -67,7 +67,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 }
             })
 
-
+            console.log("WE DID SOMETHING");
 
             $urlRouterProvider.when('','/');
 

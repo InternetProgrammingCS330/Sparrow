@@ -4,7 +4,7 @@ from flask import Flask, request, Blueprint, render_template, \
                   flash, g, session, redirect, url_for
 
 app = Flask(__name__)
-app.config.from_object('flaskconfig')
+app.config.from_object('SparrowApp.flaskconfig')
 
 @app.errorhandler(404)
 def not_found(error):
@@ -14,5 +14,8 @@ def not_found(error):
 def not_found(error):
     return "Not Authenticated", 401
 
-from app.views import general
-app.register_blueprint(general.mod)
+# from app.views import general
+
+app.config.from_object('SparrowApp.flaskconfig')
+app.url_map.strict_slashes = False
+import SparrowApp.controllers
