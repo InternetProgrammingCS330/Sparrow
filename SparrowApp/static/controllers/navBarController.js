@@ -71,11 +71,21 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 	}
 
 	function getUser(){
+		$rootScope.user = {};
+		$rootScope.user.ready = false;
 		var request = gapi.client.plus.people.get({
 			'userId': 'me'
 		});
 		request.execute(function(resp) {
 			console.log("RESPONSE",resp);
+			console.log(resp.image.url);
+			$scope.$applyAsync(function(){
+				$rootScope.user.profpic = resp.image.url;
+				$rootScope.fullName = resp.displayName;
+				$rootScope.email = resp.emails[0].value;
+				$rootScope.user.ready = true;	    		
+			});
+			
 		});
 	}
 
