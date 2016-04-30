@@ -14,25 +14,20 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function($stateProvider,$urlRouterProvider, $httpProvider) {
 
         var interceptor = ['$location', '$q', '$injector', function($location, $q, $injector) {
+            
+            console.log("inside interceptor");
             return {
                 responseError: function(response) { 
                     if (response.status === 401){
+                        console.log("4010401401401");
                         $location.url('/');
                     }
-                    if (response.status === 404){
-                        $location.url('/404');
-                    }
-                    if (response.status === 454){
-                        $location.url('/itemlist');
-                    } 
                     return $q.reject(response); 
                 } 
             };
         }];
 
         $httpProvider.interceptors.push(interceptor);
-
-        $urlRouterProvider.otherwise('/');
 
         $stateProvider
             .state('projectlist', {
@@ -70,27 +65,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
             console.log("WE DID SOMETHING");
 
             $urlRouterProvider.when('','/');
-
-            $urlRouterProvider.otherwise('/404');
-
-        var interceptor = ['$location', '$q', '$injector', function($location, $q, $injector) {
-
-            return {
-                response: function(response) {
-                    return response; 
-                },
-                responseError: function(response) { 
-                    if (response.status === 401){
-                        $location.url('/login');
-                    }
-                    if (response.status === 404){
-                        $location.url('/404');
-                    } 
-                    return $q.reject(response); 
-                } 
-            };
-        }];
-        $httpProvider.interceptors.push(interceptor);
     }
 ]);
 

@@ -2,7 +2,8 @@
   <md-content class="fixed" ng-controller= "NavBarCtrl as ctrl" ng-cloak>
     <md-toolbar class="navBarClass" md-scroll-shrink ng-if="true" layout="row" layout-align="space-between center">
       <div class="md-toolbar-tools md-toolbar-top">
-        
+        <button id="authorize-button" style="visibility: hidden">Authorize</button>
+        <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
         
       </div>
     </md-toolbar>
