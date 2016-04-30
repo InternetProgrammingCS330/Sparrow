@@ -1,3 +1,5 @@
+#initializes the App
+
 from flask import Flask, request, Blueprint, render_template, \
                   flash, g, session, redirect, url_for
 
