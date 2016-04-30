@@ -59,3 +59,7 @@ Total Views {
 
 
 ^ Sergei took these notes ... well
+
+https://kkschick.wordpress.com/2014/12/12/setting-up-the-structure-and-routing-of-an-app-using-flask-and-angularjs/
+
+https://github.com/shea256/angular-flask/tree/master/angular_flask
