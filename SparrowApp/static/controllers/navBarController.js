@@ -1,6 +1,6 @@
 var app = angular.module('navBarApp',['ngMaterial']);
 
-app.controller('navBarCtrl', ['$rootScope',
+app.controller('NavBarCtrl', ['$rootScope',
   '$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
   function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
 
