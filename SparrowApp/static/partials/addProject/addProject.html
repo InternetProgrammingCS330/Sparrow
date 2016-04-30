@@ -1,0 +1,18 @@
+<form class="settings-form">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Add Item &nbsp; </h2>
+		</div>
+	</md-toolbar>
+	<div layout-gt-xs="row">
+		<center><h4 style="color:red;">{{errorMessage}}</h4></center>
+		<md-input-container class="md-block" flex-gt-xs>
+			<label>Title</label>
+			<input ng-model="project.title">
+		</md-input-container>
+	</div>
+	<md-dialog-actions layout="row">
+		<md-button aria-label="Submit" ng-click="submitProject()" id="submit">Submit</md-button>
+		<md-button aria-label="Remove" ng-click="cancel()" id="cancel">Cancel</md-button>
+	</md-dialog-actions>
+</form>

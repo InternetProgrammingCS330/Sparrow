@@ -1,4 +1,5 @@
 .top {
+	border: 1px solid red;
 	position: absolute;
 	height:5%;
 	width: auto;
@@ -8,6 +9,7 @@
 	bottom: auto;
 }
 .middle {
+	border: 1px solid blue;
 	position: absolute;
 	height: auto;
 	width: auto;
@@ -17,20 +19,22 @@
 	bottom: 0;
 }
 .right {
+	border: 1px solid red;
 	position: absolute;
 	/*z-index:1000;*/
 	/*top:10%;*/
 	height: auto;
-	width: auto;
+	width: 21%;
 	left: auto;
 	right: 0;
 	top: 0;
 	bottom: 0;
 }
 .main {
+	border: 5px solid green;
 	position: absolute;
 	height: auto;
-	width: auto;
+	width: 79%;
 	left: 0;
 	right: auto;
 	top: 0;

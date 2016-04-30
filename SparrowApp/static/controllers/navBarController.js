@@ -5,32 +5,33 @@ var CLIENT_SECRET = 'VKl854VxVa8d-jWn4o94ru3t';
 var apiKey = 'AIzaSyBweB8JeMXGhfIInSZF9ve8x_wN-iwVVnE';
 var SCOPES = ['https://www.googleapis.com/auth/plus.login',
 		'https://www.googleapis.com/auth/userinfo.email',
+		'https://www.googleapis.com/auth/gmail.readonly',
 		'https://www.googleapis.com/auth/userinfo.profile'
 ];
 
 function handleClientLoad() {
-    gapi.client.setApiKey(apiKey);
-    window.setTimeout(checkAuth,1);
+	gapi.client.setApiKey(apiKey);
+	window.setTimeout(checkAuth,1);
 }
 
 function checkAuth() {
-    gapi.auth.authorize(
-    {
-        'client_id': CLIENT_ID,
-        'scope': SCOPES.join(' '),
-        'immediate': true
-    }, handleAuthResult);
+	gapi.auth.authorize(
+	{
+		'client_id': CLIENT_ID,
+		'scope': SCOPES.join(' '),
+		'immediate': true
+	}, handleAuthResult);
 }
 
 function handleAuthResult(authResult) {
-    var authorizeButton = document.getElementById('authorize-button');
-    if (authResult && !authResult.error) {
-        authorizeButton.style.visibility = 'hidden';
-        init();
-    } else {
-        authorizeButton.style.visibility = '';
-        authorizeButton.onclick = handleAuthClick;
-    }
+	var authorizeButton = document.getElementById('authorize-button');
+	if (authResult && !authResult.error) {
+		authorizeButton.style.visibility = 'hidden';
+		init();
+	} else {
+		authorizeButton.style.visibility = '';
+		authorizeButton.onclick = handleAuthClick;
+	}
 }
 
 function handleAuthClick(event) {
@@ -45,16 +46,21 @@ var init = function() {
 app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $location,
 							$mdSidenav,	$mdDialog, $animate, $filter, $window, gapiService) {
 
-    console.log("HELLO FROM THE navBarCtrl");
+	console.log("HELLO FROM THE navBarCtrl");
 
-    $scope.addProject = function(){
-    	console.log("ADDING PROJECT");
-    	$http.get("/addProject/"+"hell").success(function(response){
-	      	console.log(response);
-	    });
-    }
+	$scope.addProject = function(ev){
 
-    $scope.toProfile = function(){
+		$mdDialog.show({
+		  controller: addProjectModalCtrl,
+		  templateUrl: 'static/partials/addProject/addProject.html',
+		  parent: angular.element(document.body),
+		  targetEvent: ev,
+		  clickOutsideToClose:true,
+		  scope: $scope.$new()
+		})
+	}
+
+	$scope.toProfile = function(){
 		console.log("To Profile Page");
 		$location.url("/userview");
 	}
@@ -64,16 +70,55 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 		$location.url("/");
 	}
 
-    var postInitiation = function() {
+	function getUser(){
+		var request = gapi.client.plus.people.get({
+			'userId': 'me'
+		});
+		request.execute(function(resp) {
+			console.log("RESPONSE",resp);
+		});
+	}
+
+	var postInitiation = function() {
 		console.log("authorized");
+		getUser();
+
 	}
 	$window.initGapi = function() {
-	    gapiService.initGapi(postInitiation);
+		gapiService.initGapi(postInitiation);
 	}
 });
 
 app.service('gapiService', function() {
 	this.initGapi = function(postInitiation) {
-		gapi.client.load('gmail', 'v1', postInitiation);
+		gapi.client.load('plus', 'v1', postInitiation);
 	}
 });
+
+function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
+
+	console.log("HELLO ADDPROJECTMODALCTRL");
+
+	$scope.submitProject = function(){
+		console.log("ADDING PROJECT", $scope.project);
+
+		$http.get("/addProject/"+JSON.stringify($scope.project)).success(function(response){
+			console.log(response);
+			$mdDialog.cancel();
+		});
+	}
+
+	$scope.errorMessage = "";
+
+	$scope.hide = function() {
+		$mdDialog.hide();
+	};
+	$scope.cancel = function() {
+		console.log("cancel");
+		$mdDialog.cancel();
+	};
+	$scope.answer = function(answer) {
+		$mdDialog.hide(answer);
+	};
+
+};
