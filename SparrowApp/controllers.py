@@ -44,19 +44,30 @@ def view_of_test():
 # 			return response
 # 	abort(404)
 
-@app.route('/addProject', methods=['POST'])
-def test():
-	req = request.get_json()
-	print("REQUEST", req["title"]);
-	users = models.ProjectDB.query.all()
+@app.route('/listAllProjects', methods=['GET'])
+def listAllProjects():
+
+	projects = models.ProjectDB.query.all()
 	reslist = []
-	for i in users:
+	for i in projects:
 		reslist.append(dict(title=i.title,description=i.description))
 		print (reslist)
+
+	return jsonify(list=reslist), 200
+
+@app.route('/addProject', methods=['POST'])
+def addProject():
+	req = request.get_json()
 
 	project = models.ProjectDB(title=req["title"], description=req["description"])
 	db.session.add(project)
 	db.session.commit()
+	
+	projects = models.ProjectDB.query.all()
+	reslist = []
+	for i in projects:
+		reslist.append(dict(title=i.title,description=i.description))
+		print (reslist)
 
 	return jsonify(list=reslist), 200
 

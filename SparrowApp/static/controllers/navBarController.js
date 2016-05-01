@@ -126,6 +126,7 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	      	data: JSON.stringify($scope.project)
 	    }).success(function(data) {
 	      	console.log(data);
+	      	$rootScope.projectList = data.list;
 	      	$mdDialog.cancel();
 	    });
 	}
