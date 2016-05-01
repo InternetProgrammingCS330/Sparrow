@@ -24,13 +24,19 @@ function checkAuth() {
 }
 
 function handleAuthResult(authResult) {
+	console.log(authResult)
 	var authorizeButton = document.getElementById('authorize-button');
-	if (authResult && !authResult.error) {
+	if (authResult && !authResult.error && authResult.hd == "luther.edu") {
 		authorizeButton.style.visibility = 'hidden';
 		init();
 	} else {
-		authorizeButton.style.visibility = '';
-		authorizeButton.onclick = handleAuthClick;
+		if(authResult.hd != "luther.edu"){
+			console.log("Please use you luther email");
+		}
+		else{
+			authorizeButton.style.visibility = '';
+			authorizeButton.onclick = handleAuthClick;
+		}
 	}
 }
 
