@@ -1,6 +1,7 @@
 import os
 import datetime
 import time
+import json
 from wsgiref.handlers import format_date_time
 
 from flask import Flask, request, Response
@@ -48,17 +49,16 @@ def test():
 	req = request.get_json()
 	print("REQUEST", req["title"]);
 	users = models.ProjectDB.query.all()
-	print("QUERY", users)
+	reslist = []
+	for i in users:
+		reslist.append(dict(title=i.title,description=i.description))
+		print (reslist)
 
 	project = models.ProjectDB(title=req["title"], description=req["description"])
 	db.session.add(project)
 	db.session.commit()
 
-
-	# print("HEY tesST WORKS:  ", info)
-	# data = {"id": info, "title": info}
-	# return jsonify(data), 200
-	return "hello"
+	return jsonify(list=reslist), 200
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')

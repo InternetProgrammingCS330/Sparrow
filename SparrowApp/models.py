@@ -7,4 +7,5 @@ class ProjectDB(db.Model):
     keywords = db.Column(db.String(100))
 
     def __repr__(self):
-        return '<Project %r>' % (self.title)
+        # return '<Project %r>' % (self.title)
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
