@@ -54,6 +54,13 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 
 	console.log("HELLO FROM THE navBarCtrl");
 
+	$scope.onSearch = function(searchValue) {
+		console.log(searchValue);
+      $scope.search = searchValue;
+      $rootScope.search = $scope.search;
+
+    };
+
 	$scope.addProject = function(ev){
 
 		$mdDialog.show({
