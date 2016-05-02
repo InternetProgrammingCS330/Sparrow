@@ -1,4 +1,4 @@
-<body style="overflow: auto;">
+<!-- <body style="overflow: auto;">
 	<div ng-app="SparrowApp" class="container" ng-controller="projectListCtrl" ng-cloak >	
 		<div class='md-padding' layout="row" layout-wrap>
 	      <md-card style="width: 300px;" ng-repeat="project in projectList | filter:search">
@@ -18,5 +18,20 @@
 	        </md-card-actions>
 	      </md-card>
 	    </div>
+	</div>
+</body> -->
+
+<body style="overflow: auto;">
+	<div ng-app="SparrowApp" class="container" ng-controller="projectListCtrl" ng-cloak >	
+		<table md-colresize="md-colresize" class="md-table">
+			<thead>
+				<tr class="md-table-headers-row">
+					<th class="md-table-header"><h5>User</h5></th>
+					<th class="md-table-header"><h5>User</h5></th>
+					<th class="md-table-header"><h5>User</h5></th>
+					<th class="md-table-header"><h5>User</h5></th>
+				</tr>
+			</thead>
+		</table>
 	</div>
 </body>
