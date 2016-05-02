@@ -1,6 +1,7 @@
 .top {
 	border: 1px solid red;
-	position: absolute;
+	z-index:10000;
+	position: fixed;
 	height:5%;
 	width: auto;
 	left: 0;
@@ -20,23 +21,25 @@
 }
 .right {
 	border: 1px solid red;
-	position: absolute;
+	position: fixed;
 	/*z-index:1000;*/
 	/*top:10%;*/
 	height: auto;
-	width: 21%;
+	width: 22%;
 	left: auto;
 	right: 0;
 	top: 0;
 	bottom: 0;
+	padding-top: 5%;
 }
 .main {
 	border: 5px solid green;
 	position: absolute;
 	height: auto;
-	width: 78%;
+	width: 77%;
 	left: 0;
 	right: auto;
 	top: 0;
 	bottom: 0;
+	padding-top: 5%;
 } 

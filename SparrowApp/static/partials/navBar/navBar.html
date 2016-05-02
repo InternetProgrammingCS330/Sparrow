@@ -14,7 +14,7 @@
         <md-button ng-if="user.ready" class="md-fab md-primary md-hue-2 md-mini" id="add-button" aria-label="Add Project" ng-click="addProject($event)">
 			     <md-icon class="buttonstyle" md-svg-icon="static/img/add.svg"></md-icon>
 		    </md-button>
-        <md-button class="md-raised md-primary" id="authorize-button" style="visibility: hidden" >login</md-button>
+        <md-button class="md-raised md-primary" id="authorize-button" onclick="handleAuthClick(event)" style="visibility: hidden" >login</md-button>
         <img ng-if="user.profpic" id="avatar" alt="pic" ng-src="{{ user.profpic }}" class="md-avatar" />
       </div>
     </md-toolbar>
