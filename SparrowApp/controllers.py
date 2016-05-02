@@ -117,4 +117,3 @@ def checkUser():
 def favicon():
 	return send_from_directory(os.path.join(app.root_path, 'templates'),
 							   'favicon.ico')
-
