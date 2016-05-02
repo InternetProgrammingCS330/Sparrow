@@ -74,13 +74,13 @@ def checkUser():
 
 	print("USER REQUEST", req)
 
-	userStatus = models.UserDB.filter_by(email=req["email"])
-	# userList = []
-	# for i in userStatus:
-	# 	userList.append(dict(email=i.title,description=i.description,email=i.email))
+	userStatus = models.UserDB.query.filter_by(email=req["email"])
+	userList = []
+	for i in userStatus:
+		userList.append(dict(email=i.email))
 
-	if len(userStatus) == 0:
-		user = models.UserDB(email=req["email"], first_name=req["first_name"],last_name=req["last_name"])
+	if len(userList) == 0:
+		user = models.UserDB(email=req["email"], first_name=req["firstName"],last_name=req["lastName"])
 		db.session.add(user)
 		db.session.commit()
 
