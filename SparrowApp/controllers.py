@@ -46,13 +46,12 @@ def view_of_test():
 
 @app.route('/listAllProjects', methods=['GET'])
 def listAllProjects():
-
 	projects = models.ProjectDB.query.all()
+	print(projects)
 	reslist = []
 	for i in projects:
 		reslist.append(dict(title=i.title,description=i.description))
 		print (reslist)
-
 	return jsonify(list=reslist), 200
 
 @app.route('/addProject', methods=['POST'])
