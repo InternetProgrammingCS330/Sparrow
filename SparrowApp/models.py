@@ -34,50 +34,32 @@ class ProjectDB(db.Model):
 		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class CommentsDB(db.Model):
-	commentID = db.Column(INTEGER, nullable=False, primary_key=True)
-	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
-	projectID = db.Column(INT, nullable=False)
-	email = db.Column(varchar(30), nullable=False)
+	commentID = db.Column(INTEGER, nullable=False, primary_key=True, autoincrement=False)
+	projectID = db.Column(INTEGER, nullable=False)
+	email = db.Column(VARCHAR(30), nullable=False)
 	comment = db.Column(LONGTEXT, nullable=False)
+	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 
 	def __repr__(self):
 		# return '<Project %r>' % (self.title)
 		# formats/manually creates the JSON object
 		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-# class CommentsDB(db.Model):
-# 	commentID = db.Column(INTEGER, nullable=False, primary_key=True)
-# 	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
-# 	projectID = db.Column(INT, nullable=False)
-# 	email = db.Column(varchar(30), nullable=False)
-# 	comment = db.Column(LONGTEXT, nullable=False)
+class InterestDB(db.Model):
+	projectID = db.Column(INTEGER, nullable=False, primary_key=True, index=True, unique=True)
+	email = db.Column(VARCHAR(30), nullable=False, primary_key=True, index=True, unique=True)
 
-# 	def __repr__(self):
-# 		# return '<Project %r>' % (self.title)
-# 		# formats/manually creates the JSON object
-		# return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-# 	email varchar(30) NOT NULL,
-# 	projectID INT NOT NULL,
-# 	UNIQUE INDEX (email,projectID),
-# 	PRIMARY KEY (email, projectID),
-# 	FOREIGN KEY (email) REFERENCES userDB(email),
-# 	FOREIGN KEY (projectID) REFERENCES projectDB(projectID)
+	def __repr__(self):
+		# return '<Project %r>' % (self.title)
+		# formats/manually creates the JSON object
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class DepartmentDB(db.Model):
+	departmentID= db.Column(INTEGER, nullable=False, primary_key=True, autoincrement=True)
+	department_name= db.Column(VARCHAR(30))
 
-# CREATE TABLE interestDB (
-# 	email varchar(30) NOT NULL,
-# 	projectID INT NOT NULL,
-# 	UNIQUE INDEX (email,projectID),
-# 	PRIMARY KEY (email, projectID),
-# 	FOREIGN KEY (email) REFERENCES userDB(email),
-# 	FOREIGN KEY (projectID) REFERENCES projectDB(projectID)
-# 	) ENGINE=InnoDB;
+	def __repr__(self):
+		# return '<Project %r>' % (self.title)
+		# formats/manually creates the JSON object
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-# CREATE TABLE departmentDB (
-# 	departmentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-# 	department_name varchar(30)
-# 	) ENGINE=InnoDB;
-
-# USE sergeidb;
-
-# source populateTables.sql;
