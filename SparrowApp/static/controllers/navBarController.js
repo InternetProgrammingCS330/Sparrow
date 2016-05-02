@@ -180,7 +180,7 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
       var lowercaseQuery = angular.lowercase(query);
       return function filterFn(department) {
       	console.log(department)
-        return (department.department_name.indexOf(query) === 0);
+        return (department.department_name.indexOf(query.toLowerCase()) === 0);
       };
     }
 };

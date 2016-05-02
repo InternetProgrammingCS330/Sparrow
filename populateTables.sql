@@ -56,12 +56,12 @@ INSERT INTO ProjectDB (title,description,email, department) VALUES ("Ten",
 			velit. Class aptent taciti sociosqu ad litra torquent per conubia nostra, per inceptos himenaeos.",
 	"CS330@isawesome.com","Nursing");
 
-INSERT INTO DepartmentDB (department_name) VALUES ("Computer Science");
-INSERT INTO DepartmentDB (department_name) VALUES ("Biology");
-INSERT INTO DepartmentDB (department_name) VALUES ("Chemistry");
-INSERT INTO DepartmentDB (department_name) VALUES ("Physics");
-INSERT INTO DepartmentDB (department_name) VALUES ("Mathematics");
-INSERT INTO DepartmentDB (department_name) VALUES ("Environmental Studies");
-INSERT INTO DepartmentDB (department_name) VALUES ("Economics");
-INSERT INTO DepartmentDB (department_name) VALUES ("Political Science");
-INSERT INTO DepartmentDB (department_name) VALUES ("Nursing");
+INSERT INTO DepartmentDB (department_name) VALUES ("computer science");
+INSERT INTO DepartmentDB (department_name) VALUES ("biology");
+INSERT INTO DepartmentDB (department_name) VALUES ("chemistry");
+INSERT INTO DepartmentDB (department_name) VALUES ("physics");
+INSERT INTO DepartmentDB (department_name) VALUES ("mathematics");
+INSERT INTO DepartmentDB (department_name) VALUES ("environmental studies");
+INSERT INTO DepartmentDB (department_name) VALUES ("economics");
+INSERT INTO DepartmentDB (department_name) VALUES ("political science");
+INSERT INTO DepartmentDB (department_name) VALUES ("nursing");
