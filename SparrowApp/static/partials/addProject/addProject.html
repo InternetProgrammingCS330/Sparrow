@@ -14,6 +14,25 @@
 			<label>Description</label>
 			<input ng-model="project.description">
 		</md-input-container>
+
+		<md-autocomplete flex required
+            md-input-name="autocompleteField"
+            md-input-minlength="2"
+            md-input-maxlength="18"
+            md-no-cache="true"
+            md-selected-item="selectedItem"
+            md-search-text="searchText"
+            md-items="item in querySearch(searchText)"
+            md-item-text="item.department_name"
+            md-floating-label="Favorite state">
+          <md-item-template>
+            <span md-highlight-text="searchText">{{item.department_name}}</span>
+          </md-item-template>
+          
+        </md-autocomplete>
+
+
+
 	</div>
 	<md-dialog-actions layout="row">
 		<md-button aria-label="Submit" ng-click="submitProject()" id="submit">Submit</md-button>

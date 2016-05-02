@@ -4,7 +4,7 @@ app.controller('projectListCtrl', ['$rootScope',
   '$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
   function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
   	
-  	$rootScope.mainView = true;
+  	$rootScope.mainView = true; 
 
     console.log("HELLO FROM THE projectListCtrl");
 
@@ -21,6 +21,17 @@ app.controller('projectListCtrl', ['$rootScope',
 				$rootScope.projectList = data.list;
 				console.log("HERE");
 				console.log($rootScope.projectList);
+			});
+	    });
+
+	    $http({
+	      	url: '/listDepartments',
+	      	method: "GET",
+	      	headers: { 'Content-Type': 'application/json' }
+	    }).success(function(data) {
+	      	console.log(data.list);
+	      	$scope.$applyAsync(function(){
+  				$rootScope.Departments = data.list;
 			});
 	    });
 	}

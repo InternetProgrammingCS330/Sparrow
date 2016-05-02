@@ -165,4 +165,22 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);
 	};
+
+    $scope.selectedItem  = null;
+    $scope.searchText    = null;
+    $scope.querySearch   = $scope.querySearch;
+
+    $scope.querySearch = function(query) {
+      var results = query ? $rootScope.Departments.filter( createFilterFor(query) ) : [];
+      console.log(results)
+      return results;
+    }
+
+    function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(department) {
+      	console.log(department)
+        return (department.department_name.indexOf(query) === 0);
+      };
+    }
 };

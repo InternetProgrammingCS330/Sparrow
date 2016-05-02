@@ -61,6 +61,14 @@ def listAllProjects():
 
 	return jsonify(list=reslist), 200
 
+@app.route('/listDepartments', methods=['GET'])
+def listDepartments():
+	departments = models.DepartmentDB.query.all()
+	reslist = []
+	for i in departments:
+		reslist.append(dict(department_name=i.department_name))
+	return jsonify(list=reslist), 200
+
 @app.route('/addProject', methods=['POST'])
 def addProject():
 	req = request.get_json()
