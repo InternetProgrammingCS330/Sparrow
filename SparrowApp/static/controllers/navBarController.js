@@ -26,7 +26,7 @@ function checkAuth() {
 function handleAuthResult(authResult) {
 	console.log("AUTH RESULT",authResult)
 	var authorizeButton = document.getElementById('authorize-button');
-	// if (authResult && !authResult.error && authResult.hd == "luther.edu") { // USED FOR LUTHER-ONLY
+	// if (authResult && !authResult.error && authResult.hd == "luther.edu") { // USED FOR LUTHER-ONLYs
 	if (authResult && !authResult.error) {
 		authorizeButton.style.visibility = 'hidden';
 		init();
