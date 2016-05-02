@@ -26,12 +26,20 @@
 		<table md-colresize="md-colresize" class="md-table">
 			<thead>
 				<tr class="md-table-headers-row">
-					<th class="md-table-header"><h5>User</h5></th>
-					<th class="md-table-header"><h5>User</h5></th>
-					<th class="md-table-header"><h5>User</h5></th>
-					<th class="md-table-header"><h5>User</h5></th>
+					<th class="md-table-header"><span>User</span></th>
+					<th class="md-table-header"><span>Title</span></th>
+					<th class="md-table-header"><span>Description</span></th>
+					<th class="md-table-header"><span>Department</span></th>
+					<th class="md-table-header"><span>Interested?</span></th>
 				</tr>
 			</thead>
+			<tr ng-repeat="project in projectList | filter:search" class="md-table-content-row ng-scope">
+				<td>{{project.email}}</td>
+				<td>{{project.title}}</td>
+				<td>{{project.description}}</td>
+				<td>CS</td>
+				<td>*</td>
+			</tr>
 		</table>
 	</div>
 </body>
