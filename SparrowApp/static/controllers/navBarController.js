@@ -125,7 +125,6 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 
 	$scope.submitProject = function(){
 		console.log("ADDING PROJECT", $scope.project);
-		console.log("PROJECT>>>>",$scope.project);
 		$scope.project.email = $rootScope.user.email;
 		$scope.project.userFullName = $rootScope.user.fullName;
 		$scope.project.firstName = $rootScope.user.firstName;
