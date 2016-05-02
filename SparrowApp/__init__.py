@@ -10,6 +10,9 @@ db = SQLAlchemy(app)
 
 from SparrowApp import models
 
+# db.drop_all()
+db.create_all()
+
 @app.errorhandler(404)
 def not_found(error):
     return "404 error", 404
