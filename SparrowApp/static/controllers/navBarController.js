@@ -24,23 +24,21 @@ function checkAuth() {
 }
 
 function handleAuthResult(authResult) {
-	console.log(authResult)
+	console.log("AUTH RESULT",authResult)
 	var authorizeButton = document.getElementById('authorize-button');
 	if (authResult && !authResult.error && authResult.hd == "luther.edu") {
 		authorizeButton.style.visibility = 'hidden';
 		init();
 	} else {
-		if(authResult.hd != "luther.edu"){
-			console.log("Please use you luther email");
-		}
-		else{
-			authorizeButton.style.visibility = '';
-			authorizeButton.onclick = handleAuthClick;
-		}
+		console.log("Got to authenticate");
+		gapi.auth.signOut();
+		authorizeButton.style.visibility = '';
+		// authorizeButton.onclick = handleAuthClick;
 	}
 }
 
 function handleAuthClick(event) {
+	console.log("EVENT",event);
 	gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: false}, handleAuthResult);
 	return false;
 }
