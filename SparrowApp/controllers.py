@@ -68,21 +68,19 @@ def addProject():
 
 	return jsonify(list=reslist), 200
 
-checkUser
-
 @app.route('/checkUser', methods=['POST'])
 def checkUser():
 	req = request.get_json()
 
 	print("USER REQUEST", req)
 
-	userStatus = models.userDB.filter_by(email=req["email"])
+	userStatus = models.UserDB.filter_by(email=req["email"])
 	# userList = []
 	# for i in userStatus:
 	# 	userList.append(dict(email=i.title,description=i.description,email=i.email))
 
 	if len(userStatus) == 0:
-		user = models.userDB(email=req["email"], first_name=req["first_name"],last_name=req["last_name"])
+		user = models.UserDB(email=req["email"], first_name=req["first_name"],last_name=req["last_name"])
 		db.session.add(user)
 		db.session.commit()
 

@@ -9,9 +9,9 @@ from sqlalchemy.dialects.mysql import \
 		TINYBLOB, TINYINT, TINYTEXT, VARBINARY, VARCHAR, YEAR
 
 class UserDB(db.Model):
-	email = db.Column(varchar(30), primary_key=True, nullable=False)
-	first_name = db.Column(VARCHAR(30)  NOT NULL, nullable=False)
-	last_name = db.Column(VARCHAR(30) NOT NULL, nullable=False)
+	email = db.Column(VARCHAR(30), primary_key=True, nullable=False)
+	first_name = db.Column(VARCHAR(30), nullable=False)
+	last_name = db.Column(VARCHAR(30), nullable=False)
 	profile_picture = db.Column(VARCHAR(200))
 	department_preference =db.Column(LONGTEXT)
 
