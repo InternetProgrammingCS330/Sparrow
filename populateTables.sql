@@ -1,4 +1,4 @@
-USE sergeiDB
+USE sergeidb
 
 # LocationLF =============================================
 
