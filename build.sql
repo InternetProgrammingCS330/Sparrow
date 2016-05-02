@@ -42,7 +42,7 @@ CREATE TABLE commentsDB (
 	email varchar(30) NOT NULL,
 	comment LONGTEXT NOT NULL,
 	FOREIGN KEY (projectID) REFERENCES projectDB(projectID),
-	FOREIGN KEY (email) REFERENCES UserDB(email)
+	FOREIGN KEY (email) REFERENCES userDB(email)
 	) ENGINE=InnoDB;
 
 CREATE TABLE interestDB (
