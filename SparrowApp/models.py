@@ -30,6 +30,7 @@ class ProjectDB(db.Model):
 	title = db.Column(VARCHAR(20), nullable=False, index=True)
 	description = db.Column(LONGTEXT, nullable=False)
 	keywords = db.Column(VARCHAR(100))
+	department = db.Column(VARCHAR(20))
 	email = db.Column(VARCHAR(30), nullable=False)
 	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 

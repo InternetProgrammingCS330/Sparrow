@@ -8,6 +8,8 @@ from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
 from flask import send_file, make_response, abort, jsonify
 
+from sqlalchemy import text
+
 from SparrowApp import app, db, models
 
 @app.after_request
@@ -48,8 +50,15 @@ def view_of_test():
 def listAllProjects():
 	projects = models.ProjectDB.query.all()
 	reslist = []
+	test = db.engine.execute(text("Select email,first_name,last_name from UserDB"))
+	users = {}
+	for row in test:
+		users[row[0]] = (row[1],row[2])
+	
 	for i in projects:
-		reslist.append(dict(title=i.title,description=i.description,email=i.email))
+		reslist.append(dict(title=i.title,description=i.description,department=i.department,email=i.email, \
+			first_name=users[i.email][0], last_name=users[i.email][1]))
+
 	return jsonify(list=reslist), 200
 
 @app.route('/addProject', methods=['POST'])
