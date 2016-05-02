@@ -1,0 +1,17 @@
+<div ng-app="statsApp" ng-controller="StatsCtrl" ng-cloak>
+    <div layout="vertical" flex>
+        <md-sidenav style="height:100%" class="md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')">
+            <md-toolbar class="md-theme-light">
+		          <h1 class="md-toolbar-tools" ng-cloak>Hello {{user.fullName}}!</h1>        
+            </md-toolbar>
+            <md-content>
+                <h1>Charts</h1>
+                <md-input-container class="md-block" flex-gt-xs>
+                    <label>Description</label>
+                    <input ng-model="inputData" ng-change="onChange(inputData)">
+                </md-input-container>
+                <chart data="salesData"></chart>
+            </md-content>
+        </md-sidenav>
+    </div>
+</div>

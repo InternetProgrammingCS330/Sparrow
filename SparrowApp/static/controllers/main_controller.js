@@ -56,7 +56,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 						action : 'projectListApp.projectListCtrl'
 					},
 					'right@index': {
-						templateUrl : 'static/partials/stats/stats.html',
+						templateUrl : 'static/partials/stats/statsGlobal.html',
 						action : 'statsApp.StatsCtrl'
 					}
 				}
@@ -75,7 +75,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 						action : 'userApp.UserCtrl'
 					},
 					'right@index': {
-						templateUrl : 'static/partials/stats/stats.html',
+						templateUrl : 'static/partials/stats/statsUser.html',
 						action : 'statsApp.StatsCtrl'
 					}
 				}

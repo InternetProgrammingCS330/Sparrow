@@ -1,0 +1,155 @@
+var app = angular.module('statsApp',['ngMaterial']);
+
+app.controller('StatsCtrl',function($rootScope,$timeout, $scope, $http, $location,
+										$mdSidenav, $mdDialog,$animate,$filter,$mdSidenav) {
+
+    console.log("HELLO FROM THE statsCtrl");
+
+    $scope.toggleLeft = buildDelayedToggler('left');
+    $scope.toggleRight = buildToggler('right');
+    $scope.isOpenRight = function(){
+      return $mdSidenav('right').isOpen();
+    };
+
+    /**
+     * Supplies a function that will continue to operate until the
+     * time is up.
+     */
+    function debounce(func, wait, context) {
+      var timer;
+
+      return function debounced() {
+        var context = $scope,
+            args = Array.prototype.slice.call(arguments);
+        $timeout.cancel(timer);
+        timer = $timeout(function() {
+          timer = undefined;
+          func.apply(context, args);
+        }, wait || 10);
+      };
+    }
+
+    /**
+     * Build handler to open/close a SideNav; when animation finishes
+     * report completion in console
+     */
+    function buildDelayedToggler(navID) {
+      return debounce(function() {
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }, 200);
+    }
+
+    function buildToggler(navID) {
+      return function() {
+        $mdSidenav(navID)
+          .toggle()
+          .then(function () {
+            $log.debug("toggle " + navID + " is done");
+          });
+      }
+    }
+
+    $scope.datajson = [
+     {"age":"<5","population":"2704659"},
+     {"age":"5-13","population":"4499890"},
+     {"age":"14-17","population":"2159981"},
+     {"age":"18-24","population":"3853788"},
+     {"age":"25-44","population":"14106543"},
+     {"age":"45-64","population":"8819342"},
+     {"age":"=65","population":"612463"}
+	]
+});
+
+app.directive('chart', ['$http', function($http) {
+  return {
+    restrict: 'EA',
+    scope: {
+      data: '=data',
+      outerR: '=outerR',
+      innerR: '=innerR',
+      fontSize: '=fontSize',
+      displayNumber: '=displayNumber',
+      innerString: '=innerString',
+      innerStringFontSize: '=innerStringFontSize',
+      url: '=src',
+    },
+    
+    link: function($scope, elements, attrs){
+      
+      //TODO ALSO A WORK IN PROGRESS
+      if ($scope.url) {
+        $http.get($scope.url).success(function(response) {
+       	 response;
+        })
+      }
+		 if($scope.data){
+        var data = $scope.data;    
+      } else {
+      	var data = [35, 45, 50, 60];
+      } 
+      
+      var color = d3.scale.ordinal()
+                    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+      
+      if($scope.outerR){
+        var outerR = $scope.outerR; 
+      } else {
+        var outerR = 100;
+      }
+      
+      if($scope.innerR){
+        var innerR = $scope.innerR;
+      } else {
+        var innerR = 50;
+      }      
+      
+      if($scope.fontSize){
+        var fontSize = $scope.fontSize;
+      } else {
+        var fontSize = 17 * outerR / 100;
+      }
+      
+      if($scope.innerStringFontSize){
+        var innerStringFontSize = $scope.innerStringFontSize;
+      } else {
+        var innerStringFontSize = innerR / 3;
+      }
+      var width = 320,
+        height = 240,
+        radius = Math.min(width, height) / 2;
+      
+      var canvas = d3.select("body")
+      	.append("svg").attr("width", outerR * 2)
+      	.attr("height", outerR * 2); // Creates the paintable canvas
+      var group = canvas.append("g")
+      	.attr("transform", "translate(" + outerR + "," + outerR + ")"); // Sets the location
+      var arc = d3.svg.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(radius - 70);
+      var pie = d3.layout.pie();
+      var arcs = group.selectAll(".arc")
+      	.data( pie(data) )
+      	.enter()
+      	.append("g")
+      	.attr("class", "arc");
+      arcs.append("path")
+      	.attr("d", arc)
+      	.attr("fill", function(d) { return color(d.data); } );
+      if($scope.displayNumber != false){
+      	arcs.append("text").attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; } ).attr("text-anchor","middle").attr("font-size",fontSize + "px").text(function (d) {return d.data;} );
+      }
+
+      var text = canvas.selectAll("text").data($scope.innerString)
+		.enter()
+		.append("text")
+		.attr("font-size", innerStringFontSize + "px")
+		.attr("x", function(d) { return outerR; })
+		.attr("y", function(d) { return outerR + innerStringFontSize / 2; })
+		.text( function (d) { return $scope.innerString; });    
+    }
+  };
+}]);
