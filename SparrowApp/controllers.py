@@ -63,8 +63,12 @@ def addProject():
 	projects = models.ProjectDB.query.all()
 	reslist = []
 	for i in projects:
+		print("======================================")
 		print(i)
 		print(i.email)
+		print("=================+++++++++++++++++++++++++++=====================")
+		print("=================+++++++++++++++++++++++++++=====================")
+		print("=================+++++++++++++++++++++++++++=====================")
 		reslist.append(dict(title=i.title,description=i.description, email=i.email))
 		print (reslist)
 
