@@ -12,3 +12,13 @@ INSERT INTO ProjectDB (title,description,email) VALUES ("Seven","testing number 
 INSERT INTO ProjectDB (title,description,email) VALUES ("Eight","testing number eight","sergeiahanka@gmail.com");
 INSERT INTO ProjectDB (title,description,email) VALUES ("Nine","testing number nine","sergeiahanka@gmail.com");
 INSERT INTO ProjectDB (title,description,email) VALUES ("Ten","testing number ten","sergeiahanka@gmail.com");
+
+INSERT INTO DepartmentDB (department_name) VALUES ("Computer Science");
+INSERT INTO DepartmentDB (department_name) VALUES ("Biology");
+INSERT INTO DepartmentDB (department_name) VALUES ("Chemistry");
+INSERT INTO DepartmentDB (department_name) VALUES ("Physics");
+INSERT INTO DepartmentDB (department_name) VALUES ("Mathematics");
+INSERT INTO DepartmentDB (department_name) VALUES ("Environmental Studies");
+INSERT INTO DepartmentDB (department_name) VALUES ("Economics");
+INSERT INTO DepartmentDB (department_name) VALUES ("Political Science");
+INSERT INTO DepartmentDB (department_name) VALUES ("Nursing");
