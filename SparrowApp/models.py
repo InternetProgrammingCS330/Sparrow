@@ -36,8 +36,8 @@ class ProjectDB(db.Model):
 class CommentsDB(db.Model):
 	commentID = db.Column(INTEGER, nullable=False, primary_key=True)
 	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
-	projectID = db.Column(INT, nullable=False)
-	email = db.Column(varchar(30), nullable=False)
+	projectID = db.Column(INTEGER, nullable=False)
+	email = db.Column(VARCHAR(30), nullable=False)
 	comment = db.Column(LONGTEXT, nullable=False)
 
 	def __repr__(self):

@@ -77,17 +77,24 @@ def checkUser():
 	userStatus = models.UserDB.query.filter_by(email=req["email"])
 	userList = []
 	for i in userStatus:
-		userList.append(dict(email=i.email))
+		userList.append(dict(email=i.email,profile_picture=profile_picture))
 
 	if len(userList) == 0:
-		user = models.UserDB(email=req["email"], first_name=req["firstName"],last_name=req["lastName"])
+		user = models.UserDB(email=req["email"], first_name=req["firstName"],last_name=req["lastName"],profile_picture=req["profilePic"])
 		db.session.add(user)
 		db.session.commit()
 
 		return jsonify(title="userADDED"), 200
 
 	else:
-		return jsonify(title="userEXISTS"), 200
+		if userList[0]["profile_picture"] != req["profilePic"]:
+			db.session.query().\
+				filter(UserDB.email == req["email"]).\
+				update(UserDB,values={"UserDB.profile_picture": req["profilePic"]})
+			db.session.commit()
+			return jsonify(title="userEXISTS, ProfPic UPDATED"), 200
+		else:
+			return jsonify(title="userEXISTS"), 200
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')
