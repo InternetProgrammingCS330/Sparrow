@@ -49,14 +49,14 @@ def listAllProjects():
 	projects = models.ProjectDB.query.all()
 	reslist = []
 	for i in projects:
-		reslist.append(dict(title=i.title,description=i.description))
+		reslist.append(dict(title=i.title,description=i.description,email=i.email))
 	return jsonify(list=reslist), 200
 
 @app.route('/addProject', methods=['POST'])
 def addProject():
 	req = request.get_json()
 
-	project = models.ProjectDB(title=req["title"], description=req["description"])
+	project = models.ProjectDB(title=req["title"], description=req["description"],email=req["email"])
 	db.session.add(project)
 	db.session.commit()
 	
@@ -64,7 +64,6 @@ def addProject():
 	reslist = []
 	for i in projects:
 		print(i)
-		print(i.email)
 		reslist.append(dict(title=i.title,description=i.description, email=i.email))
 		print (reslist)
 
