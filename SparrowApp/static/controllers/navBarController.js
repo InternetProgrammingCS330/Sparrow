@@ -97,7 +97,17 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 				$rootScope.user.firstName = resp.name.givenName;
 				$rootScope.user.lastName = resp.name.familyName;
 				$rootScope.user.email = resp.emails[0].value;
-				$rootScope.user.ready = true;	    		
+				$rootScope.user.ready = true;
+
+				$http({
+			      	url: '/checkUser',
+			      	method: "POST",
+			      	headers: { 'Content-Type': 'application/json' },
+			      	data: JSON.stringify($rootScope.user)
+			    }).success(function(data) {
+			    	console.log("DONE AUTHENTICATING", data);
+			    });
+
 			});
 			
 		});
