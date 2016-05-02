@@ -5,7 +5,7 @@
 #===== build.sql enter the mysql database as root =====
 #============ and run the following script ============
 #======================================================
-DROP DATABASE IF EXISTS sergeiDB;
+DROP DATABASE IF EXISTS sergeidb;
 
 DROP USER master;
 
@@ -14,8 +14,8 @@ CREATE USER master IDENTIFIED BY 'qwerty';
 GRANT ALL PRIVILEGES ON *.* TO master;
 FLUSH PRIVILEGES;
 
-CREATE DATABASE sergeiDB;
-USE sergeiDB;
+CREATE DATABASE sergeidb;
+USE sergeidb;
 
 CREATE TABLE userDB (
 	email varchar(30) NOT NULL PRIMARY KEY,
@@ -31,13 +31,13 @@ CREATE TABLE projectDB (
 	description LONGTEXT NOT NULL,
 	keywords VARCHAR(100),
 	email varchar(30) NOT NULL,
-	time_stamp DATE NOT NULL,
+	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	FOREIGN KEY (email) REFERENCES userDB(email)
 	) ENGINE=InnoDB;
 
 CREATE TABLE commentsDB (
 	commentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	time_stamp DATE NOT NULL,
+	time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	projectID INT NOT NULL,
 	email varchar(30) NOT NULL,
 	comment LONGTEXT NOT NULL,
@@ -59,6 +59,6 @@ CREATE TABLE departmentDB (
 	department_name varchar(30)
 	) ENGINE=InnoDB;
 
-USE sergeiDB;
+USE sergeidb;
 
 source populateTables.sql;
