@@ -26,14 +26,15 @@ function checkAuth() {
 function handleAuthResult(authResult) {
 	console.log("AUTH RESULT",authResult)
 	var authorizeButton = document.getElementById('authorize-button');
-	if (authResult && !authResult.error && authResult.hd == "luther.edu") {
+	// if (authResult && !authResult.error && authResult.hd == "luther.edu") { // USED FOR LUTHER-ONLY
+	if (authResult && !authResult.error) {
 		authorizeButton.style.visibility = 'hidden';
 		init();
 	} else {
 		console.log("Got to authenticate");
-		gapi.auth.signOut();
+		// gapi.auth.signOut(); // USED FOR LUTHER-ONLY
 		authorizeButton.style.visibility = '';
-		// authorizeButton.onclick = handleAuthClick;
+		authorizeButton.onclick = handleAuthClick;
 	}
 }
 
@@ -155,5 +156,4 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);
 	};
-
 };

@@ -17,41 +17,47 @@ FLUSH PRIVILEGES;
 CREATE DATABASE sergeiDB;
 USE sergeiDB;
 
+CREATE TABLE userDB (
+	email varchar(30) NOT NULL PRIMARY KEY,
+	first_name VARCHAR(30)  NOT NULL,
+	last_name VARCHAR(30) NOT NULL,
+	profile_picture VARCHAR(200),
+	department_preference LONGTEXT
+	) ENGINE=InnoDB;
+
 CREATE TABLE projectDB (
 	projectID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	title VARCHAR(20) NOT NULL,
-	description VARCHAR(50) NOT NULL,
-	keywords VARCHAR(100)
-	) engine=InnoDB;
+	description LONGTEXT NOT NULL,
+	keywords VARCHAR(100),
+	email varchar(30) NOT NULL,
+	time_stamp DATE NOT NULL,
+	FOREIGN KEY (email) REFERENCES userDB(email)
+	) ENGINE=InnoDB;
 
-CREATE TABLE UserDB (
-	email varchar(30) NOT NULL PRIMARY KEY,
-	first_name VARCHAR(30)  NOT NULL,
-	last_name VARCHAR(30) NOT NULL
-	) engine=InnoDB;
-
-CREATE TABLE CommentsDB (
+CREATE TABLE commentsDB (
 	commentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	time_stamp DATE NOT NULL,
 	projectID INT NOT NULL,
 	email varchar(30) NOT NULL,
 	comment LONGTEXT NOT NULL,
-	FOREIGN KEY (projectID) REFERENCES ProjectDB(projectID),
+	FOREIGN KEY (projectID) REFERENCES projectDB(projectID),
 	FOREIGN KEY (email) REFERENCES UserDB(email)
 	) ENGINE=InnoDB;
 
-CREATE TABLE InterestID (
-	interestID INT NOT NULL PRIMARY KEY AUTO_INCREMENT 
-	) engine=InnoDB;
-
-CREATE TABLE UserInterests (
+CREATE TABLE interestDB (
 	email varchar(30) NOT NULL,
-	interestID INT NOT NULL,
-	UNIQUE INDEX (email,interestID),
-	PRIMARY KEY (email, interestID),
-	FOREIGN KEY (email) REFERENCES UserDB(email),
-	FOREIGN KEY (interestID) REFERENCES InterestID(interestID)
-	) engine=InnoDB;
+	projectID INT NOT NULL,
+	UNIQUE INDEX (email,projectID),
+	PRIMARY KEY (email, projectID),
+	FOREIGN KEY (email) REFERENCES userDB(email),
+	FOREIGN KEY (projectID) REFERENCES projectDB(projectID)
+	) ENGINE=InnoDB;
+
+CREATE TABLE departmentDB (
+	departmentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	department_name varchar(30)
+	) ENGINE=InnoDB;
 
 USE sergeiDB;
 
