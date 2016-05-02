@@ -1,7 +1,7 @@
 <body style="overflow: auto;">
 	<div ng-app="SparrowApp" class="container" ng-controller="projectListCtrl" ng-cloak >	
 		<div class='md-padding' layout="row" layout-wrap>
-	      <md-card style="width: 300px;" ng-repeat="project in projectList">
+	      <md-card style="width: 300px;" ng-repeat="project in projectList | filter:search">
 	        <md-card-title>
 	        	<img src="http://placehold.it/100x100" class="md-card-image" alt="user avatar">
 	          <md-card-title-text>
