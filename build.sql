@@ -32,7 +32,7 @@ CREATE TABLE ProjectDB (
 	keywords VARCHAR(100),
 	email varchar(30) NOT NULL,
 	time_stamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	FOREIGN KEY (email) REFERENCES userDB(email)
+	FOREIGN KEY (email) REFERENCES UserDB(email)
 	) ENGINE=InnoDB;
 
 CREATE TABLE CommentsDB (
@@ -41,8 +41,8 @@ CREATE TABLE CommentsDB (
 	projectID INT NOT NULL,
 	email varchar(30) NOT NULL,
 	comment LONGTEXT NOT NULL,
-	FOREIGN KEY (projectID) REFERENCES projectDB(projectID),
-	FOREIGN KEY (email) REFERENCES userDB(email)
+	FOREIGN KEY (projectID) REFERENCES ProjectDB(projectID),
+	FOREIGN KEY (email) REFERENCES UserDB(email)
 	) ENGINE=InnoDB;
 
 CREATE TABLE InterestDB (
@@ -50,8 +50,8 @@ CREATE TABLE InterestDB (
 	projectID INT NOT NULL,
 	UNIQUE INDEX (email,projectID),
 	PRIMARY KEY (email, projectID),
-	FOREIGN KEY (email) REFERENCES userDB(email),
-	FOREIGN KEY (projectID) REFERENCES projectDB(projectID)
+	FOREIGN KEY (email) REFERENCES UserDB(email),
+	FOREIGN KEY (projectID) REFERENCES ProjectDB(projectID)
 	) ENGINE=InnoDB;
 
 CREATE TABLE DepartmentDB (
