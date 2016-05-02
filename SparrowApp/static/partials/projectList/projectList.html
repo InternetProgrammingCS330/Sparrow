@@ -1,45 +1,20 @@
-<!-- <body style="overflow: auto;">
-	<div ng-app="SparrowApp" class="container" ng-controller="projectListCtrl" ng-cloak >	
-		<div class='md-padding' layout="row" layout-wrap>
-	      <md-card style="width: 300px;" ng-repeat="project in projectList | filter:search">
-	        <md-card-title>
-	        	<img src="http://placehold.it/100x100" class="md-card-image" alt="user avatar">
-	          <md-card-title-text>
-	            <span class="md-headline">{{project.title}}</span>
-	            <span class="md-subhead">{{project.description}}</span>
-	          </md-card-title-text>
-	          <md-card-title-media>
-	            <div class="md-media-lg card-media"></div>
-	          </md-card-title-media>
-	        </md-card-title>
-	        <md-card-actions layout="row" layout-align="end center">
-	          <md-button>Action 1</md-button>
-	          <md-button>Action 2</md-button>
-	        </md-card-actions>
-	      </md-card>
-	    </div>
-	</div>
-</body> -->
-
-<body style="overflow: auto;">
-	<div ng-app="SparrowApp" class="container" ng-controller="projectListCtrl" ng-cloak >	
-		<table md-colresize="md-colresize" class="md-table">
-			<thead>
-				<tr class="md-table-headers-row">
-					<th class="md-table-header"><span>User</span></th>
-					<th class="md-table-header"><span>Title</span></th>
-					<th class="md-table-header"><span>Description</span></th>
-					<th class="md-table-header"><span>Department</span></th>
-					<th class="md-table-header"><span>Interested?</span></th>
-				</tr>
-			</thead>
-			<tr ng-repeat="project in projectList | filter:search" class="md-table-content-row ng-scope">
-				<td>{{project.first_name}} {{project.last_name}}</td>
-				<td>{{project.title}}</td>
-				<td>{{project.description}}</td>
-				<td>{{project.department}}</td>
-				<td>*</td>
-			</tr>
-		</table>
+<body>
+	<div ng-app="SparrowApp" ng-controller="projectListCtrl">
+	<md-list>
+	<md-subheader class="md-no-sticky">All Projects</md-subheader>
+	<md-list-item ng-repeat="project in projectList | filter:search">
+		<div id="Avatar" style="width: 60px;">
+			<img ng-if="project.profile_picture" id="avatar" alt="pic" ng-src="{{ project.profile_picture }}" class="md-avatar" />
+			<div ng-if="!project.profile_picture" class="userProfAvatar">
+				<span class="avatarText">{{project.first_name[0]}}</span>
+			</div>
+		</div>
+		<div class="md-list-item-text">
+		<h3>{{project.title}}</h3>
+			<p>{{ project.description }}</p>
+		</div>
+		<md-divider ></md-divider>
+	</md-list-item>
+	</md-list>
 	</div>
 </body>

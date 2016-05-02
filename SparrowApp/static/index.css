@@ -30,7 +30,7 @@
 	right: 0;
 	top: 0;
 	bottom: 0;
-	padding-top: 5%;
+	/*padding-top: 5%;*/
 }
 .main {
 	/*border: 5px solid green;*/
@@ -41,5 +41,5 @@
 	right: auto;
 	top: 0;
 	bottom: 0;
-	padding-top: 5%;
+	/*padding-top: 5%;*/
 } 
