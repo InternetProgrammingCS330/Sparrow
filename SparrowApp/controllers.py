@@ -68,6 +68,27 @@ def addProject():
 
 	return jsonify(list=reslist), 200
 
+@app.route('/checkUser', methods=['POST'])
+def checkUser():
+	req = request.get_json()
+
+	print("USER REQUEST", req)
+
+	userStatus = models.UserDB.query.filter_by(email=req["email"])
+	userList = []
+	for i in userStatus:
+		userList.append(dict(email=i.email))
+
+	if len(userList) == 0:
+		user = models.UserDB(email=req["email"], first_name=req["firstName"],last_name=req["lastName"])
+		db.session.add(user)
+		db.session.commit()
+
+		return jsonify(title="userADDED"), 200
+
+	else:
+		return jsonify(title="userEXISTS"), 200
+
 # special file handlers and error handlers
 @app.route('/favicon.ico')
 def favicon():
