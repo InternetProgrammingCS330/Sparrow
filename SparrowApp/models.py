@@ -33,23 +33,36 @@ class ProjectDB(db.Model):
 		# formats/manually creates the JSON object
 		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-# CREATE TABLE userDB (
-# 	email varchar(30) NOT NULL PRIMARY KEY,
-# 	first_name VARCHAR(30)  NOT NULL,
-# 	last_name VARCHAR(30) NOT NULL,
-# 	profile_picture VARCHAR(200),
-# 	department_preference LONGTEXT
-# 	) ENGINE=InnoDB;
+class CommentsDB(db.Model):
+	commentID = db.Column(INTEGER, nullable=False, primary_key=True)
+	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
+	projectID = db.Column(INT, nullable=False)
+	email = db.Column(varchar(30), nullable=False)
+	comment = db.Column(LONGTEXT, nullable=False)
 
-# CREATE TABLE commentsDB (
-# 	commentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-# 	time_stamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-# 	projectID INT NOT NULL,
+	def __repr__(self):
+		# return '<Project %r>' % (self.title)
+		# formats/manually creates the JSON object
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+# class CommentsDB(db.Model):
+# 	commentID = db.Column(INTEGER, nullable=False, primary_key=True)
+# 	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
+# 	projectID = db.Column(INT, nullable=False)
+# 	email = db.Column(varchar(30), nullable=False)
+# 	comment = db.Column(LONGTEXT, nullable=False)
+
+# 	def __repr__(self):
+# 		# return '<Project %r>' % (self.title)
+# 		# formats/manually creates the JSON object
+		# return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 # 	email varchar(30) NOT NULL,
-# 	comment LONGTEXT NOT NULL,
-# 	FOREIGN KEY (projectID) REFERENCES projectDB(projectID),
-# 	FOREIGN KEY (email) REFERENCES userDB(email)
-# 	) ENGINE=InnoDB;
+# 	projectID INT NOT NULL,
+# 	UNIQUE INDEX (email,projectID),
+# 	PRIMARY KEY (email, projectID),
+# 	FOREIGN KEY (email) REFERENCES userDB(email),
+# 	FOREIGN KEY (projectID) REFERENCES projectDB(projectID)
+
 
 # CREATE TABLE interestDB (
 # 	email varchar(30) NOT NULL,

@@ -17,7 +17,7 @@ FLUSH PRIVILEGES;
 CREATE DATABASE sergeidb;
 USE sergeidb;
 
-CREATE TABLE userDB (
+CREATE TABLE UserDB (
 	email varchar(30) NOT NULL PRIMARY KEY,
 	first_name VARCHAR(30)  NOT NULL,
 	last_name VARCHAR(30) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE userDB (
 	department_preference LONGTEXT
 	) ENGINE=InnoDB;
 
-CREATE TABLE projectDB (
+CREATE TABLE ProjectDB (
 	projectID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	title VARCHAR(20) NOT NULL,
 	description LONGTEXT NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE projectDB (
 	FOREIGN KEY (email) REFERENCES userDB(email)
 	) ENGINE=InnoDB;
 
-CREATE TABLE commentsDB (
+CREATE TABLE CommentsDB (
 	commentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	time_stamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	projectID INT NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE commentsDB (
 	FOREIGN KEY (email) REFERENCES userDB(email)
 	) ENGINE=InnoDB;
 
-CREATE TABLE interestDB (
+CREATE TABLE InterestDB (
 	email varchar(30) NOT NULL,
 	projectID INT NOT NULL,
 	UNIQUE INDEX (email,projectID),
@@ -54,7 +54,7 @@ CREATE TABLE interestDB (
 	FOREIGN KEY (projectID) REFERENCES projectDB(projectID)
 	) ENGINE=InnoDB;
 
-CREATE TABLE departmentDB (
+CREATE TABLE DepartmentDB (
 	departmentID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	department_name varchar(30)
 	) ENGINE=InnoDB;
