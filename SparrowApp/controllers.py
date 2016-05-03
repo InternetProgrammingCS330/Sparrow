@@ -61,6 +61,21 @@ def listAllProjects():
 
 	return jsonify(list=reslist), 200
 
+@app.route('/listUserProjects', methods=['GET'])
+def listUserProjects():
+	projects = models.ProjectDB.query.all()
+	reslist = []
+	test = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB"))
+	users = {}
+	for row in test:
+		users[row[0]] = (row[1],row[2],row[3])
+	
+	for i in projects:
+		reslist.append(dict(title=i.title,description=i.description,department=i.department,email=i.email, \
+			first_name=users[i.email][0], last_name=users[i.email][1], profile_picture=users[i.email][2]))
+
+	return jsonify(list=reslist), 200
+
 @app.route('/listDepartments', methods=['GET'])
 def listDepartments():
 	departments = models.DepartmentDB.query.all()

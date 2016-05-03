@@ -24,14 +24,12 @@ function checkAuth() {
 }
 
 function handleAuthResult(authResult) {
-	console.log("AUTH RESULT",authResult)
 	var authorizeButton = document.getElementById('authorize-button');
 	// if (authResult && !authResult.error && authResult.hd == "luther.edu") { // USED FOR LUTHER-ONLYs
 	if (authResult && !authResult.error) {
 		authorizeButton.style.visibility = 'hidden';
 		init();
 	} else {
-		console.log("Got to authenticate");
 		// gapi.auth.signOut(); // USED FOR LUTHER-ONLY
 		authorizeButton.style.visibility = '';
 		authorizeButton.onclick = handleAuthClick;
@@ -39,7 +37,6 @@ function handleAuthResult(authResult) {
 }
 
 function handleAuthClick(event) {
-	console.log("EVENT",event);
 	gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: false}, handleAuthResult);
 	return false;
 }
@@ -51,12 +48,10 @@ var init = function() {
 app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $location,
 							$mdSidenav,	$mdDialog, $animate, $filter, $window, gapiService) {
 
-	console.log("HELLO FROM THE navBarCtrl");
-
 	$scope.onSearch = function(searchValue) {
-		console.log(searchValue);
       $scope.search = searchValue;
       $rootScope.search = $scope.search;
+      console.log(searchValue);
 
     };
 
@@ -73,12 +68,10 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 	}
 
 	$scope.toProfile = function(){
-		console.log("To Profile Page");
 		$location.url("/userview");
 	}
 
 	$scope.home = function(){
-		console.log("To Home Page");
 		$location.url("/");
 	}
 
@@ -89,8 +82,6 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 			'userId': 'me'
 		});
 		request.execute(function(resp) {
-			console.log("RESPONSE",resp);
-			console.log(resp.image.url);
 			$scope.$applyAsync(function(){
 				$rootScope.user.profpic = resp.image.url;
 				$rootScope.user.fullName = resp.displayName;
@@ -105,7 +96,6 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 			      	headers: { 'Content-Type': 'application/json' },
 			      	data: JSON.stringify($rootScope.user)
 			    }).success(function(data) {
-			    	console.log("DONE AUTHENTICATING", data);
 			    });
 
 			});
@@ -114,7 +104,6 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 	}
 
 	var postInitiation = function() {
-		console.log("authorized");
 		$rootScope.loginAccepted = true;
 		getUser();
 	}
@@ -132,16 +121,12 @@ app.service('gapiService', function() {
 
 function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 
-	console.log("HELLO ADDPROJECTMODALCTRL");
-
 	$scope.submitProject = function(){
-		console.log("ADDING PROJECT", $scope.project);
 		$scope.project.email = $rootScope.user.email;
 		$scope.project.userFullName = $rootScope.user.fullName;
 		$scope.project.firstName = $rootScope.user.firstName;
 		$scope.project.LastName = $rootScope.user.lastName;
 		$scope.project.department = $scope.selectedItem.department_name;
-		console.log("PROJECT>>>>",$scope.project);
 
 		$http({
 	      	url: '/addProject',
@@ -149,7 +134,6 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	      	headers: { 'Content-Type': 'application/json' },
 	      	data: JSON.stringify($scope.project)
 	    }).success(function(data) {
-	      	console.log(data);
 	      	$rootScope.projectList = data.list;
 	      	$mdDialog.cancel();
 	    });
@@ -161,7 +145,6 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 		$mdDialog.hide();
 	};
 	$scope.cancel = function() {
-		console.log("cancel");
 		$mdDialog.cancel();
 	};
 	$scope.answer = function(answer) {
@@ -174,14 +157,12 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 
     $scope.querySearch = function(query) {
       var results = query ? $rootScope.Departments.filter( createFilterFor(query) ) : [];
-      console.log(results)
       return results;
     }
 
     function createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
       return function filterFn(department) {
-      	console.log(department)
         return (department.department_name.indexOf(query.toLowerCase()) === 0);
       };
     }

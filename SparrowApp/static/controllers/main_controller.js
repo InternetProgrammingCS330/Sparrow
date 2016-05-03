@@ -15,7 +15,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 
 		var interceptor = ['$location', '$q', '$injector', function($location, $q, $injector) {
 			
-			console.log("inside interceptor");
 			return {
 				responseError: function(response) { 
 					if (response.status === 401){
@@ -80,8 +79,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 					}
 				}
 			})
-
-			console.log("WE DID SOMETHING");
 
 			$urlRouterProvider.when('','/');
 	}
