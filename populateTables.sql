@@ -1,14 +1,14 @@
 USE sergeidb
 
 INSERT INTO UserDB (email, first_name,last_name) VALUES ("sergeiahanka@gmail.com","Sergei","Hanka");
-INSERT INTO UserDB (email, first_name,last_name) VALUES ("sparrow@isabird.org","Ales","ToughLastName");
+INSERT INTO UserDB (email, first_name,last_name) VALUES ("varaal01@luther.edu","Ales","Varabyou");
 INSERT INTO UserDB (email, first_name,last_name) VALUES ("CS330@isawesome.com","Brad","Miller");
 
 INSERT INTO ProjectDB (title,description,email, department) VALUES ("One",
 			"Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
 			Nulla metus metus, ullamcorper vel, Dog sed, euismod in, nibh. Quisque volutpat condimentum
 			velit. Class aptent taciti sociosqu ad litra torquent per conubia nostra, per inceptos himenaeos.",
-			"sparrow@isabird.org","Computer Science");
+			"varaal01@luther.edu","Computer Science");
 INSERT INTO ProjectDB (title,description,email, department) VALUES ("Two",
 	"Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
 			Nulla metus metus, ullamcorper vel, Dog sed, euismod in, nibh. Quisque volutpat condimentum
@@ -29,7 +29,7 @@ INSERT INTO ProjectDB (title,description,email, department) VALUES ("Five",
 	"Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
 			Nulla metus metus, ullamcorper vel, Fish sed, euismod in, nibh. Quisque volutpat condimentum
 			velit. Class aptent taciti sociosqu ad litra torquent per conubia nostra, per inceptos himenaeos.",
-	"sparrow@isabird.org","Economics");
+	"varaal01@luther.edu","Economics");
 INSERT INTO ProjectDB (title,description,email, department) VALUES ("Six",
 	"Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
 			Nulla metus metus, ullamcorper vel, Cat sed, euismod in, Fish. Quisque volutpat condimentum
@@ -44,7 +44,7 @@ INSERT INTO ProjectDB (title,description,email, department) VALUES ("Eight",
 	"Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
 			Nulla metus metus, ullamcorper vel, Cat sed, euismod in, nibh. Quisque volutpat condimentum
 			velit. Class aptent taciti sociosqu ad litra torquent per conubia nostra, per inceptos himenaeos.",
-	"sparrow@isabird.org","Computer Science");
+	"varaal01@luther.edu","Computer Science");
 INSERT INTO ProjectDB (title,description,email, department) VALUES ("Nine",
 	"Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
 			Nulla metus metus, ullamcorper vel, Fish sed, euismod in, nibh. Quisque volutpat condimentum

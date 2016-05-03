@@ -6,11 +6,9 @@
             </md-toolbar>
             <md-content>
                 <h1>Charts</h1>
-                <md-input-container class="md-block" flex-gt-xs>
-                    <label>Description</label>
-                    <input ng-model="inputData" ng-change="onChange(inputData)">
-                </md-input-container>
                 <chart data="salesData"></chart>
+                <md-input-container class="md-block" flex-gt-xs>
+                <piechart data="data"></piechart>
             </md-content>
         </md-sidenav>
     </div>

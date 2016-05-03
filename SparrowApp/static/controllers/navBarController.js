@@ -115,6 +115,7 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 
 	var postInitiation = function() {
 		console.log("authorized");
+		$rootScope.loginAccepted = true;
 		getUser();
 
 	}
