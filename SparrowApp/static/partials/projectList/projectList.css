@@ -1,14 +1,4 @@
-div.userProfAvatar {
-  width: 50px;
-  height: 50px;
-  background-color: #006622;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border-radius: 50%;
-  text-align: center;
-}
-
-span.avatarText {
+span.avatarLetter {
   font-weight: 480;
   padding-top: 15px;
   display: inline-block;
@@ -19,6 +9,59 @@ div.md-list-item-text {
   padding-left: 30px;
 }
 
-div.Avatar {
-  width: 60px;
+img.avatarImage {
+  border-radius: 50%;
 }
+
+div.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: #006622;
+  /*margin-top: 8px;*/
+  margin-bottom: 8px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}dfs y
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(128, 128, 128, 0.9);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    margin-top: 10px;
+    margin-left: 30px;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+.projectTimeStamp {
+  margin: 5px 0 5px 0;
+}
+
+p.projectDescription {
+  margin-bottom: 50px;
+}
+
+.green {
+  background: #b9f6ca; }
+
+.yellow {
+  background: #ffff8d; }
+
+.red {
+  background: #ff8a80; }
