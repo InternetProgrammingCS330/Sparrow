@@ -56,7 +56,7 @@ def listAllProjects():
 		users[row[0]] = (row[1],row[2],row[3])
 	
 	for i in projects:
-		reslist.append(dict(title=i.title,description=i.description,department=i.department,email=i.email, \
+		reslist.append(dict(title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
 			first_name=users[i.email][0], last_name=users[i.email][1], profile_picture=users[i.email][2]))
 
 	return jsonify(list=reslist), 200
@@ -80,7 +80,7 @@ def addProject():
 	projects = models.ProjectDB.query.all()
 	reslist = []
 	for i in projects:
-		reslist.append(dict(title=i.title,description=i.description, email=i.email))
+		reslist.append(dict(title=i.title,description=i.description, email=i.email, time_stamp=i.time_stamp))
 		print (reslist)
 
 	return jsonify(list=reslist), 200
