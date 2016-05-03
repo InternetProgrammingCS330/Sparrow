@@ -10,6 +10,9 @@ angular.module('SparrowApp').directive("areachart", function($window) {
 				height = 280 - margin.top - margin.bottom;
 
 			var parseDate = d3.time.format("%d-%b-%y").parse;
+			for (var i = 0; i < scope.data.length; i++) {
+				console.log(parseDate(scope.data[i].date))
+			}
 
 			var x = d3.time.scale().range([0, width]);
 			var y = d3.scale.linear().range([height, 0]);
