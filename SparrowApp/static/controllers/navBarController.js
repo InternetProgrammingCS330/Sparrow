@@ -117,8 +117,8 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 		console.log("authorized");
 		$rootScope.loginAccepted = true;
 		getUser();
-
 	}
+	
 	$window.initGapi = function() {
 		gapiService.initGapi(postInitiation);
 	}
@@ -140,6 +140,7 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 		$scope.project.userFullName = $rootScope.user.fullName;
 		$scope.project.firstName = $rootScope.user.firstName;
 		$scope.project.LastName = $rootScope.user.lastName;
+		$scope.project.department = $scope.selectedItem.department_name;
 		console.log("PROJECT>>>>",$scope.project);
 
 		$http({

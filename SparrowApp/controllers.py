@@ -73,7 +73,7 @@ def listDepartments():
 def addProject():
 	req = request.get_json()
 
-	project = models.ProjectDB(title=req["title"], description=req["description"],email=req["email"])
+	project = models.ProjectDB(title=req["title"], description=req["description"],email=req["email"],department=req["department"])
 	db.session.add(project)
 	db.session.commit()
 	
