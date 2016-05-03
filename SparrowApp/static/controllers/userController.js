@@ -35,6 +35,10 @@ app.controller('UserCtrl', ['$rootScope',
 
 	refresh();
 
+	$scope.editPage = function(){
+		$location.url("/editPage");
+	}
+
 	$scope.dateSample = [
 	    {"date":"1-May-12","close":"612.33"},
 	    {"date":"30-Apr-12","close":"513.93"},

@@ -6,9 +6,11 @@ angular.module('userApp',[]);
 angular.module('navBarApp',[]);
 angular.module('searchProjectApp',[]);
 angular.module('statsApp',[]);
+angular.module('textEditApp',[]);
 
 var myApp = angular.module('SparrowApp', ['ui.router', 'ngMaterial',
-	'projectListApp','projectApp','userApp','navBarApp', 'searchProjectApp', 'statsApp']);
+	'projectListApp','projectApp','userApp','navBarApp', 'searchProjectApp',
+	'statsApp','textEditApp']);
 
 myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 	function($stateProvider,$urlRouterProvider, $httpProvider) {
@@ -42,6 +44,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 					// 'right@index' : { templateUrl: 'static/partials/tpl/main/tpl.main.html',},
 				},
 			})
+
 			.state('index.projectlist', {
 				parent:'index',
 				url:'/',
@@ -76,6 +79,21 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 					'right@index': {
 						templateUrl : 'static/partials/stats/statsUser.html',
 						action : 'statsApp.StatsCtrl'
+					}
+				}
+			})
+
+			.state('index.editPage', {
+				parent:'index',
+				url:'/editPage',
+				views: {
+					'top@index': {
+						templateUrl : 'static/partials/navBar/navBar.html',
+						action : 'navBarApp.NavBarCtrl'
+					},
+					'textEditor@index': {
+						templateUrl : 'static/partials/textEditor/textEditor.html',
+						action : 'textEditApp.TextEditCtrl'
 					}
 				}
 			})
