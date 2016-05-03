@@ -27,7 +27,7 @@ class UserDB(db.Model):
 class ProjectDB(db.Model):
 	__tablename__ = 'ProjectDB'
 	projectID = db.Column(INTEGER, primary_key=True)
-	title = db.Column(VARCHAR(20), nullable=False, index=True)
+	title = db.Column(VARCHAR(100), nullable=False, index=True)
 	description = db.Column(LONGTEXT, nullable=False)
 	keywords = db.Column(VARCHAR(100))
 	department = db.Column(VARCHAR(20))
