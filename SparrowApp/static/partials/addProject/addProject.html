@@ -1,21 +1,18 @@
-<form class="settings-form">
+
+<form class="settings-form width">
 	<md-toolbar>
 		<div class="md-toolbar-tools">
-			<h2>Add Item &nbsp; </h2>
+			<h2>Add Project Proposal&nbsp; </h2>
 		</div>
 	</md-toolbar>
 	<div layout-gt-xs="row">
 		<center><h4 style="color:red;">{{errorMessage}}</h4></center>
 		<md-input-container class="md-block" flex-gt-xs>
-			<label>Title</label>
+			<label >Title</label>
 			<input ng-model="project.title">
 		</md-input-container>
-		<md-input-container class="md-block" flex-gt-xs>
-			<label>Description</label>
-			<input ng-model="project.description">
-		</md-input-container>
 
-		<md-autocomplete flex required
+		<md-autocomplete required id=padding
             md-input-name="autocompleteField"
             md-input-minlength="1"
             md-input-maxlength="18"
@@ -26,12 +23,37 @@
             md-item-text="item.department_name"
             md-floating-label="Department">
           <md-item-template>
-            <span md-highlight-text="searchText">{{item.department_name}}</span>
+            <span id=padding md-highlight-text="searchText">{{item.department_name}}</span>
           </md-item-template>      
         </md-autocomplete>
-	</div>
+		<md-input-container class="md-block" flex-gt-xs>
+			<label >Project Proposal</label>
+			<textarea id =desc ng-model="project.description"></textarea>
+		</md-input-container>
+      <md-chips ng-model="selectedTags" class="md-block">
+        <md-autocomplete class="md-block"
+                md-selected-item="selectedItem"
+                md-search-text="searchText"
+                md-items="item in querySearch(searchText)"
+                md-item-text="item"
+                placeholder="Related Keywords">
+            <span md-highlight-text="searchText">{{item}}</span>
+        </md-autocomplete>
+        <md-chip-template>
+          <strong>{{$chip}}</strong>
+        </md-chip-template>
+      </md-chips>
+
+		<!-- <div id=center>
+		<div id=desc contenteditable="true" placeholder="Project Proposal"  ></div>
+		</div> -->
+
 	<md-dialog-actions layout="row">
 		<md-button aria-label="Submit" ng-click="submitProject()" id="submit">Submit</md-button>
 		<md-button aria-label="Remove" ng-click="cancel()" id="cancel">Cancel</md-button>
 	</md-dialog-actions>
+	</div>
+
 </form>
+</body>
+</html>
