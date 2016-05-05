@@ -36,6 +36,9 @@
 	<div ng-app="SparrowApp" ng-controller="projectListCtrl">
 	<md-list>
 	<md-subheader class="md-no-sticky">All Projects</md-subheader>
+	<md-switch ng-model="data.cb2" ng-true-value="'Interested'" ng-false-value="'Not Interested'" class="md-warn">
+    {{ data.cb2 }}
+  	</md-switch>
 	<md-list-item class="md-3-line" ng-repeat="project in projectList | filter:search">
 		<div class="avatar tooltip">
   			<span class="tooltiptext">{{project.first_name}} {{project.last_name}}</span>
@@ -52,6 +55,9 @@
 			<h3 class="projectTitle">{{project.title}}</h3>
 			<h6 class="projectTimeStamp">{{project.time_stamp.slice(0,-15)}}</h6>
 			<p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p>
+			<md-switch ng-model="data.cb2" ng-true-value="'Interested'" ng-false-value="'Not Interested'" class="md-warn">
+    		{{ data.cb2 }}
+  	</md-switch>
 		</div>
 	</md-list-item>
 	</md-list>
