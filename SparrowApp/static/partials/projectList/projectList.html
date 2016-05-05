@@ -1,19 +1,58 @@
+<!-- <body>
+	<div ng-app="SparrowApp" ng-controller="projectListCtrl">
+	<md-list>
+	<md-subheader class="md-no-sticky">All Projects</md-subheader>
+	<md-list-item class="md-3-line" ng-repeat="project in projectList | filter:search">
+		<md-content>
+		<md-grid-list md-cols="10" md-rowmd-cols-sm="5" md-row-height="100" md-gutter="0px">
+			<md-grid-tile  class="green" md-colspan-sm="1" md-colspan-xs="2">
+				Stuff
+			</md-grid-tile>
+			<md-grid-tile md-rowspan="1" md-colspan="7" md-colspan-sm="3" md-colspan-xs="2" class="red">
+				and
+			</md-grid-tile>
+			<md-grid-tile md-rowspan="1" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1" class="yellow">
+				things
+			</md-grid-tile>
+		</md-grid-list>
+		</md-content>
+	</md-list-item>
+	</md-list>
+	</div>
+</body>
+	<div>
+		<md-grid-list md-cols="10" md-cols-sm="5" md-row-height="100" md-gutter="0px">
+			<md-grid-tile  class="green" md-colspan-sm="1" md-colspan-xs="2">
+				<div style="width: 60px;height: 60px;background-color: black;"></div>
+			</md-grid-tile>
+			<md-grid-tile md-rowspan="1" md-colspan="7" md-colspan-sm="3" md-colspan-xs="2" class="red">
+			</md-grid-tile>
+			<md-grid-tile md-rowspan="1" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1" class="yellow">
+			</md-grid-tile>
+		</md-grid-list>
+	</div> -->
+
 <body>
 	<div ng-app="SparrowApp" ng-controller="projectListCtrl">
 	<md-list>
 	<md-subheader class="md-no-sticky">All Projects</md-subheader>
-	<md-list-item ng-repeat="project in projectList | filter:search">
-		<div id="Avatar" style="width: 60px;">
-			<img ng-if="project.profile_picture" id="avatar" alt="pic" ng-src="{{ project.profile_picture }}" class="md-avatar" />
-			<div ng-if="!project.profile_picture" class="userProfAvatar">
-				<span class="avatarText">{{project.first_name[0]}}</span>
+	<md-list-item class="md-3-line" ng-repeat="project in projectList | filter:search">
+		<div class="avatar tooltip">
+  			<span class="tooltiptext">{{project.first_name}} {{project.last_name}}</span>
+
+  			<div>
+  				<img class="avatarImage" ng-if="project.profile_picture" ng-src="{{ project.profile_picture }}" />
+  			</div>
+
+			<div ng-if="!project.profile_picture">
+				<span class="avatarLetter">{{project.first_name[0]}}</span>
 			</div>
 		</div>
 		<div class="md-list-item-text">
-			<h3>{{project.title}}</h3>
-			<p>{{ project.description }}</p>
+			<h3 class="projectTitle">{{project.title}}</h3>
+			<h6 class="projectTimeStamp">{{project.time_stamp.slice(0,-15)}}</h6>
+			<p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p>
 		</div>
-		<md-divider ></md-divider>
 	</md-list-item>
 	</md-list>
 	</div>
@@ -39,4 +78,4 @@
 	      </md-card>
 	    </div>
 	</div>
-</body> -->
+</body>
