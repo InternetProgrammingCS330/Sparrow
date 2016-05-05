@@ -8,6 +8,7 @@ app.controller('projectListCtrl', ['$rootScope',
 
     console.log("HELLO FROM THE projectListCtrl");
 
+
     function refresh(){
 		console.log("REFRESHING");
 
@@ -23,6 +24,21 @@ app.controller('projectListCtrl', ['$rootScope',
 				console.log($rootScope.projectList);
 			});
 	    });
+	    
+	    $http({
+	      	url: '/listKeywords',
+	      	method: "GET",
+	      	headers: { 'Content-Type': 'application/json' }
+	    }).success(function(data) {
+	      	console.log(data.list);
+	      	$scope.$applyAsync(function(){
+  				$rootScope.keywords = data.list;
+  				console.log("heree " + $rootScope.keywords);
+			});
+	    });
+
+
+
 
 	    $http({
 	      	url: '/listDepartments',

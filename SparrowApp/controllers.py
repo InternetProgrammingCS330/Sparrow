@@ -8,7 +8,7 @@ from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
 from flask import send_file, make_response, abort, jsonify
 
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 from SparrowApp import app, db, models
 
@@ -75,7 +75,27 @@ def listUserProjects():
 			first_name=users[i.email][0], last_name=users[i.email][1], profile_picture=users[i.email][2]))
 
 	return jsonify(list=reslist), 200
+@app.route('/listKeywords', methods=['GET'])
+def listKeywords():
+	keywords = models.ProjectDB.query.all()
+	reslist = []
+	dbKeywords = db.engine.execute(text("select keywords from ProjectDB where keywords is not null"))
+	final=[]
+	for keystring in dbKeywords:
+		keyList = keystring[0].split("@@@")
+		for key in keyList:
+			if key not in final:
+				final.append(key)
+	print(str(final))
+	return jsonify(list=final), 200
+	# for i in keywords:
+	# 	reslist.append(dict(keyword=i))
+	# return jsonify(list=reslist), 200
 
+
+	# for i in departments:
+	# 	reslist.append(dict(department_name=i.department_name))
+	# return jsonify(list=reslist), 200
 @app.route('/listDepartments', methods=['GET'])
 def listDepartments():
 	departments = models.DepartmentDB.query.all()

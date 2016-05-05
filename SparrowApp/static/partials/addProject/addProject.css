@@ -1,0 +1,19 @@
+ .md-block {
+ 	padding-right: 15px;
+ 	padding-left: 15px;
+ }
+#desc {
+	overflow:auto;
+
+}
+#center {
+	text-align: center;
+}
+.width {
+	min-width:600px;
+}
+#padding {
+padding-right: 15px;
+ padding-left: 15px;
+
+}
