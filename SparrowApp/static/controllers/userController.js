@@ -17,13 +17,16 @@ app.controller('UserCtrl', ['$rootScope',
 
 		$http({
 	      	url: '/listUserProjects',
-	      	method: "GET",
-	      	headers: { 'Content-Type': 'application/json' }
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify($rootScope.user.email)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
+				$rootScope.totalCount = data.total[0].totalCount
 				$scope.dataSource = data.counts;
 				$scope.userCards[0].value = data.list.length;
+				console.log($rootScope.totalCount)
 			});
 	    });
 
@@ -40,10 +43,12 @@ app.controller('UserCtrl', ['$rootScope',
 
 	refresh();
 
+	$rootScope.totalCount = 5;
+
 	$scope.userCards = [
 	{ 
 		"title" : "Total Projects",
-		"value" : $rootScope.total.length
+		"value" : $rootScope.totalCount
 	},
 	{ 
 		"title" : "Your Interests",

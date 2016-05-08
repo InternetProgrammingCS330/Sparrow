@@ -61,25 +61,35 @@ def listAllProjects():
 
 	return jsonify(list=reslist), 200
 
-@app.route('/listUserProjects', methods=['GET'])
+@app.route('/listUserProjects', methods=['POST'])
 def listUserProjects():
+
+	req = request.get_json()
+
+	print("USER REQUEST", req)
+
 	projects = models.ProjectDB.query.all()
 	reslist = []
-	test = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB"))
+	test = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB WHERE email = '"+req+"'"))
 	users = {}
 	for row in test:
 		users[row[0]] = (row[1],row[2],row[3])
 	
-	for i in projects:
+	for i in test:
 		reslist.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp))
 	
 	reslistCounts = []
-	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) totalCount FROM ProjectDB GROUP BY  DATE(time_stamp)"))
+	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) totalCount FROM ProjectDB WHERE email = '"+req+"' GROUP BY DATE(time_stamp)"))
 	for row in userProjectCounts:
 		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.totalCount))
 
+	totalCount = []
+	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) totalCount FROM ProjectDB WHERE email = '"+req+"'"))
+	for row in userProjectCounts:
+		totalCount.append(dict(totalCount=row.totalCount))
+
 	# reslist.append({"length":len(reslist)})
-	return jsonify(list=reslist,counts=reslistCounts), 200
+	return jsonify(list=reslist,counts=reslistCounts,total=totalCount), 200
 
 @app.route('/listDepartments', methods=['GET'])
 def listDepartments():

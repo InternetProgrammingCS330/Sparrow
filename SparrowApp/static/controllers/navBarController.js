@@ -55,6 +55,11 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 
     };
 
+    $scope.getProfileIcon = function(){
+    	console.log($rootScope.user.profpic)
+		return $rootScope.user.profpic
+	}
+
 	$scope.addProject = function(ev){
 
 		$mdDialog.show({

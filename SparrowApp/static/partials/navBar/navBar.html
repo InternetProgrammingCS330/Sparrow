@@ -3,7 +3,7 @@
     <md-toolbar class="navBarClass" md-scroll-shrink ng-if="true" layout="row" layout-align="space-between center">
       <div class="md-toolbar-tools md-toolbar-top">  
         <md-button ng-if="!mainView" class="md-raised md-primary" aria-label="home" ng-click="home()" >home</md-button>
-        <md-button ng-if="mainView" class="md-raised md-primary" aria-label="toProfile" ng-click="toProfile()" >profile</md-button>
+        <!-- <md-button ng-if="mainView" class="md-raised md-primary" aria-label="toProfile" ng-click="toProfile()" >profile</md-button> -->
         <div class="navBarSearch">
 
           <md-input-container class="navBarSearchContainer" md-no-float flex>
@@ -14,7 +14,9 @@
 			     <md-icon class="buttonstyle" md-svg-icon="static/img/add.svg"></md-icon>
 		    </md-button>
         <md-button ng-if="!loginAccepted" class="md-raised md-primary" id="authorize-button" onclick="handleAuthClick(event)" style="visibility: hidden" >login</md-button>
-        <img ng-if="user.profpic" id="avatar" alt="pic" ng-src="{{ user.profpic }}" class="md-avatar" />
+        <md-button aria-label="profile" ng-if="user.profpic" ng-click="toProfile()" id="avatar" alt="pic" class="md-fab md-primary md-hue-2">
+          <img ng-src="{{ user.profpic }}" style="display: block; margin-left: auto; margin-right: auto"/>
+        </md-button>
       </div>
     </md-toolbar>
   </md-content>
