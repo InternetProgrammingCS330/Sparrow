@@ -74,6 +74,8 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 
 	$scope.toProfile = function(){
 		$location.url("/userview");
+		$rootScope.userRefreshState = true;
+		$rootScope.userRefresh();
 	}
 
 	$scope.home = function(){
@@ -81,6 +83,7 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 	}
 
 	function getUser(){
+		$rootScope.userRefreshState = false;
 		$rootScope.user = {};
 		$rootScope.user.ready = false;
 		var request = gapi.client.plus.people.get({
@@ -101,6 +104,7 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 			      	headers: { 'Content-Type': 'application/json' },
 			      	data: JSON.stringify($rootScope.user)
 			    }).success(function(data) {
+			    	$rootScope.userRefresh();
 			    });
 
 			});

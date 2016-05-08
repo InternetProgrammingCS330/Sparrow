@@ -13,7 +13,7 @@ app.controller('UserCtrl', ['$rootScope',
 	    'height': cw + 'px'
 	});
 
-    function refresh(){
+    $rootScope.userRefresh = function(){
 
 		$http({
 	      	url: '/listUserProjects',
@@ -41,23 +41,11 @@ app.controller('UserCtrl', ['$rootScope',
 	    });
 	}
 
-	refresh();
-
 	$rootScope.totalCount = 5;
 
-	$scope.userCards = [
-	{ 
-		"title" : "Total Projects",
-		"value" : $rootScope.totalCount
-	},
-	{ 
-		"title" : "Your Interests",
-		"value" : "2"
-	},
-	{ 
-		"title" : "Blank",
-		"value" : "3"
-	}];
+	if($rootScope.userRefreshState){
+		$rootScope.userRefresh();
+	}
 
 	$scope.xAxis = "hour"
 
