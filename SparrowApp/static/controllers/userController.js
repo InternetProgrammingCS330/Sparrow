@@ -10,6 +10,21 @@ app.controller('UserCtrl', ['$rootScope',
 	    'height': cw + 'px'
 	});
 
+
+	$scope.userCards = [
+	{ 
+		"title" : "Total Projects",
+		"value" : "1"
+	},
+	{ 
+		"title" : "Your Interests",
+		"value" : "2"
+	},
+	{ 
+		"title" : "Blank",
+		"value" : "3"
+	}];
+
     function refresh(){
 
 		$http({
@@ -35,22 +50,38 @@ app.controller('UserCtrl', ['$rootScope',
 
 	refresh();
 
-	$scope.dateSample = [
-	    {"date":"1-May-12","close":"612.33"},
-	    {"date":"30-Apr-12","close":"513.93"},
-	    {"date":"27-Apr-12","close":"693.00"},
-	    {"date":"26-Apr-12","close":"680.50"},
-	    {"date":"25-Apr-12","close":"630.33"},
-	    {"date":"24-Apr-12","close":"615.33"},
-	    {"date":"23-Apr-12","close":"600.33"},
-	    {"date":"22-Apr-12","close":"585.33"},
-	    {"date":"21-Apr-12","close":"570.33"},
-	    {"date":"20-Apr-12","close":"555.00"},
-	    {"date":"19-Apr-12","close":"540.00"},
-	    {"date":"18-Apr-12","close":"525.00"},
-	    {"date":"17-Apr-12","close":"510.00"},
-	    {"date":"16-Apr-12","close":"495.00"},
-	    {"date":"15-Apr-12","close":"480.00"}
-	]
-	
+	$scope.dataSource = [
+		{"date":"1-May-12","close":"612.33"},
+		{"date":"25-Apr-12","close":"630.33"},
+		{"date":"19-Apr-12","close":"540.00"}]
+
+	$scope.test = function(btnName) {
+		switch(btnName) {
+		case "Total Projects":
+			$scope.dataSource = [
+			    {"date":"1-May-12","close":"612.33"},
+				{"date":"25-Apr-12","close":"630.33"},
+				{"date":"19-Apr-12","close":"540.00"},
+			    {"date":"16-Apr-12","close":"495.00"}
+			]
+			break;
+		case "Your Interests": 
+			$scope.dataSource = [
+			    {"date":"27-Apr-12","close":"693.00"},
+			    {"date":"20-Apr-12","close":"555.00"},
+			    {"date":"19-Apr-12","close":"540.00"},
+			    {"date":"18-Apr-12","close":"525.00"}
+			]
+			break;
+		case "Blank": 
+			$scope.dataSource = [
+			    {"date":"26-Apr-12","close":"680.50"},
+			    {"date":"25-Apr-12","close":"630.33"},
+			    {"date":"16-Apr-12","close":"495.00"},
+			    {"date":"15-Apr-12","close":"480.00"}
+			]
+			break;
+		}
+	}
+
 }]);

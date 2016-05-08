@@ -3,4 +3,10 @@ div.child {
   margin-bottom: 8px;
   border-radius: 50%;
   text-align: center;
+  width:100%;
+}
+
+md-card.statsPreview {
+	width: 30%;
+	min-width: 200px;
 }

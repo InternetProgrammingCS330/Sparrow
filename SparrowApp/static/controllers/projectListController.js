@@ -8,6 +8,10 @@ app.controller('projectListCtrl', ['$rootScope',
 
     console.log("HELLO FROM THE projectListCtrl");
 
+    $scope.testing = function() {
+	    $location.url("/projectView");
+    }
+
     function refresh(){
 		console.log("REFRESHING");
 
@@ -16,11 +20,9 @@ app.controller('projectListCtrl', ['$rootScope',
 	      	method: "GET",
 	      	headers: { 'Content-Type': 'application/json' }
 	    }).success(function(data) {
-	      	console.log(data.list);
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
-				console.log("HERE");
-				console.log($rootScope.projectList);
+				console.log("ProjectList:", $rootScope.projectList);
 			});
 	    });
 
@@ -29,7 +31,6 @@ app.controller('projectListCtrl', ['$rootScope',
 	      	method: "GET",
 	      	headers: { 'Content-Type': 'application/json' }
 	    }).success(function(data) {
-	      	console.log(data.list);
 	      	$scope.$applyAsync(function(){
   				$rootScope.Departments = data.list;
 			});
