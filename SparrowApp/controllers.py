@@ -71,10 +71,15 @@ def listUserProjects():
 		users[row[0]] = (row[1],row[2],row[3])
 	
 	for i in projects:
-		reslist.append(dict(title=i.title,description=i.description,department=i.department,email=i.email, \
-			first_name=users[i.email][0], last_name=users[i.email][1], profile_picture=users[i.email][2]))
+		reslist.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp))
+	
+	reslistCounts = []
+	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) totalCount FROM ProjectDB GROUP BY  DATE(time_stamp)"))
+	for row in userProjectCounts:
+		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.totalCount))
 
-	return jsonify(list=reslist), 200
+	# reslist.append({"length":len(reslist)})
+	return jsonify(list=reslist,counts=reslistCounts), 200
 
 @app.route('/listDepartments', methods=['GET'])
 def listDepartments():
@@ -82,6 +87,17 @@ def listDepartments():
 	reslist = []
 	for i in departments:
 		reslist.append(dict(department_name=i.department_name))
+	return jsonify(list=reslist), 200
+
+@app.route('/getTotalGraph', methods=['GET'])
+def getTotalGraph():
+	departments = models.ProjectDB.query.all()
+	reslist = []
+	test = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) totalCount FROM ProjectDB GROUP BY  DATE(time_stamp)"))
+	for row in test:
+		reslist.append(dict(time=row.time_stamp.isoformat(),count=row.totalCount))
+	print(reslist)
+	print(type(reslist))
 	return jsonify(list=reslist), 200
 
 @app.route('/addProject', methods=['POST'])

@@ -42,6 +42,7 @@ app.controller('StatsCtrl',function($rootScope,$timeout, $scope, $http, $locatio
 	 		});
 	 	}
 	}
+	
 	$scope.onChange = function(data){
 	 	$scope.$applyAsync(function(){
 	 		$scope.inputData = data;

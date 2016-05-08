@@ -34,6 +34,11 @@ angular.module('SparrowApp').directive("areachart", function($window) {
 
 			scope.render = function(data) {
 
+				var area = d3.svg.area()
+                .x(function(d) { return x(d.date); })
+                .y0(height)
+                .y1(function(d) { return y(d.close); });
+
 				data.forEach(function(d) {
                 	d.date = parseDate(d.date);
                 	d.close = +d.close;
@@ -62,6 +67,88 @@ angular.module('SparrowApp').directive("areachart", function($window) {
                 	.attr("dy", ".71em")
                 	.style("text-anchor", "end")
                 	.text(this.yaxisName);
+			};
+		}
+	};
+});
+
+angular.module('SparrowApp').directive("areachart2", function($window) {
+	return {
+		restrict: 'E',
+		scope: {
+			data: '='
+		},
+		link: function (scope, element) {
+			var margin = {top: 20, right: 20, bottom: 30, left: 10},
+				width = 300 - margin.left - margin.right,
+				height = 310 - margin.top - margin.bottom;
+
+			var svg = d3.select(element[0])
+				.append("svg")
+				.attr('width', width + margin.left + margin.right)
+				.attr('height', height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+			var y = d3.scale.linear().range([height, 0]);
+
+			var color = d3.scale.ordinal()
+                    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+			// var xAxis = d3.svg.axis()
+			// 	.scale(x)
+			// 	.orient("bottom");
+
+			// var yAxis = d3.svg.axis()
+			// 	.scale(y)
+			// 	.orient("left")
+
+			scope.$watch('data', function(){
+				scope.render(scope.data);
+			}, true); 
+
+			scope.render = function(data) {
+				x.domain(data.map(function(d) { return d.time; }));
+				y.domain([0, d3.max(data, function(d) { return d.count; })]);
+  
+				svg.selectAll('g.axis').remove();
+
+				//Render X axis
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(0," + height + ")")
+					// .call(xAxis);
+
+				//Render Y axis
+				svg.append("g")
+					.attr("class", "y axis")
+					// .call(yAxis)
+					.append("text")
+					.attr("transform", "rotate(-90)")
+					.attr("y", 2)
+					.attr("dy", ".71em")
+					.style("text-anchor", "end")
+					// .text("Count");
+	  
+	  
+				//Create or update the bar data
+				var area = svg.selectAll(".area").data(data);
+				area.enter()
+					.append("rect")
+					.attr("class", "area")
+					.attr("d", area)
+					.style("fill", "#8a89a6")
+					.attr("x", function(d) { return x(d.time); })
+					.attr("width", x.rangeBand());
+
+				//Animate bars
+				area
+					.transition()
+					.duration(1000)
+					.attr('height', function(d) { return height - y(d.count); })
+					.attr("y", function(d) { return y(d.count); })
+					.style("fill", function(d){return color(d.time)})
 			};
 		}
 	};
