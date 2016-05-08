@@ -6,9 +6,10 @@ angular.module('userApp',[]);
 angular.module('navBarApp',[]);
 angular.module('searchProjectApp',[]);
 angular.module('statsApp',[]);
+angular.module('textEditApp',[]);
 
 var myApp = angular.module('SparrowApp', ['ui.router', 'ngMaterial',
-	'projectListApp','projectApp','userApp','navBarApp', 'searchProjectApp', 'statsApp']);
+	'projectListApp','projectApp','userApp','navBarApp', 'searchProjectApp', 'statsApp','textEditApp']);
 
 myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 	function($stateProvider,$urlRouterProvider, $httpProvider) {
