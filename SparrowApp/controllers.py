@@ -177,12 +177,28 @@ def addLike():
 		models.InterestDB.query.filter_by(projectID=req["projectID"],email=req["email"]).delete()
 		db.session.commit()
 	
-	reslist = []
+	reslistCount = []
 	likeCounts = db.engine.execute(text("SELECT COUNT(DISTINCT email) count FROM InterestDB WHERE projectID = "+str(req["projectID"])))
 	for row in likeCounts:
-		reslist.append(dict(count=row.count))
+		reslistCount.append(dict(count=row.count))
 
-	return jsonify(count=reslist), 200
+	reslist = []
+	query = db.engine.execute(text("select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,\
+		ProjectDB.department, ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,\
+		UserDB.profile_picture, ( select count(InterestDB.email) from InterestDB where \
+		InterestDB.projectID = ProjectDB.projectID) count, IF(InterestDB.email = '"+req["email"]+"', \
+		TRUE, FALSE) as liked from UserDB, ProjectDB LEFT JOIN InterestDB ON \
+		(ProjectDB.projectID = InterestDB.projectID) where ProjectDB.email = UserDB.email;"))
+	
+	for i in query:
+		if(i.liked == 0):
+			reslist.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
+				first_name=i.first_name, last_name=i.last_name, profile_picture=i.profile_picture, count=i.count,liked=False))
+		else:
+			reslist.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
+				first_name=i.first_name, last_name=i.last_name, profile_picture=i.profile_picture, count=i.count,liked=True))
+
+	return jsonify(count=reslistCount,list=reslist), 200
 
 @app.route('/checkUser', methods=['POST'])
 def checkUser():

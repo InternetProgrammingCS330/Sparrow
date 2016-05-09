@@ -24,8 +24,10 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	      	headers: { 'Content-Type': 'application/json' },
 	      	data: JSON.stringify(toLike)
 	    }).success(function(data) {
-
-	      	console.log("NEW LIKES",data)
+	    	$scope.$applyAsync(function(){
+				$rootScope.projectList = data.list;
+				console.log("NEW LIKES",data)
+	    	});
 	    });
     }
 
