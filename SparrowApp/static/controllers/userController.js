@@ -23,6 +23,7 @@ app.controller('UserCtrl', ['$rootScope',
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectListUser = data.yourProjectList;
+				$rootScope.interestListUser = data.yourInterestList;
 
 				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
 				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
