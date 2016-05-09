@@ -5,9 +5,29 @@ app.controller('projectListCtrl', ['$rootScope',
   function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
   	
   	$rootScope.mainView = true; 
+  	$scope.selectedKeyword = [];
+  	$scope.readonly = false;
+  	$scope.selectedItem = null;
+  	$scope.searchText = null;
+  	$scope.numberBuffer = '';
+  	$scope.autocompleteDemoRequireMatch = true;
+  	$scope.transformChip = transformChip;
+  	$scope.myTags = [];
+
+
 
     console.log("HELLO FROM THE projectListCtrl");
+    console.log($scope.selectedKeyword);
+   	function transformChip(chip) {
+      // If it is an object, it's already a known chip
+      if (angular.isObject(chip)) {
+      	console.log(chip);
+        return chip;
+      }
 
+      // Otherwise, create a new one
+      return { lowername: chip};
+    }
 
     function refresh(){
 		console.log("REFRESHING");

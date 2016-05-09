@@ -30,8 +30,8 @@
 			<label >Project Proposal</label>
 			<textarea id =desc ng-model="project.description"></textarea>
 		</md-input-container>
-      <md-chips class="md-block">
-        <md-autocomplete class="md-block"
+      <md-chips ng-model = "selectedKeyword" md-transform-chip="transformChip($chip)">
+        <md-autocomplete 
                 md-selected-item="selectedItem"
                 md-search-text="searchText"
                 md-items="item in querySearch(searchText)"
