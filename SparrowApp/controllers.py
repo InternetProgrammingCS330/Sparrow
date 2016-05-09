@@ -50,13 +50,13 @@ def view_of_test():
 def listAllProjects():
 	projects = models.ProjectDB.query.all()
 	reslist = []
-	test = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB"))
+	query = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB"))
 	users = {}
-	for row in test:
+	for row in query:
 		users[row[0]] = (row[1],row[2],row[3])
 	
 	for i in projects:
-		reslist.append(dict(title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
+		reslist.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
 			first_name=users[i.email][0], last_name=users[i.email][1], profile_picture=users[i.email][2]))
 
 	return jsonify(list=reslist), 200
@@ -69,6 +69,7 @@ def listUserProjects():
 	print("USER REQUEST", req)
 
 	projects = models.ProjectDB.query.all()
+
 	yourProjectList = []
 	test = db.engine.execute(text("Select title,description,department, time_stamp from ProjectDB WHERE email = '"+req+"'"))
 	
@@ -116,11 +117,29 @@ def listDepartments():
 def getTotalGraph():
 	departments = models.ProjectDB.query.all()
 	reslist = []
-	test = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) totalCount FROM ProjectDB GROUP BY  DATE(time_stamp)"))
-	for row in test:
+	query = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) totalCount FROM ProjectDB GROUP BY  DATE(time_stamp)"))
+	for row in query:
 		reslist.append(dict(time=row.time_stamp.isoformat(),count=row.totalCount))
 	print(reslist)
 	print(type(reslist))
+	return jsonify(list=reslist), 200
+
+@app.route('/showProject', methods=['POST'])
+def showProject():
+	req = request.get_json()
+	
+	project = db.engine.execute(text("SELECT * FROM ProjectDB WHERE projectID = " + str(req)))
+	
+	query = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB"))
+	users = {}
+	for row in query:
+		users[row[0]] = (row[1],row[2],row[3])
+
+	reslist = []
+	for i in project:
+		reslist.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
+			first_name=users[i.email][0], last_name=users[i.email][1], profile_picture=users[i.email][2]))
+	
 	return jsonify(list=reslist), 200
 
 @app.route('/addProject', methods=['POST'])

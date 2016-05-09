@@ -1,12 +1,30 @@
-<body style="overflow: auto;">
-	<div ng-app="SparrowApp" class="container" ng-controller="projectCtrl" ng-cloak >
-		<div ng-app="textEditApp" ng-controller="TextEditCtrl" ng-cloak>
-		   <!-- <form ng-app="textEditApp" method="post" ng-controller="TextEditCtrl"> -->
-	        <textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
-		    <button ng-click="getContent()">Get content</button>
-		    <button ng-click="setContent()">Set content</button> 
-	        <!-- </form> -->
-	    </div>
+<md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card>
+        <!-- <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out"> -->
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{currentProject.Title}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <div>
+          	{{currentProject.Description}}
+          </div>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Edit</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </md-content>
+
+<div ng-app="SparrowApp" class="container" ng-controller="projectCtrl" ng-cloak >
+	<div ng-app="textEditApp" ng-controller="TextEditCtrl" ng-cloak>
+		<!-- <form ng-app="textEditApp" method="post" ng-controller="TextEditCtrl"> -->
+		<textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
+		<button ng-click="getContent()">Get content</button>
+		<button ng-click="setContent()">Set content</button> 
+		<!-- </form> -->
 	</div>
-	
-</body>
+</div>

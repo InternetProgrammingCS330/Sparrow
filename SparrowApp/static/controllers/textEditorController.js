@@ -10,7 +10,7 @@ app.controller('TextEditCtrl', ['$rootScope',
   $scope.tinymceModel = 'Initial content';
 
   $scope.getContent = function() {
-    console.log('Editor content:', $scope.tinymceModel);
+    return $scope.tinymceModel;
   };
 
   $scope.setContent = function() {
@@ -23,7 +23,7 @@ app.controller('TextEditCtrl', ['$rootScope',
           context: 'file',
           onclick: function() {
               $('.mce-i-save').closest('button').trigger('click');
-              console.log("HELLO")
+              console.log($scope.getContent())
           }
       });
   });

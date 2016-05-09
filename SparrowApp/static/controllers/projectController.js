@@ -6,6 +6,11 @@ app.controller('projectCtrl', ['$rootScope',
 
 	console.log("HELLO FROM THE projectCtrl");
 
+	function currentProject() {
+		console.log("PROJID:",(window.location.hash).split("=")[1]);
+		return (window.location.hash).split("=")[1];
+	}
+
     $scope.goHome = function() {
 	    $location.url("/");
     }
@@ -13,17 +18,13 @@ app.controller('projectCtrl', ['$rootScope',
     function refresh(){
 		$http({
 	      	url: '/showProject',
-	      	method: "GET",
-	      	headers: { 'Content-Type': 'application/json' }
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: currentProject()
 	    }).success(function(data) {
-	      	$scope.$applyAsync(function(){
-				$rootScope.projectList = data.list;
-				console.log("projectDetails:", $rootScope.projectList);
-			});
+	      	$rootScope.currentProject = data.list[0];
+	      	console.log($rootScope.currentProject);
 	    });
 	}
-
 	refresh();
-
-
 }]);

@@ -64,7 +64,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 
 			.state('index.projectView', {
 				parent:'index',
-				url:'/projectView',
+				url:'/projectView/pid=:projectID',
 				views: {
 					'top@index': {
 						templateUrl : 'static/partials/navBar/navBar.html',
@@ -73,7 +73,8 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 					'main1@index': {
 						templateUrl : 'static/partials/projectView/projectView.html',
 						action : 'projectViewApp.projectViewCtrl'
-					},
+					}
+					// },
 					// 'right@index': {
 					// 	templateUrl : 'static/partials/stats/statsGlobal.html',
 					// 	action : 'statsApp.StatsCtrl'
