@@ -69,19 +69,32 @@ def listUserProjects():
 	print("USER REQUEST", req)
 
 	projects = models.ProjectDB.query.all()
-	reslist = []
-	test = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB WHERE email = '"+req+"'"))
-	users = {}
-	for row in test:
-		users[row[0]] = (row[1],row[2],row[3])
+	yourProjectList = []
+	test = db.engine.execute(text("Select title,description,department, time_stamp from ProjectDB WHERE email = '"+req+"'"))
 	
 	for i in test:
-		reslist.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp))
+		yourProjectList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp))
 	
+	yourInterestList = []
+	test = db.engine.execute(text("Select title,description,department, time_stamp from ProjectDB WHERE email = '"+req+"'"))
+	
+	for i in test:
+		yourInterestList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp))
+
 	reslistCounts = []
-	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) totalCount FROM ProjectDB WHERE email = '"+req+"' GROUP BY DATE(time_stamp)"))
+	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) yourProjectsCount FROM ProjectDB WHERE email = '"+req+"' GROUP BY DATE(time_stamp)"))
 	for row in userProjectCounts:
-		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.totalCount))
+		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.yourProjectsCount))
+
+	yourProjectsCount = []
+	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourProjectsCount FROM ProjectDB WHERE email = '"+req+"'"))
+	for row in userProjectCounts:
+		yourProjectsCount.append(dict(yourProjectsCount=row.yourProjectsCount))
+
+	yourInterestsCount = []
+	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourInterestsCount FROM ProjectDB WHERE email = '"+req+"'"))
+	for row in userProjectCounts:
+		yourInterestsCount.append(dict(yourInterestsCount=row.yourInterestsCount))
 
 	totalCount = []
 	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) totalCount FROM ProjectDB WHERE email = '"+req+"'"))
@@ -89,7 +102,7 @@ def listUserProjects():
 		totalCount.append(dict(totalCount=row.totalCount))
 
 	# reslist.append({"length":len(reslist)})
-	return jsonify(list=reslist,counts=reslistCounts,total=totalCount), 200
+	return jsonify(yourProjectList=yourProjectList,yourInterestList=yourInterestList,yourProjectCounts=reslistCounts,yourProjectsTotal=yourProjectsCount,yourInterestsTotal=yourInterestsCount,total=totalCount), 200
 
 @app.route('/listDepartments', methods=['GET'])
 def listDepartments():

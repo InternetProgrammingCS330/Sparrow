@@ -22,11 +22,14 @@ app.controller('UserCtrl', ['$rootScope',
 	      	data: JSON.stringify($rootScope.user.email)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
-				$rootScope.projectList = data.list;
+				$rootScope.projectList = data.yourProjectList;
+
+				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
+				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
 				$rootScope.totalCount = data.total[0].totalCount
-				$scope.dataSource = data.counts;
-				$scope.userCards[0].value = data.list.length;
-				console.log($rootScope.totalCount)
+
+				$rootScope.dataSource = data.yourProjectCounts;
+				console.log(data)
 			});
 	    });
 
@@ -41,7 +44,7 @@ app.controller('UserCtrl', ['$rootScope',
 	    });
 	}
 
-	$rootScope.totalCount = 5;
+	$rootScope.yourProjectsCount = 5;
 
 	if($rootScope.userRefreshState){
 		$rootScope.userRefresh();
