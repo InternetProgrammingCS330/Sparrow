@@ -8,8 +8,8 @@ app.controller('projectListCtrl', ['$rootScope',
 
     console.log("HELLO FROM THE projectListCtrl");
 
-    $scope.testing = function() {
-	    $location.url("/projectView");
+    $scope.viewProject = function(proj) {
+		$location.url("/projectView/pid="+proj.projectID);
     }
 
     function refresh(){
