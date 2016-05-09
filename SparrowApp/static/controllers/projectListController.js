@@ -5,14 +5,7 @@ app.controller('projectListCtrl', ['$rootScope',
   function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
   	
   	$rootScope.mainView = true; 
-  	$scope.selectedKeyword = [];
-  	$scope.readonly = false;
-  	$scope.selectedItem = null;
-  	$scope.searchText = null;
-  	$scope.numberBuffer = '';
-  	$scope.autocompleteDemoRequireMatch = true;
-  	$scope.transformChip = transformChip;
-  	$scope.myTags = [];
+
 
 
 
@@ -45,17 +38,17 @@ app.controller('projectListCtrl', ['$rootScope',
 			});
 	    });
 	    
-	    $http({
-	      	url: '/listKeywords',
-	      	method: "GET",
-	      	headers: { 'Content-Type': 'application/json' }
-	    }).success(function(data) {
-	      	console.log(data.list);
-	      	$scope.$applyAsync(function(){
-  				$rootScope.keywords = data.list;
-  				console.log("heree " + $rootScope.keywords);
-			});
-	    });
+	  //   $http({
+	  //     	url: '/listKeywords',
+	  //     	method: "GET",
+	  //     	headers: { 'Content-Type': 'application/json' }
+	  //   }).success(function(data) {
+	  //     	console.log(data.list);
+	  //     	$scope.$applyAsync(function(){
+  	// 			$rootScope.keywords = data.list;
+  	// 			console.log("heree " + $rootScope.keywords);
+			// });
+	  //   });
 
 
 

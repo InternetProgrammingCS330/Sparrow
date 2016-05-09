@@ -30,18 +30,7 @@
 			<label >Project Proposal</label>
 			<textarea id =desc ng-model="project.description"></textarea>
 		</md-input-container>
-      <md-chips ng-model = "selectedKeyword" md-transform-chip="transformChip($chip)">
-        <md-autocomplete 
-                md-selected-item="selectedItem"
-                md-search-text="searchText"
-                md-items="item in querySearch(searchText)"
-                md-item-text="item"
-                placeholder="Related Keywords">
-            <span md-highlight-text="searchText">{{item}}</span>
-        </md-autocomplete>
-        <md-chip-template>
-          <strong>{{$chip}}</strong>
-        </md-chip-template>
+      <md-chips ng-model = "selectedKeyword">
       </md-chips>
 
 		<!-- <div id=center>
@@ -55,5 +44,3 @@
 	</div>
 
 </form>
-</body>
-</html>

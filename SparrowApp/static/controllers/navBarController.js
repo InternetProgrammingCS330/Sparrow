@@ -118,7 +118,7 @@ app.service('gapiService', function() {
 		gapi.client.load('plus', 'v1', postInitiation);
 	}
 });
-
+//keyword@@@ iterate through list and delimit it and then assign it to scope.keywords
 function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 
 	$scope.submitProject = function(){
@@ -127,6 +127,8 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 		$scope.project.firstName = $rootScope.user.firstName;
 		$scope.project.LastName = $rootScope.user.lastName;
 		$scope.project.department = $scope.selectedItem.department_name;
+
+		// $scope.project.keywords = 
 
 		$http({
 	      	url: '/addProject',
@@ -138,6 +140,19 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	      	$mdDialog.cancel();
 	    });
 	}
+
+    $http({
+      	url: '/listKeywords',
+      	method: "GET",
+      	headers: { 'Content-Type': 'application/json' }
+    }).success(function(data) {
+      	console.log(data.list);
+      	$scope.$applyAsync(function(){
+				$rootScope.keywords = data.list;
+				console.log("heree " + $rootScope.keywords);
+		});
+    });
+  	$scope.selectedKeyword = [];
 
 	$scope.errorMessage = "";
 
