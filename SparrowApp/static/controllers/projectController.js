@@ -6,6 +6,17 @@ app.controller('projectCtrl', ['$rootScope',
 
 	console.log("HELLO FROM THE projectCtrl");
 
+	$rootScope.viewOnly = true;
+
+	$scope.edit = function() {
+		if ($scope.viewOnly) {
+			$rootScope.viewOnly = false;
+			console.log("viewOnly:false");
+		} else {
+			$rootScope.viewOnly = true;
+			console.log("viewOnly:true");
+		}
+	}
 	function currentProject() {
 		console.log("PROJID:",(window.location.hash).split("=")[1]);
 		return (window.location.hash).split("=")[1];
