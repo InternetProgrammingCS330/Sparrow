@@ -1,15 +1,33 @@
 <body style="overflow: auto;">
 	<div ng-app="SparrowApp" class="container" ng-controller="UserCtrl" ng-cloak >	
-		<div class='md-padding' layout="row" layout-wrap>
-	      <md-card class="statsPreview" ng-repeat="card in userCards">
-	          <md-card-content>
-	            <h1> {{card.title}} </h1>
-	          	<h4> {{card.value}} </h4>
-	          </md-card-content>
-	          <div class="md-actions" layout="row" layout-align="end center">
-            	<md-button ng-click="test(card.title)">View</md-button>
-	          </div>
-	        </md-card>
+		<div ng-if="user.ready" class='md-padding' layout="row" layout-wrap>
+	      	<md-card class="statsPreview">
+	          	<md-card-content>
+		            <h1> Your Projects </h1>
+		          	<h4> {{yourProjectsCount}} </h4>
+	          	</md-card-content>
+	          	<div class="md-actions" layout="row" layout-align="end center">
+            		<md-button ng-click="test(card.title)">View</md-button>
+	         	</div>
+	       	</md-card>
+	       	<md-card class="statsPreview">
+	          	<md-card-content>
+		            <h1> Your Interests </h1>
+		          	<h4> {{yourInterestsCount}} </h4>
+	          	</md-card-content>
+	          	<div class="md-actions" layout="row" layout-align="end center">
+            		<md-button ng-click="test(card.title)">View</md-button>
+	         	</div>
+	       	</md-card>
+	       	<md-card class="statsPreview">
+	          	<md-card-content>
+		            <h1> Total Projects </h1>
+		          	<h4> {{totalCount}} </h4>
+	          	</md-card-content>
+	          	<div class="md-actions" layout="row" layout-align="end center">
+            		<md-button ng-click="test(card.title)">View</md-button>
+	         	</div>
+	       	</md-card>
 	    </div>
     	<areachart2 data="dataSource"></areachart2>
     	<!-- <areachart data="dateSample"></areachart> -->
