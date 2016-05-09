@@ -22,7 +22,7 @@ app.controller('UserCtrl', ['$rootScope',
 	      	data: JSON.stringify($rootScope.user.email)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
-				$rootScope.projectList = data.yourProjectList;
+				$rootScope.projectListUser = data.yourProjectList;
 
 				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
 				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount

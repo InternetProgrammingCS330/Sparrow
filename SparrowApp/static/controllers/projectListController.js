@@ -1,8 +1,8 @@
 var app = angular.module('projectListApp',['ngMaterial']);
 
-app.controller('projectListCtrl', ['$rootScope',
+app.controller('projectListCtrl', ['$state','$rootScope',
   '$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
-  function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
+  function($state,$rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
   	
   	$rootScope.mainView = true; 
 
@@ -12,13 +12,31 @@ app.controller('projectListCtrl', ['$rootScope',
 		$location.url("/projectView/pid="+proj.projectID);
     }
 
-    function refresh(){
+    $scope.checked = function(projectID){
+    	var toLike = {
+    		projectID:projectID,
+    		email:$rootScope.user.email
+    	}
+    	console.log("LIKE", $rootScope.user.email)
+    	$http({
+	      	url: '/addLike',
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify(toLike)
+	    }).success(function(data) {
+
+	      	console.log("NEW LIKES",data)
+	    });
+    }
+
+    $rootScope.refreshProjectList = function(){
 		console.log("REFRESHING");
 
 		$http({
 	      	url: '/listAllProjects',
-	      	method: "GET",
-	      	headers: { 'Content-Type': 'application/json' }
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify($rootScope.user)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
@@ -36,7 +54,5 @@ app.controller('projectListCtrl', ['$rootScope',
 			});
 	    });
 	}
-
-	refresh();
 	
 }]);

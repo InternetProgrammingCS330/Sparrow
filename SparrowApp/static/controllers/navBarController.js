@@ -45,7 +45,7 @@ var init = function() {
 	window.initGapi();
 }
 
-app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $location,
+app.controller('NavBarCtrl',function($state,$rootScope,$timeout, $scope, $http, $location,
 							$mdSidenav,	$mdDialog, $animate, $filter, $window, gapiService) {
 
 	$scope.onSearch = function(searchValue) {
@@ -104,11 +104,15 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 			      	headers: { 'Content-Type': 'application/json' },
 			      	data: JSON.stringify($rootScope.user)
 			    }).success(function(data) {
-			    	$rootScope.userRefresh();
+			    	console.log($state.current)
+			    	if($state.current.name == 'index.projectlist'){
+			    		$rootScope.refreshProjectList();
+			    	}
+			    	else{
+			    		$rootScope.userRefresh();
+			    	}
 			    });
-
 			});
-			
 		});
 	}
 
