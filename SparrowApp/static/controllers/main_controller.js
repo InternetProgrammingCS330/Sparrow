@@ -6,10 +6,11 @@ angular.module('userApp',[]);
 angular.module('navBarApp',[]);
 angular.module('searchProjectApp',[]);
 angular.module('statsApp',[]);
-angular.module('textEditApp',[]);
+// angular.module('textEditApp',[]);
+angular.module('projectEditApp',[]);
 
 var myApp = angular.module('SparrowApp', ['ui.router', 'ngMaterial',
-	'projectListApp','projectApp','userApp','navBarApp', 'searchProjectApp', 'statsApp','textEditApp']);
+	'projectListApp','projectApp','userApp','navBarApp', 'searchProjectApp', 'statsApp','projectEditApp']);
 
 myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 	function($stateProvider,$urlRouterProvider, $httpProvider) {
@@ -76,6 +77,24 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 				}
 			})
 
+			.state('index.projectEdit', {
+				parent:'index',
+				url:'/projectEdit/pid=:projectID',
+				views: {
+					'top@index': {
+						templateUrl : 'static/partials/navBar/navBar.html',
+						action : 'navBarApp.NavBarCtrl'
+					},
+					'main1@index': {
+						templateUrl : 'static/partials/projectEdit/projectEdit.html',
+						action : 'projectEditApp.projectEditCtrl'
+					},
+					'right@index': {
+						templateUrl : 'static/partials/projectEdit/projectEditSide.html',
+						action : 'projectEditApp.projectEditCtrl'
+					}
+				}
+			})
 			.state('index.userview', {
 				parent:'index',
 				url:'/userview',
