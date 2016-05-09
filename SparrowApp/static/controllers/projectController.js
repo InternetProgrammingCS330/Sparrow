@@ -9,13 +9,7 @@ app.controller('projectCtrl', ['$rootScope',
 	$rootScope.viewOnly = true;
 
 	$scope.edit = function() {
-		if ($scope.viewOnly) {
-			$rootScope.viewOnly = false;
-			console.log("viewOnly:false");
-		} else {
-			$rootScope.viewOnly = true;
-			console.log("viewOnly:true");
-		}
+		$location.url("/projectEdit/pid="+$rootScope.currentProject.projectID);
 	}
 	function currentProject() {
 		console.log("PROJID:",(window.location.hash).split("=")[1]);
@@ -34,7 +28,7 @@ app.controller('projectCtrl', ['$rootScope',
 	      	data: currentProject()
 	    }).success(function(data) {
 	      	// $rootScope.currentProject = data.list[0];
-	      	$scope.currentProject = data.list[0];
+	      	$rootScope.currentProject = data.list[0];
 	      	console.log($scope.currentProject);
 	    });
 	}

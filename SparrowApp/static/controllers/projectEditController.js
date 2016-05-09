@@ -1,6 +1,6 @@
-var app = angular.module('textEditApp',['ngMaterial','ui.tinymce']);
+var app = angular.module('projectEditApp',['ngMaterial','ui.tinymce']);
 
-app.controller('TextEditCtrl', ['$rootScope',
+app.controller('projectEditCtrl', ['$rootScope',
 	'$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
 	function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
 
@@ -10,11 +10,12 @@ app.controller('TextEditCtrl', ['$rootScope',
   $scope.tinymceModel = 'Initial content';
 
   $scope.getContent = function() {
+    console.log(tinymceModel);
     return $scope.tinymceModel;
   };
 
   $scope.setContent = function() {
-    $scope.tinymceModel = "<h1>Hello World</h1>";
+    $scope.tinymceModel = $rootScope.currentProject.description;
   };
 
   tinymce.PluginManager.add('menusave', function(editor, url) {
@@ -27,7 +28,7 @@ app.controller('TextEditCtrl', ['$rootScope',
           }
       });
   });
-  
+
   $scope.tinymceOptions = {
     selector: 'textarea',
     height: 500,
@@ -41,14 +42,7 @@ app.controller('TextEditCtrl', ['$rootScope',
       '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
       '//www.tinymce.com/css/codepen.min.css'
     ],
-    save_onsavecallback: function() {
-              $('.mce-i-save').closest('button').trigger('click');
-              console.log("HAHAHAHAHAHAHAH");
-          }
-
-    //   console.log('Saved'); 
-    // }
-    ,
+    save_onsavecallback: function() {$('.mce-i-save').closest('button').trigger('click');},
     save_oncancelcallback: function () { console.log('Save canceled'); },
     save_enablewhendirty: true
   };
