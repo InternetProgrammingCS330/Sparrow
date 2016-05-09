@@ -76,11 +76,11 @@ def listUserProjects():
 	print("USER REQUEST", req)
 
 	yourProjectList = []
-	test = db.engine.execute(text("Select ProjectDB.title,ProjectDB.description,ProjectDB.department, \
+	test = db.engine.execute(text("Select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,ProjectDB.department, \
 	ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture \
 	from ProjectDB, UserDB WHERE ProjectDB.email = UserDB.email AND ProjectDB.email = '"+req+"'"))	
 	for i in test:
-		yourProjectList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
+		yourProjectList.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
 	
 	yourInterestList = []
 	test = db.engine.execute(text("Select ProjectDB.title,ProjectDB.description,ProjectDB.department, \
@@ -211,6 +211,56 @@ def addLike():
 				first_name=i.first_name, last_name=i.last_name, profile_picture=i.profile_picture, count=i.count,liked=True))
 
 	return jsonify(count=reslistCount,list=reslist), 200
+
+@app.route('/deleteUserProject', methods=['POST'])
+def deleteUserProject():
+	req = request.get_json()
+	print("\n\nPROJECT::::::::::::::::::::::::",req,"\n\n\n")
+
+	models.ProjectDB.query.filter_by(projectID=req["projectID"]).delete()
+	db.session.commit()
+	
+	yourProjectList = []
+	test = db.engine.execute(text("Select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,ProjectDB.department, \
+	ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture \
+	from ProjectDB, UserDB WHERE ProjectDB.email = UserDB.email AND ProjectDB.email = '"+req["email"]+"'"))	
+	for i in test:
+		yourProjectList.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
+	
+	yourInterestList = []
+	test = db.engine.execute(text("Select ProjectDB.title,ProjectDB.description,ProjectDB.department, \
+	ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture \
+	from ProjectDB, UserDB, InterestDB WHERE ProjectDB.email=UserDB.email AND \
+	ProjectDB.projectID = InterestDB.projectID AND InterestDB.email = '"+req["email"]+"'"))	
+	for i in test:
+		yourInterestList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
+
+	reslistCounts = []
+	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, \
+		COUNT(DISTINCT projectID) yourProjectsCount FROM ProjectDB WHERE email = '"+req["email"]+"' \
+		GROUP BY DATE(time_stamp)"))
+	for row in userProjectCounts:
+		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.yourProjectsCount))
+
+	yourProjectsCount = []
+	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourProjectsCount \
+		FROM ProjectDB WHERE email = '"+req["email"]+"'"))
+	for row in userProjectCounts:
+		yourProjectsCount.append(dict(yourProjectsCount=row.yourProjectsCount))
+
+	yourInterestsCount = []
+	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourInterestsCount \
+		FROM ProjectDB WHERE email = '"+req["email"]+"'"))
+	for row in userProjectCounts:
+		yourInterestsCount.append(dict(yourInterestsCount=row.yourInterestsCount))
+
+	totalCount = []
+	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) totalCount \
+		FROM ProjectDB WHERE email = '"+req["email"]+"'"))
+	for row in userProjectCounts:
+		totalCount.append(dict(totalCount=row.totalCount))
+
+	return jsonify(yourProjectList=yourProjectList,yourInterestList=yourInterestList,yourProjectCounts=reslistCounts,yourProjectsTotal=yourProjectsCount,yourInterestsTotal=yourInterestsCount,total=totalCount), 200
 
 @app.route('/checkUser', methods=['POST'])
 def checkUser():

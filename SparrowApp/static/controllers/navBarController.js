@@ -132,7 +132,7 @@ app.service('gapiService', function() {
 	}
 });
 
-function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
+function addProjectModalCtrl($state,$scope, $rootScope, $http, $mdDialog) {
 
 	$scope.submitProject = function(){
 		$scope.project.email = $rootScope.user.email;
@@ -149,8 +149,13 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	    }).success(function(data) {
 	      	$rootScope.projectList = data.list;
 	      	$mdDialog.cancel();
-	      	$rootScope.userRefreshState = true;
-			$rootScope.userRefresh();
+	      	if($state.current.name == 'index.projectlist'){
+	    		$rootScope.refreshProjectList();
+	    	}
+	    	else{
+	    		$rootScope.userRefreshState = true;
+				$rootScope.userRefresh();
+	    	}
 	    });
 	}
 

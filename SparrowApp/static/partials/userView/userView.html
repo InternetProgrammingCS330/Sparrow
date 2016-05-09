@@ -29,7 +29,7 @@
        	</md-card>
     </div>
     <md-list>
-		<md-subheader class="md-no-sticky">All Projects</md-subheader>
+		<md-subheader class="md-no-sticky">Your Projects</md-subheader>
 		<md-list-item class="md-3-line" ng-repeat="project in projectListUser | filter:search">
 			<div class="avatar tooltip">
 	  			<span class="tooltiptext">{{project.first_name}} {{project.last_name}}</span>
@@ -46,6 +46,9 @@
 				<h3 class="projectTitle" ng-click="testing()">{{project.title}}</h3>
 				<h6 class="projectTimeStamp">{{project.time_stamp.slice(0,-15)}}</h6>
 				<p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p>
+			</div>
+			<div ng-repeat="v in [0]">
+				<md-button style="display:inline-block;" ng-click="delete(project)">DELETE</md-button>
 			</div>
 		</md-list-item>
 	</md-list>

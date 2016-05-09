@@ -53,6 +53,28 @@ app.controller('UserCtrl', ['$rootScope',
 
 	$scope.xAxis = "hour"
 
+	$scope.delete = function(project){
+		console.log("PROJECT TO DELETE", project)
+		$http({
+	      	url: '/deleteUserProject',
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify(project)
+	    }).success(function(data) {
+	      	$scope.$applyAsync(function(){
+				$rootScope.projectListUser = data.yourProjectList;
+				$rootScope.interestListUser = data.yourInterestList;
+
+				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
+				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
+				$rootScope.totalCount = data.total[0].totalCount
+
+				$rootScope.dataSource = data.yourProjectCounts;
+				console.log(data)
+			});
+	    });
+	}
+
 	$scope.test = function(btnName) {
 		switch(btnName) {
 		case "Total Projects":
