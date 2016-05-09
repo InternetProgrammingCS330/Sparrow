@@ -68,19 +68,15 @@ def listUserProjects():
 
 	print("USER REQUEST", req)
 
-	projects = models.ProjectDB.query.all()
-
 	yourProjectList = []
-	test = db.engine.execute(text("Select title,description,department, time_stamp from ProjectDB WHERE email = '"+req+"'"))
-	
+	test = db.engine.execute(text("Select ProjectDB.title,ProjectDB.description,ProjectDB.department, ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture from ProjectDB, UserDB WHERE ProjectDB.email = UserDB.email AND ProjectDB.email = '"+req+"'"))	
 	for i in test:
-		yourProjectList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp))
+		yourProjectList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
 	
 	yourInterestList = []
-	test = db.engine.execute(text("Select title,description,department, time_stamp from ProjectDB WHERE email = '"+req+"'"))
-	
+	test = db.engine.execute(text("Select ProjectDB.title,ProjectDB.description,ProjectDB.department, ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture from ProjectDB, UserDB WHERE ProjectDB.email = UserDB.email AND ProjectDB.email = '"+req+"'"))	
 	for i in test:
-		yourInterestList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp))
+		yourInterestList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
 
 	reslistCounts = []
 	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) yourProjectsCount FROM ProjectDB WHERE email = '"+req+"' GROUP BY DATE(time_stamp)"))
@@ -102,7 +98,6 @@ def listUserProjects():
 	for row in userProjectCounts:
 		totalCount.append(dict(totalCount=row.totalCount))
 
-	# reslist.append({"length":len(reslist)})
 	return jsonify(yourProjectList=yourProjectList,yourInterestList=yourInterestList,yourProjectCounts=reslistCounts,yourProjectsTotal=yourProjectsCount,yourInterestsTotal=yourInterestsCount,total=totalCount), 200
 
 @app.route('/listDepartments', methods=['GET'])
