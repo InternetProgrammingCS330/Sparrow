@@ -145,6 +145,8 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	    }).success(function(data) {
 	      	$rootScope.projectList = data.list;
 	      	$mdDialog.cancel();
+	      	$rootScope.userRefreshState = true;
+			$rootScope.userRefresh();
 	    });
 	}
 
