@@ -1,30 +1,39 @@
 <div ng-app="SparrowApp" class="container" ng-controller="UserCtrl" ng-cloak >	
 	<div ng-if="user.ready" class='md-padding' layout="row" layout-wrap>
-      	<md-card class="statsPreview">
+		<md-card class="statsPreview" style="width:auto">
           	<md-card-content>
-	            <h1> Your Projects </h1>
-	          	<h4> {{yourProjectsCount}} </h4>
+	            <h1> All Stats </h1>
+	          	<h4> {{totalCount}} </h4>
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
         		<md-button ng-click="test(card.title)">View</md-button>
          	</div>
        	</md-card>
-       	<md-card class="statsPreview">
+      	<md-card class="statsPreview" style="width:auto">
           	<md-card-content>
-	            <h1> Your Interests </h1>
+	            <h1> Your Projects </h1>
+	          	<h4> {{yourProjectsCount}} </h4>
+          	</md-card-content>
+          	<div class="md-actions" layout="row" layout-align="end center">
+        		<md-button ng-click="yourProjects()">View</md-button>
+         	</div>
+       	</md-card>
+       	<md-card class="statsPreview" style="width:auto">
+          	<md-card-content>
+	            <h1> You Gave Likes To </h1>
 	          	<h4> {{yourInterestsCount}} </h4>
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
         		<md-button ng-click="test(card.title)">View</md-button>
          	</div>
        	</md-card>
-       	<md-card class="statsPreview">
+       	<md-card class="statsPreview" style="width:auto">
           	<md-card-content>
-	            <h1> Total Projects </h1>
+	            <h1> You Received Likes </h1>
 	          	<h4> {{totalCount}} </h4>
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
-        		<md-button ng-click="test(card.title)">View</md-button>
+        		<md-button ng-click="displayYourLikes()">View</md-button>
          	</div>
        	</md-card>
     </div>

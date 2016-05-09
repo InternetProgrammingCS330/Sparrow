@@ -28,6 +28,8 @@ app.controller('UserCtrl', ['$rootScope',
 				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
 				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
 				$rootScope.totalCount = data.total[0].totalCount
+				$rootScope.youGaveLikesTo = data.projectLikes;
+				console.log("YOU GAVE LIKES TO", $rootScope.youGaveLikesTo)
 
 				$rootScope.dataSource = data.yourProjectCounts;
 				console.log(data)
@@ -53,6 +55,18 @@ app.controller('UserCtrl', ['$rootScope',
 
 	$scope.xAxis = "hour"
 
+	$scope.displayYourLikes = function(){
+		console.log("DISPLAYING LIKE GRAPH")
+    	$rootScope.yourLikesGraph = true;
+    	$rootScope.yourProjectsGraph = false;
+    }
+
+    $scope.yourProjects = function(){
+    	console.log("DISPLAYING LIKE GRAPH")
+    	$rootScope.yourLikesGraph = false;
+    	$rootScope.yourProjectsGraph = true;
+    }
+
 	$scope.delete = function(project){
 		console.log("PROJECT TO DELETE", project)
 		$http({
@@ -67,7 +81,8 @@ app.controller('UserCtrl', ['$rootScope',
 
 				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
 				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
-				$rootScope.totalCount = data.total[0].totalCount
+				$rootScope.youGaveLikesTo = data.projectLikes;
+				console.log("YOU GAVE LIKES TO", $rootScope.youGaveLikesTo)
 
 				$rootScope.dataSource = data.yourProjectCounts;
 				console.log(data)

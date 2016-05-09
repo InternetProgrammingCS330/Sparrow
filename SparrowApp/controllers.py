@@ -97,6 +97,14 @@ def listUserProjects():
 	for row in userProjectCounts:
 		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.yourProjectsCount))
 
+	projectsLikes = []
+	projectsLikesCounts = db.engine.execute(text("SELECT ProjectDB.title, ProjectDB.projectID, \
+		COUNT(InterestDB.email) \
+		yourLikes FROM ProjectDB,InterestDB WHERE ProjectDB.projectID=InterestDB.projectID AND \
+		ProjectDB.email = '"+req+"' GROUP BY ProjectDB.projectID;"))
+	for row in projectsLikesCounts:
+		projectsLikes.append(dict(title=row.title,countLikes=row.yourLikes))
+
 	yourProjectsCount = []
 	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourProjectsCount \
 		FROM ProjectDB WHERE email = '"+req+"'"))
@@ -115,7 +123,9 @@ def listUserProjects():
 	for row in userProjectCounts:
 		totalCount.append(dict(totalCount=row.totalCount))
 
-	return jsonify(yourProjectList=yourProjectList,yourInterestList=yourInterestList,yourProjectCounts=reslistCounts,yourProjectsTotal=yourProjectsCount,yourInterestsTotal=yourInterestsCount,total=totalCount), 200
+	return jsonify(yourProjectList=yourProjectList,yourInterestList=yourInterestList,\
+		yourProjectCounts=reslistCounts,yourProjectsTotal=yourProjectsCount,\
+		yourInterestsTotal=yourInterestsCount,total=totalCount, projectLikes=projectsLikes), 200
 
 @app.route('/listDepartments', methods=['GET'])
 def listDepartments():
