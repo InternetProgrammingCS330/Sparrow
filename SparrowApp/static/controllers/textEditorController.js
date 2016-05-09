@@ -14,7 +14,7 @@ app.controller('TextEditCtrl', ['$rootScope',
   };
 
   $scope.setContent = function() {
-    $scope.tinymceModel = 'Time: ' + (new Date());
+    $scope.tinymceModel = "<h1>Hello World</h1>";
   };
 
   tinymce.PluginManager.add('menusave', function(editor, url) {
@@ -23,11 +23,11 @@ app.controller('TextEditCtrl', ['$rootScope',
           context: 'file',
           onclick: function() {
               $('.mce-i-save').closest('button').trigger('click');
-              console.log($scope.getContent())
+              console.log("ScopeContent:",$scope.getContent())
           }
       });
   });
-
+  
   $scope.tinymceOptions = {
     selector: 'textarea',
     height: 500,
@@ -41,7 +41,14 @@ app.controller('TextEditCtrl', ['$rootScope',
       '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
       '//www.tinymce.com/css/codepen.min.css'
     ],
-    save_onsavecallback: function () { console.log('Saved'); },
+    save_onsavecallback: function() {
+              $('.mce-i-save').closest('button').trigger('click');
+              console.log("HAHAHAHAHAHAHAH");
+          }
+
+    //   console.log('Saved'); 
+    // }
+    ,
     save_oncancelcallback: function () { console.log('Save canceled'); },
     save_enablewhendirty: true
   };

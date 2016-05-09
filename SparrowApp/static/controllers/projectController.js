@@ -22,8 +22,9 @@ app.controller('projectCtrl', ['$rootScope',
 	      	headers: { 'Content-Type': 'application/json' },
 	      	data: currentProject()
 	    }).success(function(data) {
-	      	$rootScope.currentProject = data.list[0];
-	      	console.log($rootScope.currentProject);
+	      	// $rootScope.currentProject = data.list[0];
+	      	$scope.currentProject = data.list[0];
+	      	console.log($scope.currentProject);
 	    });
 	}
 	refresh();
