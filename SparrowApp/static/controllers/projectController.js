@@ -4,15 +4,14 @@ app.controller('projectCtrl', ['$rootScope',
 	'$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
 	function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
 
-	console.log("HELLO FROM THE projectCtrl");
-
-	$rootScope.viewOnly = true;
+	$scope.back = function(){
+		$location.url("/");
+	}
 
 	$scope.edit = function() {
 		$location.url("/projectEdit/pid="+$rootScope.currentProject.projectID);
 	}
 	function currentProject() {
-		console.log("PROJID:",(window.location.hash).split("=")[1]);
 		return (window.location.hash).split("=")[1];
 	}
 
@@ -27,10 +26,20 @@ app.controller('projectCtrl', ['$rootScope',
 	      	headers: { 'Content-Type': 'application/json' },
 	      	data: currentProject()
 	    }).success(function(data) {
-	      	// $rootScope.currentProject = data.list[0];
 	      	$rootScope.currentProject = data.list[0];
-	      	console.log($scope.currentProject);
+	      	var el = document.getElementById("viewDescription");
+	      	el.insertAdjacentHTML ("beforeBegin", $rootScope.currentProject.description);
+
+	      	console.log(compress($rootScope.currentProject.description))
+
+	      	if($rootScope.currentProject.email == $rootScope.user.email){
+	      		$rootScope.viewOnly = false;
+	      	}
+	      	else{
+	      		$rootScope.viewOnly = true;
+	      	}
 	    });
 	}
 	refresh();
+
 }]);

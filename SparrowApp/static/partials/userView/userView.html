@@ -6,7 +6,7 @@
 	          	<h4> {{totalCount}} </h4>
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
-        		<md-button ng-click="test(card.title)">View</md-button>
+        		<md-button ng-click="yourProjects()">View</md-button>
          	</div>
        	</md-card>
       	<md-card class="statsPreview" style="width:auto">
@@ -15,7 +15,7 @@
 	          	<h4> {{yourProjectsCount}} </h4>
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
-        		<md-button ng-click="yourProjects()">View</md-button>
+        		<md-button ng-click="displayYourLikes()">View</md-button>
          	</div>
        	</md-card>
        	<md-card class="statsPreview" style="width:auto">
@@ -27,19 +27,10 @@
         		<md-button ng-click="test(card.title)">View</md-button>
          	</div>
        	</md-card>
-       	<md-card class="statsPreview" style="width:auto">
-          	<md-card-content>
-	            <h1> You Received Likes </h1>
-	          	<h4> {{totalCount}} </h4>
-          	</md-card-content>
-          	<div class="md-actions" layout="row" layout-align="end center">
-        		<md-button ng-click="displayYourLikes()">View</md-button>
-         	</div>
-       	</md-card>
     </div>
     <md-list>
 		<md-subheader class="md-no-sticky">Your Projects</md-subheader>
-		<md-list-item class="md-3-line" ng-repeat="project in projectListUser | filter:search">
+		<md-list-item class="md-3-line" ng-click="viewProject(project)" ng-repeat="project in projectListUser | filter:search">
 			<div class="avatar tooltip">
 	  			<span class="tooltiptext">{{project.first_name}} {{project.last_name}}</span>
 
@@ -57,7 +48,7 @@
 				<p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p>
 			</div>
 			<div ng-repeat="v in [0]">
-				<md-button style="display:inline-block;" ng-click="delete(project)">DELETE</md-button>
+				<md-button class="md-secondary" style="display:inline-block;" ng-click="delete(project)">DELETE</md-button>
 			</div>
 		</md-list-item>
 	</md-list>

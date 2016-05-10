@@ -1,4 +1,4 @@
-var app = angular.module('navBarApp',['ngMaterial']);
+app = angular.module('navBarApp',['ngMaterial']);
 
 var CLIENT_ID = '403395753267-0vbv21q2j00qcf47thho0ukqs05oohgs.apps.googleusercontent.com';
 var CLIENT_SECRET = 'VKl854VxVa8d-jWn4o94ru3t';
@@ -51,12 +51,10 @@ app.controller('NavBarCtrl',function($state,$rootScope,$timeout, $scope, $http, 
 	$scope.onSearch = function(searchValue) {
       $scope.search = searchValue;
       $rootScope.search = $scope.search;
-      console.log(searchValue);
 
     };
 
     $scope.getProfileIcon = function(){
-    	console.log($rootScope.user.profpic)
 		return $rootScope.user.profpic
 	}
 
@@ -104,11 +102,10 @@ app.controller('NavBarCtrl',function($state,$rootScope,$timeout, $scope, $http, 
 			      	headers: { 'Content-Type': 'application/json' },
 			      	data: JSON.stringify($rootScope.user)
 			    }).success(function(data) {
-			    	console.log($state.current)
 			    	if($state.current.name == 'index.projectlist'){
 			    		$rootScope.refreshProjectList();
 			    	}
-			    	else{
+			    	if($state.current.name == 'index.userview'){
 			    		$rootScope.userRefresh();
 			    	}
 			    });
@@ -142,12 +139,7 @@ function addProjectModalCtrl($state,$scope, $rootScope, $http, $mdDialog) {
 		$scope.project.LastName = $rootScope.user.lastName;
 		$scope.project.department = $scope.selectedItem.department_name;
 		$scope.project.description = $rootScope.getContent();
-		console.log("DEScription",$scope.project.description)
-		// var delimKey = 
 		$scope.project.key = $scope.selectedKeyword;
-
-
-		// $scope.project.keywords = 
 
 		$http({
 	      	url: '/addProject',
@@ -166,19 +158,6 @@ function addProjectModalCtrl($state,$scope, $rootScope, $http, $mdDialog) {
 	    	}
 	    });
 	}
-
-  //   $http({
-  //     	url: '/listKeywords',
-  //     	method: "GET",
-  //     	headers: { 'Content-Type': 'application/json' }
-  //   }).success(function(data) {
-  //     	$scope.$applyAsync(function(){
-		// 		$rootScope.keywords = data.list;
-		// 		console.log("hihihi" + data.list);
-		// 		console.log("heree " + $rootScope.keywords);
-		// 		console.log("test " + $scope.selectedKeyword );
-		// });
-  //   });
 
   	$scope.selectedKeyword = [];
 

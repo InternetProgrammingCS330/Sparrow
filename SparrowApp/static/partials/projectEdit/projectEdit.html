@@ -1,15 +1,15 @@
 <div ng-app="projectEditApp" ng-controller="projectEditCtrl" class="container" ng-cloak >
-	<md-content class="md-padding" layout-xs="column" layout="row">
+	<md-content class="md-padding" layout-xs="column" layout="row" style="float:left">
 		<div flex-xs flex-gt-xs="50" layout="column">
 			<md-card>
 				<md-toolbar layout="row" class="md-hue-3">
 					<md-button class="md-raised md-primary" style="border-radius: 0; margin: 0; margin-right: 10px;">
 						<md-icon md-svg-icon="static/img/returnWhite48.svg" style="padding: 0;"></md-icon>BACK
 					</md-button>
-					<h1>{{currentProject.title}}</h1><span flex></span><h4 style="margin-right: 10px;">{{currentProject.first_name}} {{currentProject.last_name}}</h4>
+					<h1>{{editingProject.title}}</h1><span flex></span><h4 style="margin-right: 10px;">{{editingProject.first_name}} {{editingProject.last_name}}</h4>
 				</md-toolbar>
 
-				<div  class="ifEditing" ng-show="!viewOnly" ng-hide="viewOnly">
+				<div  class="ifEditing">
 					<md-card-content>
 						<div ng-cloak>
 							<textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
@@ -18,13 +18,32 @@
 					<md-toolbar class="md-warn md-hue-3">
 						<div class="md-toolbar-tools">
 							<md-card-actions layout="row" layout-align="end center">
-								<md-button class="md-raised" ng-click="getContent()">Save</md-button>
-								<md-button aria-label="Cancel" ng-click="edit()">Cancel</md-button>
+								<md-button class="md-raised" ng-click="save()">Save</md-button>
+								<md-button aria-label="Cancel" ng-click="cancel()">Cancel</md-button>
 							</md-card-actions>
 						</div>
 					</md-toolbar>
 				</div>
 			</md-card>
 		</div>
+	</md-content>
+	<md-content class="md-padding" layout="column" layout-padding style="float:right">
+		<md-list>
+			<md-subheader class="md-no-sticky">EXTRA INFO</md-subheader>
+			<md-list-item class="card md-3-line">
+				<md-input-container class="md-block">
+			        <label>TITLE</label>
+			        <input ng-model="project.title">
+			    </md-input-container>
+			    <md-input-container class="md-block">
+			        <label>Keywords</label>
+			        <input ng-model="project.keywords">
+			    </md-input-container>
+			    <md-input-container class="md-block">
+			        <label>Department</label>
+			        <input ng-model="project.department">
+			    </md-input-container>
+			</md-list-item>
+		</md-list>
 	</md-content>
 </div>
