@@ -1,4 +1,4 @@
-<div ng-app="SparrowApp" class="container" ng-controller="UserCtrl" ng-cloak >	
+<div ng-app="userApp" class="container" ng-controller="UserCtrl" ng-cloak >	
 	<div ng-if="user.ready" class='md-padding' layout="row" layout-wrap>
 		<md-card class="statsPreview" style="width:auto">
           	<md-card-content>
@@ -32,6 +32,9 @@
          	</div>
        	</md-card>
     </div>
+
+<!-- ====================== YOUR PROJECTS ====================== -->
+
     <md-list>
 		<md-subheader class="md-no-sticky">Your Projects</md-subheader>
 		<md-list-item class="md-3-line" ng-click="viewProject(project)" ng-repeat="project in projectListUser | filter:search">
@@ -49,7 +52,10 @@
 			<div class="md-list-item-text" id=description>
 				<h3 class="projectTitle" ng-click="testing()">{{project.title}}</h3>
 				<h6 class="projectTimeStamp">{{project.time_stamp.slice(0,-15)}}</h6>
-				<p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p>
+				<!-- <p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p> -->
+
+				<p id="{{project.projectID}}"></p>
+				<div id="sdf{{project.projectID}}">{{htmlDesc(project)}}</div>
 			</div>
 			<div ng-repeat="v in [0]">
 
@@ -59,6 +65,9 @@
 		</md-list-item>
 	</md-list>
 	<md-divider></md-divider>
+
+<!-- ====================== LIKED PROJECTS ====================== -->
+
 	<md-list>
 		<md-subheader class="md-no-sticky">Liked Projects</md-subheader>
 		<md-list-item class="md-3-line" ng-repeat="project in interestListUser | filter:search">
@@ -76,7 +85,11 @@
 			<div class="md-list-item-text">
 				<h3 class="projectTitle" ng-click="testing()">{{project.title}}</h3>
 				<h6 class="projectTimeStamp">{{project.time_stamp.slice(0,-15)}}</h6>
-				<p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p>
+				<!-- <p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p> -->
+
+				<p id="{{project.projectID}}"></p>
+				<div id="sdf{{project.projectID}}">{{htmlDesc(project)}}</div>
+
 			</div>
 		</md-list-item>
 	</md-list>

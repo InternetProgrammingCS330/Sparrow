@@ -16,6 +16,11 @@ app.controller('UserCtrl', ['$rootScope',
 	$scope.viewProject = function(proj) {
 		$location.url("/projectView/pid="+proj.projectID);
     }
+    
+    $scope.htmlDesc = function(data){
+    	var el = document.getElementById(data.projectID);
+    	$('#'+data.projectID).html(data.description)
+    }
 
     $rootScope.userRefresh = function(){
 

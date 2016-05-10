@@ -6,8 +6,6 @@ app.controller('projectListCtrl', ['$state','$rootScope',
   	
   	$rootScope.mainView = true; 
 
-	$scope.projectList = [];
-
    	function transformChip(chip) {
       if (angular.isObject(chip)) {
         return chip;
@@ -15,8 +13,9 @@ app.controller('projectListCtrl', ['$state','$rootScope',
       return { lowername: chip};
     }
 
-    $scope.test1 = function(data){
-    	return data
+    $scope.htmlDesc = function(data){
+    	var el = document.getElementById(data.projectID);
+    	$('#'+data.projectID).html(data.description)
     }
 
     $scope.viewProject = function(proj) {
@@ -49,7 +48,9 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	      	data: JSON.stringify($rootScope.user)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
+	      		$scope.projectListCopy = data.list;
 				$rootScope.projectList = data.list;
+				$rootScope.allDepartmentProjectCountGraph = data.allDepartmentProjectCountGraph;
 			});
 	    });
 
@@ -67,5 +68,13 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	if($rootScope.user != null){
 		$rootScope.refreshProjectList();
 	}
+
+	$rootScope.showDepartment = function(department){
+		$scope.$applyAsync(function(){
+			$rootScope.projectList = $.grep( $scope.projectListCopy, function( n, i ) {
+			  return n.department===department;
+			});
+		})
+	};
 	
 }]);
