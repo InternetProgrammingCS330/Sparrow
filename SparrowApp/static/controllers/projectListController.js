@@ -6,8 +6,6 @@ app.controller('projectListCtrl', ['$state','$rootScope',
   	
   	$rootScope.mainView = true; 
 
-	$scope.projectList = [];
-
    	function transformChip(chip) {
       if (angular.isObject(chip)) {
         return chip;
