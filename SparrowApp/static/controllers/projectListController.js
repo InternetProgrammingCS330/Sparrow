@@ -16,10 +16,6 @@ app.controller('projectListCtrl', ['$state','$rootScope',
     $scope.test1 = function(data){
     	var el = document.getElementById(data.projectID);
     	$('#'+data.projectID).html(data.description)
-    	console.log('#'+data.projectID)
-    	// el.innerHTML = "";
-	    // el.insertAdjacentHTML ("beforeBegin", data.description);
-	    console.log(data.description)
     }
 
     $scope.viewProject = function(proj) {
@@ -52,7 +48,9 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	      	data: JSON.stringify($rootScope.user)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
+	      		$scope.projectListCopy = data.list;
 				$rootScope.projectList = data.list;
+				$rootScope.allDepartmentProjectCountGraph = data.allDepartmentProjectCountGraph;
 			});
 	    });
 
@@ -70,5 +68,13 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	if($rootScope.user != null){
 		$rootScope.refreshProjectList();
 	}
+
+	$rootScope.showDepartment = function(department){
+		$scope.$applyAsync(function(){
+			$rootScope.projectList = $.grep( $scope.projectListCopy, function( n, i ) {
+			  return n.department===department;
+			});
+		})
+	};
 	
 }]);

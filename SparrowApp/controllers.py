@@ -65,7 +65,13 @@ def listAllProjects():
 			reslist.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
 				first_name=i.first_name, last_name=i.last_name, profile_picture=i.profile_picture, count=i.count,liked=True))
 
-	return jsonify(list=reslist), 200
+	allDepartmentProjectCountGraph = []
+	allDepartmentProjectCountGraphCounts = db.engine.execute(text("SELECT department, \
+		COUNT(DISTINCT projectID) projectCount FROM ProjectDB GROUP BY department"))
+	for row in allDepartmentProjectCountGraphCounts:
+		allDepartmentProjectCountGraph.append(dict(department=row.department,likes=row.projectCount))
+
+	return jsonify(list=reslist,allDepartmentProjectCountGraph=allDepartmentProjectCountGraph), 200
 
 @app.route('/listUserProjects', methods=['POST'])
 def listUserProjects():
