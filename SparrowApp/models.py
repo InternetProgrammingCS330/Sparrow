@@ -14,7 +14,7 @@ class UserDB(db.Model):
 	first_name = db.Column(VARCHAR(30), nullable=False)
 	last_name = db.Column(VARCHAR(30), nullable=False)
 	profile_picture = db.Column(VARCHAR(200))
-	department_preference =db.Column(LONGTEXT)
+	department_preference =db.Column(TEXT)
 
 	# def __init__( self, email,first_name,last_name,profile_picture,department_preference ):
 	# 	self.name = name
@@ -28,11 +28,11 @@ class ProjectDB(db.Model):
 	__tablename__ = 'ProjectDB'
 	projectID = db.Column(INTEGER, primary_key=True)
 	title = db.Column(VARCHAR(100), nullable=False, index=True)
-	description = db.Column(LONGTEXT, nullable=False)
+	description = db.Column(TEXT, nullable=False)
 	keywords = db.Column(VARCHAR(100))
 	department = db.Column(VARCHAR(20))
 	email = db.Column(VARCHAR(30), nullable=False)
-	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
+	time_stamp = db.Column(TIMESTAMP, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 
 	# def __init__( self, projectID,title,description,keywords,email,time_stamp ):
 	# 	self.name = name
@@ -47,8 +47,8 @@ class CommentsDB(db.Model):
 	commentID = db.Column(INTEGER, nullable=False, primary_key=True, autoincrement=False)
 	projectID = db.Column(INTEGER, nullable=False)
 	email = db.Column(VARCHAR(30), nullable=False)
-	comment = db.Column(LONGTEXT, nullable=False)
-	time_stamp = db.Column(DATETIME, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
+	comment = db.Column(TEXT, nullable=False)
+	time_stamp = db.Column(TIMESTAMP, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
 
 	# def __init__( self, commentID,projectID,email,comment,time_stamp ):
 	# 	self.name = name

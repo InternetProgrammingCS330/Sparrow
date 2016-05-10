@@ -3,7 +3,7 @@ DEBUG = True
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))  
 
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://master:qwerty@localhost/sergeidb?charset=utf8'
+SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://sparrow:qwerty@localhost/sergeidb'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 DATABASE_CONNECT_OPTIONS = {}
 

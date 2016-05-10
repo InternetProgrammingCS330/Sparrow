@@ -50,12 +50,15 @@ def view_of_test():
 def listAllProjects():
 	req = request.get_json()
 	reslist = []
-	query = db.engine.execute(text("select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,\
-		ProjectDB.department, ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,\
-		UserDB.profile_picture, ( select count(InterestDB.email) from InterestDB where \
-		InterestDB.projectID = ProjectDB.projectID) count, MAX(IF(InterestDB.email = '"+req["email"]+"', \
-		TRUE, FALSE)) as liked from UserDB, ProjectDB LEFT JOIN InterestDB ON \
-		(ProjectDB.projectID = InterestDB.projectID) where ProjectDB.email = UserDB.email GROUP BY ProjectDB.projectID;"))
+	query = db.engine.execute(text("""SELECT
+	"ProjectDB"."projectID","ProjectDB"."title","ProjectDB"."description", 
+	"ProjectDB"."department", "ProjectDB"."time_stamp", "UserDB"."email", 
+	"UserDB"."first_name","UserDB"."last_name",	"UserDB"."profile_picture", 
+	( select count("InterestDB"."email") from "InterestDB" where 
+		"InterestDB"."projectID" = "ProjectDB"."projectID") count,
+	 MAX(CASE WHEN "InterestDB"."email" = 'varaal01@luther.edu' THEN 1 ELSE 0 END) as liked FROM "UserDB", 
+"ProjectDB" LEFT JOIN "InterestDB" ON ("ProjectDB"."projectID" = "InterestDB"."projectID") 
+where "ProjectDB"."email" = "UserDB"."email" GROUP BY "ProjectDB"."projectID", "UserDB"."email";"""))
 	
 	for i in query:
 		if(i.liked == 0):
@@ -66,8 +69,8 @@ def listAllProjects():
 				first_name=i.first_name, last_name=i.last_name, profile_picture=i.profile_picture, count=i.count,liked=True))
 
 	allDepartmentProjectCountGraph = []
-	allDepartmentProjectCountGraphCounts = db.engine.execute(text("SELECT department, \
-		COUNT(DISTINCT projectID) projectCount FROM ProjectDB GROUP BY department"))
+	allDepartmentProjectCountGraphCounts = db.engine.execute(text("""SELECT "ProjectDB"."department", \
+		COUNT("ProjectDB"."projectID") as "projectCount" FROM "ProjectDB" GROUP BY "ProjectDB"."department";"""))
 	for row in allDepartmentProjectCountGraphCounts:
 		allDepartmentProjectCountGraph.append(dict(department=row.department,likes=row.projectCount))
 
@@ -79,73 +82,73 @@ def listUserProjects():
 	req = request.get_json()
 
 	yourProjectList = []
-	test = db.engine.execute(text("Select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,ProjectDB.department, \
-	ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture \
-	from ProjectDB, UserDB WHERE ProjectDB.email = UserDB.email AND ProjectDB.email = '"+req+"'"))	
+	test = db.engine.execute(text("""Select "ProjectDB"."projectID","ProjectDB"."title","ProjectDB"."description","ProjectDB"."department", \
+	"ProjectDB"."time_stamp", "UserDB"."email", "UserDB"."first_name","UserDB"."last_name","UserDB"."profile_picture" \
+	from "ProjectDB", "UserDB" WHERE "ProjectDB"."email" = "UserDB"."email" AND "ProjectDB"."email" = '"""+req+"""';"""))	
 	for i in test:
 		yourProjectList.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
 	
 	yourInterestList = []
-	test = db.engine.execute(text("Select ProjectDB.title,ProjectDB.description,ProjectDB.department, \
-	ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture \
-	from ProjectDB, UserDB, InterestDB WHERE ProjectDB.email=UserDB.email AND \
-	ProjectDB.projectID = InterestDB.projectID AND InterestDB.email = '"+req+"'"))	
+	test = db.engine.execute(text("""Select "ProjectDB"."title","ProjectDB"."description","ProjectDB"."department", \
+	"ProjectDB"."time_stamp", "UserDB"."email", "UserDB"."first_name","UserDB"."last_name","UserDB"."profile_picture" \
+	from "ProjectDB", "UserDB", "InterestDB" WHERE "ProjectDB"."email"="UserDB"."email" AND \
+	"ProjectDB"."projectID" = "InterestDB"."projectID" AND "InterestDB"."email" = '"""+req+"""';"""))	
 	for i in test:
 		yourInterestList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
 
 
 	reslistCounts = []
-	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, \
-		COUNT(DISTINCT projectID) yourProjectsCount FROM ProjectDB WHERE email = '"+req+"' \
-		GROUP BY DATE(time_stamp)"))
+	userProjectCounts = db.engine.execute(text("""SELECT DATE("time_stamp") time_stamp, \
+		COUNT("projectID") as "yourProjectsCount" FROM "ProjectDB" WHERE "email" = '"""+req+"""' \
+		GROUP BY DATE("time_stamp");"""))
 	for row in userProjectCounts:
 		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.yourProjectsCount))
 
 	yourProjectLikes = []
-	projectsLikesCounts = db.engine.execute(text("SELECT ProjectDB.title, ProjectDB.projectID, \
-		COUNT(InterestDB.email) \
-		yourLikes FROM ProjectDB,InterestDB WHERE ProjectDB.projectID=InterestDB.projectID AND \
-		ProjectDB.email = '"+req+"' GROUP BY ProjectDB.projectID;"))
+	projectsLikesCounts = db.engine.execute(text("""SELECT "ProjectDB"."title", "ProjectDB"."projectID", \
+		COUNT("InterestDB"."email") \
+		as "yourLikes" FROM "ProjectDB","InterestDB" WHERE "ProjectDB"."projectID"="InterestDB"."projectID" AND \
+		"ProjectDB"."email" = '"""+req+"""' GROUP BY "ProjectDB"."projectID";"""))
 	for row in projectsLikesCounts:
 		yourProjectLikes.append(dict(title=row.title,countLikes=row.yourLikes))
 
 	youGaveLikes = []
-	projectsLikesCounts = db.engine.execute(text("SELECT ProjectDB.title, ProjectDB.projectID, \
-		COUNT(InterestDB.email) \
-		yourLikes FROM ProjectDB,InterestDB WHERE ProjectDB.projectID=InterestDB.projectID AND \
-		ProjectDB.email = '"+req+"' GROUP BY ProjectDB.projectID;"))
+	projectsLikesCounts = db.engine.execute(text("""SELECT "ProjectDB"."title", "ProjectDB"."projectID", \
+		COUNT("InterestDB"."email") \
+		as "yourLikes" FROM "ProjectDB","InterestDB" WHERE "ProjectDB"."projectID"="InterestDB"."projectID" AND \
+		"ProjectDB"."email" = '"""+req+"""' GROUP BY "ProjectDB"."projectID";"""))
 	for row in projectsLikesCounts:
 		youGaveLikes.append(dict(title=row.title,countLikes=row.yourLikes))
 
 	yourProjectsCount = []
-	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourProjectsCount \
-		FROM ProjectDB WHERE email = '"+req+"'"))
+	userProjectCounts = db.engine.execute(text("""SELECT COUNT("projectID") as "yourProjectsCount" \
+		FROM "ProjectDB" WHERE "email" = '"""+req+"""';"""))
 	for row in userProjectCounts:
 		yourProjectsCount.append(dict(yourProjectsCount=row.yourProjectsCount))
 
 	yourInterestsCount = []
-	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourInterestsCount \
-		FROM InterestDB WHERE email = '"+req+"'"))
+	userProjectCounts = db.engine.execute(text("""SELECT COUNT("projectID") as "yourInterestsCount" \
+		FROM "InterestDB" WHERE "email" = '"""+req+"""';"""))
 	for row in userProjectCounts:
 		yourInterestsCount.append(dict(yourInterestsCount=row.yourInterestsCount))
 
 	totalCount = []
-	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) totalCount \
-		FROM ProjectDB WHERE email = '"+req+"'"))
+	userProjectCounts = db.engine.execute(text("""SELECT COUNT("projectID") as "totalCount" \
+		FROM "ProjectDB" WHERE "email" = '"""+req+"""';"""))
 	for row in userProjectCounts:
 		totalCount.append(dict(totalCount=row.totalCount))
 
 	departmentLikeGraph = []
-	departmentLikeGraphCounts = db.engine.execute(text("SELECT department, COUNT(DISTINCT projectID) projectCount \
-	FROM ProjectDB WHERE email = '"+req+"' GROUP BY department"))
+	departmentLikeGraphCounts = db.engine.execute(text("""SELECT "department", COUNT("projectID") as "projectCount" \
+	FROM "ProjectDB" WHERE "email" = '"""+req+"""' GROUP BY "department";"""))
 	for row in departmentLikeGraphCounts:
 		departmentLikeGraph.append(dict(department=row.department,likes=row.projectCount))
 
 	peopleLikeYourProjectsGraph = []
-	peopleLikeYourProjectsGraphCounts = db.engine.execute(text("SELECT department, \
-		COUNT(DISTINCT InterestDB.email) likeCount FROM ProjectDB, InterestDB \
-		WHERE ProjectDB.projectID = InterestDB.projectID and \
-		ProjectDB.email = '"+req+"' GROUP BY department;"))
+	peopleLikeYourProjectsGraphCounts = db.engine.execute(text("""SELECT "department", \
+		COUNT(DISTINCT "InterestDB"."email") as "likeCount" FROM "ProjectDB", "InterestDB" \
+		WHERE "ProjectDB"."projectID" = "InterestDB"."projectID" and \
+		"ProjectDB"."email" = '"""+req+"""' GROUP BY "department";"""))
 	for row in peopleLikeYourProjectsGraphCounts:
 		peopleLikeYourProjectsGraph.append(dict(department=row.department,likes=row.likeCount))
 
@@ -167,8 +170,8 @@ def listDepartments():
 def getTotalGraph():
 	departments = models.ProjectDB.query.all()
 	reslist = []
-	query = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, COUNT(DISTINCT projectID) \
-		totalCount FROM ProjectDB GROUP BY  DATE(time_stamp)"))
+	query = db.engine.execute(text("""SELECT DATE("time_stamp") time_stamp, COUNT(DISTINCT "projectID") \
+		as "totalCount" FROM "ProjectDB" GROUP BY  DATE("time_stamp");"""))
 	for row in query:
 		reslist.append(dict(time=row.time_stamp.isoformat(),count=row.totalCount))
 	return jsonify(list=reslist), 200
@@ -177,9 +180,9 @@ def getTotalGraph():
 def showProject():
 	req = request.get_json()
 	
-	project = db.engine.execute(text("SELECT * FROM ProjectDB WHERE projectID = " + str(req)))
+	project = db.engine.execute(text("""SELECT * FROM "ProjectDB" WHERE "projectID" = """ + str(req)))
 	
-	query = db.engine.execute(text("Select email,first_name,last_name, profile_picture from UserDB"))
+	query = db.engine.execute(text("""Select "email","first_name","last_name", "profile_picture" from "UserDB";"""))
 	users = {}
 	for row in query:
 		users[row[0]] = (row[1],row[2],row[3])
@@ -218,7 +221,7 @@ def addLike():
 	req = request.get_json()
 
 	verificationList = []
-	verification = db.engine.execute(text("SELECT * FROM InterestDB WHERE projectID = "+str(req["projectID"]) + " AND email='"+req["email"]+"'"))
+	verification = db.engine.execute(text("""SELECT * FROM "InterestDB" WHERE "projectID" = """+str(req["projectID"]) + """ AND "email"='"""+req["email"]+"""';"""))
 	for row in verification:
 		verificationList.append(dict(count=row))
 
@@ -231,18 +234,21 @@ def addLike():
 		db.session.commit()
 	
 	reslistCount = []
-	likeCounts = db.engine.execute(text("SELECT COUNT(DISTINCT email) count FROM InterestDB WHERE \
-		projectID = "+str(req["projectID"])))
+	likeCounts = db.engine.execute(text("""SELECT COUNT(DISTINCT "email") as "count" \
+		FROM "InterestDB" WHERE	"projectID" = """+str(req["projectID"])))
 	for row in likeCounts:
 		reslistCount.append(dict(count=row.count))
 
 	reslist = []
-	query = db.engine.execute(text("select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,\
-		ProjectDB.department, ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,\
-		UserDB.profile_picture, ( select count(InterestDB.email) from InterestDB where \
-		InterestDB.projectID = ProjectDB.projectID) count, MAX(IF(InterestDB.email = '"+req["email"]+"', \
-		TRUE, FALSE)) as liked from UserDB, ProjectDB LEFT JOIN InterestDB ON \
-		(ProjectDB.projectID = InterestDB.projectID) where ProjectDB.email = UserDB.email GROUP BY ProjectDB.projectID;"))
+	query = db.engine.execute(text("""SELECT
+	"ProjectDB"."projectID","ProjectDB"."title","ProjectDB"."description", 
+	"ProjectDB"."department", "ProjectDB"."time_stamp", "UserDB"."email", 
+	"UserDB"."first_name","UserDB"."last_name",	"UserDB"."profile_picture", 
+	( select count("InterestDB"."email") from "InterestDB" where 
+		"InterestDB"."projectID" = "ProjectDB"."projectID") count,
+	 MAX(CASE WHEN "InterestDB"."email" = 'varaal01@luther.edu' THEN 1 ELSE 0 END) as liked FROM "UserDB", 
+"ProjectDB" LEFT JOIN "InterestDB" ON ("ProjectDB"."projectID" = "InterestDB"."projectID") 
+where "ProjectDB"."email" = "UserDB"."email" GROUP BY "ProjectDB"."projectID", "UserDB"."email";"""))
 	
 	for i in query:
 		if(i.liked == 0):
@@ -264,72 +270,73 @@ def deleteUserProject():
 	db.session.commit()
 	
 	yourProjectList = []
-	test = db.engine.execute(text("Select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,ProjectDB.department, \
-	ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture \
-	from ProjectDB, UserDB WHERE ProjectDB.email = UserDB.email AND ProjectDB.email = '"+req['email']+"'"))	
+	test = db.engine.execute(text("""Select "ProjectDB"."projectID","ProjectDB"."title","ProjectDB"."description","ProjectDB"."department", \
+	"ProjectDB"."time_stamp", "UserDB"."email", "UserDB"."first_name","UserDB"."last_name","UserDB"."profile_picture" \
+	from "ProjectDB", "UserDB" WHERE "ProjectDB"."email" = "UserDB"."email" AND "ProjectDB"."email" = '"""+req['email']+"""';"""))	
 	for i in test:
 		yourProjectList.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
 	
 	yourInterestList = []
-	test = db.engine.execute(text("Select ProjectDB.title,ProjectDB.description,ProjectDB.department, \
-	ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,UserDB.profile_picture \
-	from ProjectDB, UserDB, InterestDB WHERE ProjectDB.email=UserDB.email AND \
-	ProjectDB.projectID = InterestDB.projectID AND InterestDB.email = '"+req['email']+"'"))	
+	test = db.engine.execute(text("""Select "ProjectDB"."title","ProjectDB"."description","ProjectDB"."department", \
+	"ProjectDB"."time_stamp", "UserDB"."email", "UserDB"."first_name","UserDB"."last_name","UserDB"."profile_picture" \
+	from "ProjectDB", "UserDB", "InterestDB" WHERE "ProjectDB"."email"="UserDB"."email" AND \
+	"ProjectDB"."projectID" = "InterestDB"."projectID" AND "InterestDB"."email" = '"""+req['email']+"""';"""))	
 	for i in test:
 		yourInterestList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
 
+
 	reslistCounts = []
-	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, \
-		COUNT(DISTINCT projectID) yourProjectsCount FROM ProjectDB WHERE email = '"+req['email']+"' \
-		GROUP BY DATE(time_stamp)"))
+	userProjectCounts = db.engine.execute(text("""SELECT DATE("time_stamp") time_stamp, \
+		COUNT("projectID") as "yourProjectsCount" FROM "ProjectDB" WHERE "email" = '"""+req['email']+"""' \
+		GROUP BY DATE("time_stamp");"""))
 	for row in userProjectCounts:
 		reslistCounts.append(dict(time=row.time_stamp.isoformat(),count=row.yourProjectsCount))
 
 	yourProjectLikes = []
-	projectsLikesCounts = db.engine.execute(text("SELECT ProjectDB.title, ProjectDB.projectID, \
-		COUNT(InterestDB.email) \
-		yourLikes FROM ProjectDB,InterestDB WHERE ProjectDB.projectID=InterestDB.projectID AND \
-		ProjectDB.email = '"+req['email']+"' GROUP BY ProjectDB.projectID;"))
+	projectsLikesCounts = db.engine.execute(text("""SELECT "ProjectDB"."title", "ProjectDB"."projectID", \
+		COUNT("InterestDB"."email") \
+		as yourLikes FROM "ProjectDB","InterestDB" WHERE "ProjectDB"."projectID"="InterestDB"."projectID" AND \
+		"ProjectDB"."email" = '"""+req['email']+"""' GROUP BY "ProjectDB"."projectID";"""))
 	for row in projectsLikesCounts:
 		yourProjectLikes.append(dict(title=row.title,countLikes=row.yourLikes))
 
 	youGaveLikes = []
-	projectsLikesCounts = db.engine.execute(text("SELECT ProjectDB.title, ProjectDB.projectID, \
-		COUNT(InterestDB.email) \
-		yourLikes FROM ProjectDB,InterestDB WHERE ProjectDB.projectID=InterestDB.projectID AND \
-		ProjectDB.email = '"+req['email']+"' GROUP BY ProjectDB.projectID;"))
+	projectsLikesCounts = db.engine.execute(text("""SELECT "ProjectDB"."title", "ProjectDB"."projectID", \
+		COUNT("InterestDB"."email") \
+		as yourLikes FROM "ProjectDB","InterestDB" WHERE "ProjectDB"."projectID"="InterestDB"."projectID" AND \
+		"ProjectDB"."email" = '"""+req['email']+"""' GROUP BY "ProjectDB"."projectID";"""))
 	for row in projectsLikesCounts:
 		youGaveLikes.append(dict(title=row.title,countLikes=row.yourLikes))
 
 	yourProjectsCount = []
-	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourProjectsCount \
-		FROM ProjectDB WHERE email = '"+req['email']+"'"))
+	userProjectCounts = db.engine.execute(text("""SELECT COUNT("projectID") as "yourProjectsCount" \
+		FROM "ProjectDB" WHERE "email" = '"""+req['email']+"""';"""))
 	for row in userProjectCounts:
 		yourProjectsCount.append(dict(yourProjectsCount=row.yourProjectsCount))
 
 	yourInterestsCount = []
-	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) yourInterestsCount \
-		FROM InterestDB WHERE email = '"+req['email']+"'"))
+	userProjectCounts = db.engine.execute(text("""SELECT COUNT("projectID") as "yourInterestsCount" \
+		FROM "InterestDB" WHERE "email" = '"""+req['email']+"""';"""))
 	for row in userProjectCounts:
 		yourInterestsCount.append(dict(yourInterestsCount=row.yourInterestsCount))
 
 	totalCount = []
-	userProjectCounts = db.engine.execute(text("SELECT COUNT(DISTINCT projectID) totalCount \
-		FROM ProjectDB WHERE email = '"+req['email']+"'"))
+	userProjectCounts = db.engine.execute(text("""SELECT COUNT("projectID") as "totalCount" \
+		FROM "ProjectDB" WHERE "email" = '"""+req['email']+"""';"""))
 	for row in userProjectCounts:
 		totalCount.append(dict(totalCount=row.totalCount))
 
 	departmentLikeGraph = []
-	departmentLikeGraphCounts = db.engine.execute(text("SELECT department, COUNT(DISTINCT projectID) projectCount \
-	FROM ProjectDB WHERE email = '"+req['email']+"' GROUP BY department"))
+	departmentLikeGraphCounts = db.engine.execute(text("""SELECT "department", COUNT("projectID") as "projectCount" \
+	FROM "ProjectDB" WHERE "email" = '"""+req['email']+"""' GROUP BY "department";"""))
 	for row in departmentLikeGraphCounts:
 		departmentLikeGraph.append(dict(department=row.department,likes=row.projectCount))
 
 	peopleLikeYourProjectsGraph = []
-	peopleLikeYourProjectsGraphCounts = db.engine.execute(text("SELECT department, \
-		COUNT(DISTINCT InterestDB.email) likeCount FROM ProjectDB, InterestDB \
-		WHERE ProjectDB.projectID = InterestDB.projectID and \
-		ProjectDB.email = '"+req['email']+"' GROUP BY department;"))
+	peopleLikeYourProjectsGraphCounts = db.engine.execute(text("""SELECT "department", \
+		COUNT(DISTINCT "InterestDB"."email") as "likeCount" FROM "ProjectDB", "InterestDB" \
+		WHERE "ProjectDB"."projectID" = "InterestDB"."projectID" and \
+		"ProjectDB"."email" = '"""+req['email']+"""' GROUP BY "department";"""))
 	for row in peopleLikeYourProjectsGraphCounts:
 		peopleLikeYourProjectsGraph.append(dict(department=row.department,likes=row.likeCount))
 
