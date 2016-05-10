@@ -30,7 +30,7 @@
 			<label >Project Proposal</label>
 			<textarea id =desc ng-model="project.description"></textarea>
 		</md-input-container>
-      <md-chips ng-model = "selectedKeyword">
+      <md-chips ng-model = "selectedKeyword" placeholder="Related Descriptors">
       </md-chips>
 
 		<!-- <div id=center>
@@ -40,7 +40,7 @@
 	<md-dialog-actions layout="row">
 		<md-button aria-label="Submit" ng-click="submitProject()" id="submit">Submit</md-button>
 		<md-button aria-label="Remove" ng-click="cancel()" id="cancel">Cancel</md-button>
-	</md-dialog-actions>
+	</md-dialog-actions>{{selectedKeyword}}
 	</div>
 
 </form>

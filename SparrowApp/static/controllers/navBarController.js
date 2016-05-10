@@ -127,6 +127,9 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 		$scope.project.firstName = $rootScope.user.firstName;
 		$scope.project.LastName = $rootScope.user.lastName;
 		$scope.project.department = $scope.selectedItem.department_name;
+		// var delimKey = 
+		$scope.project.key = $scope.selectedKeyword;
+
 
 		// $scope.project.keywords = 
 
@@ -141,17 +144,19 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	    });
 	}
 
-    $http({
-      	url: '/listKeywords',
-      	method: "GET",
-      	headers: { 'Content-Type': 'application/json' }
-    }).success(function(data) {
-      	console.log(data.list);
-      	$scope.$applyAsync(function(){
-				$rootScope.keywords = data.list;
-				console.log("heree " + $rootScope.keywords);
-		});
-    });
+  //   $http({
+  //     	url: '/listKeywords',
+  //     	method: "GET",
+  //     	headers: { 'Content-Type': 'application/json' }
+  //   }).success(function(data) {
+  //     	$scope.$applyAsync(function(){
+		// 		$rootScope.keywords = data.list;
+		// 		console.log("hihihi" + data.list);
+		// 		console.log("heree " + $rootScope.keywords);
+		// 		console.log("test " + $scope.selectedKeyword );
+		// });
+  //   });
+
   	$scope.selectedKeyword = [];
 
 	$scope.errorMessage = "";
