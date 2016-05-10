@@ -19,21 +19,7 @@
 
 				<h6 style="display:inline-block;" class="projectTimeStamp">{{project.time_stamp.slice(0,-15)}}</h6>
 				<span flex></span>
-				<!-- <p>{{project.description.replace(/(<([^>]+)>)/ig,"")}}</p> -->
-				<div id="{{project.projectID}}" class="stuffnthings"></div>
-
-				<script type="text/javascript">
-
-					var appElement = document.querySelector('[ng-app=projectListApp]');
-					var scope = angular.element(appElement).scope()
-					// console.log(appElement);
-					// console.log(scope.projectList);
-					// console.log("CLASSS",document.getElementsByClassName("stuffnthings")[0].id);
-					console.log("SCOPE",scope.project);
-
-
-					// var desc = appElement.getElementById("projectDescription").insertAdjacentHTML("beforeBegin",projDesc);
-				</script>
+				<p>{{project.description.replace(/(<([^>]+)>)/ig,"")}}</p>
 			</div>
 			<div ng-repeat="v in [0]">
 				<md-checkbox class="greenCheck md-secondary" ng-if="project.email != user.email" aria-label="Checkbox" ng-model="project.liked" style="display:inline-block;" ng-change="checked(project.projectID)"></md-checkbox>
