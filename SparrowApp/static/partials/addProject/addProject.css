@@ -1,0 +1,34 @@
+ .md-block {
+ 	padding-right: 15px;
+ 	padding-left: 15px;
+ }
+#desc {
+	overflow:auto;
+
+}
+#center {
+	text-align: center;
+}
+.width {
+	min-width:600px;
+}
+#padding {
+padding-right: 15px;
+ padding-left: 15px;
+
+}
+
+#buttonholder {
+	padding-top: 20px;
+	text-align: center;
+
+}
+#submit {
+	background-color:#006622;
+	color: white;
+
+} 
+#cancel {
+	background-color:#808080;
+	color:white;
+}

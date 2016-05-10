@@ -65,3 +65,6 @@ p.projectDescription {
 
 .red {
   background: #ff8a80; }
+md-checkbox.md-checked.greenCheck .md-icon {
+ background-color: #006622;
+}

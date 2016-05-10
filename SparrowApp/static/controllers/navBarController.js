@@ -134,12 +134,20 @@ app.service('gapiService', function() {
 
 function addProjectModalCtrl($state,$scope, $rootScope, $http, $mdDialog) {
 
+
 	$scope.submitProject = function(){
 		$scope.project.email = $rootScope.user.email;
 		$scope.project.userFullName = $rootScope.user.fullName;
 		$scope.project.firstName = $rootScope.user.firstName;
 		$scope.project.LastName = $rootScope.user.lastName;
 		$scope.project.department = $scope.selectedItem.department_name;
+		$scope.project.description = $rootScope.getContent();
+		console.log("DEScription",$scope.project.description)
+		// var delimKey = 
+		$scope.project.key = $scope.selectedKeyword;
+
+
+		// $scope.project.keywords = 
 
 		$http({
 	      	url: '/addProject',
@@ -158,6 +166,21 @@ function addProjectModalCtrl($state,$scope, $rootScope, $http, $mdDialog) {
 	    	}
 	    });
 	}
+
+  //   $http({
+  //     	url: '/listKeywords',
+  //     	method: "GET",
+  //     	headers: { 'Content-Type': 'application/json' }
+  //   }).success(function(data) {
+  //     	$scope.$applyAsync(function(){
+		// 		$rootScope.keywords = data.list;
+		// 		console.log("hihihi" + data.list);
+		// 		console.log("heree " + $rootScope.keywords);
+		// 		console.log("test " + $scope.selectedKeyword );
+		// });
+  //   });
+
+  	$scope.selectedKeyword = [];
 
 	$scope.errorMessage = "";
 

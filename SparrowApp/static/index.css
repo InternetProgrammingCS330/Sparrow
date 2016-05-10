@@ -1,3 +1,9 @@
+/*for add project*/
+.add{
+	padding-left: 100px;
+	padding-right: 5px;
+}
+/*end*/
 .top {
 	/*border: 1px solid red;*/
 	z-index:10000;

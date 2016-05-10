@@ -6,7 +6,21 @@ app.controller('projectListCtrl', ['$state','$rootScope',
   	
   	$rootScope.mainView = true; 
 
+
+
+
     console.log("HELLO FROM THE projectListCtrl");
+    console.log($scope.selectedKeyword);
+   	function transformChip(chip) {
+      // If it is an object, it's already a known chip
+      if (angular.isObject(chip)) {
+      	console.log(chip);
+        return chip;
+      }
+
+      // Otherwise, create a new one
+      return { lowername: chip};
+    }
 
     $scope.viewProject = function(proj) {
 		$location.url("/projectView/pid="+proj.projectID);
@@ -45,6 +59,21 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 				console.log("ProjectList:", $rootScope.projectList);
 			});
 	    });
+	    
+	  //   $http({
+	  //     	url: '/listKeywords',
+	  //     	method: "GET",
+	  //     	headers: { 'Content-Type': 'application/json' }
+	  //   }).success(function(data) {
+	  //     	console.log(data.list);
+	  //     	$scope.$applyAsync(function(){
+  	// 			$rootScope.keywords = data.list;
+  	// 			console.log("heree " + $rootScope.keywords);
+			// });
+	  //   });
+
+
+
 
 	    $http({
 	      	url: '/listDepartments',

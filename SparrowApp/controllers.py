@@ -8,7 +8,7 @@ from flask import Flask, request, Response
 from flask import render_template, url_for, redirect, send_from_directory
 from flask import send_file, make_response, abort, jsonify
 
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 from SparrowApp import app, db, models
 
@@ -89,6 +89,7 @@ def listUserProjects():
 	ProjectDB.projectID = InterestDB.projectID AND InterestDB.email = '"+req+"'"))	
 	for i in test:
 		yourInterestList.append(dict(title=i.title,description=i.description,department=i.department,time_stamp=i.time_stamp,email=i.email,first_name=i.first_name,last_name=i.last_name,profile_picture=i.profile_picture ))
+
 
 	reslistCounts = []
 	userProjectCounts = db.engine.execute(text("SELECT DATE(time_stamp) time_stamp, \
@@ -178,8 +179,13 @@ def showProject():
 @app.route('/addProject', methods=['POST'])
 def addProject():
 	req = request.get_json()
+	keystring = ""
+	for key in req["key"]:
+		keystring += key + "@@@"
+	keystring = keystring[:-3]
 
-	project = models.ProjectDB(title=req["title"], description=req["description"],email=req["email"],department=req["department"])
+
+	project = models.ProjectDB(title=req["title"], description=req["description"],email=req["email"],department=req["department"],keywords=keystring)
 	db.session.add(project)
 	db.session.commit()
 	
@@ -187,7 +193,7 @@ def addProject():
 	reslist = []
 	for i in projects:
 		reslist.append(dict(title=i.title,description=i.description, email=i.email, time_stamp=i.time_stamp))
-		print (reslist)
+		# print (reslist)
 
 	return jsonify(list=reslist), 200
 
