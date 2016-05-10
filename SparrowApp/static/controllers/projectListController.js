@@ -57,5 +57,9 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 			});
 	    });
 	}
+
+	if($rootScope.user != null){
+		$rootScope.refreshProjectList();
+	}
 	
 }]);

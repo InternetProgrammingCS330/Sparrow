@@ -105,7 +105,7 @@ app.controller('NavBarCtrl',function($state,$rootScope,$timeout, $scope, $http, 
 			    	if($state.current.name == 'index.projectlist'){
 			    		$rootScope.refreshProjectList();
 			    	}
-			    	else{
+			    	if($state.current.name == 'index.userview'){
 			    		$rootScope.userRefresh();
 			    	}
 			    });
