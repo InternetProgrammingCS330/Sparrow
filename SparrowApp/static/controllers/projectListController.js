@@ -14,7 +14,12 @@ app.controller('projectListCtrl', ['$state','$rootScope',
     }
 
     $scope.test1 = function(data){
-    	return data
+    	var el = document.getElementById(data.projectID);
+    	$('#'+data.projectID).html(data.description)
+    	console.log('#'+data.projectID)
+    	// el.innerHTML = "";
+	    // el.insertAdjacentHTML ("beforeBegin", data.description);
+	    console.log(data.description)
     }
 
     $scope.viewProject = function(proj) {
