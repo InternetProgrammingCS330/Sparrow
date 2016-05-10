@@ -5,7 +5,8 @@
 		          <h1 class="md-toolbar-tools" ng-cloak>Hello {{user.fullName}}!</h1>        
             </md-toolbar>
             <md-content>
-                <chart data="salesData"></chart>
+                <areachart2 ng-if="!yourLikesGraph" data="dataSource"></areachart2>
+                <likechart ng-if="yourLikesGraph" data="youGaveLikesTo"></likechart>
                 <piechart data="data"></piechart>
             </md-content>
         </md-sidenav>

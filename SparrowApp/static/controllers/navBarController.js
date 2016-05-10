@@ -45,7 +45,7 @@ var init = function() {
 	window.initGapi();
 }
 
-app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $location,
+app.controller('NavBarCtrl',function($state,$rootScope,$timeout, $scope, $http, $location,
 							$mdSidenav,	$mdDialog, $animate, $filter, $window, gapiService) {
 
 	$scope.onSearch = function(searchValue) {
@@ -54,6 +54,11 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
       console.log(searchValue);
 
     };
+
+    $scope.getProfileIcon = function(){
+    	console.log($rootScope.user.profpic)
+		return $rootScope.user.profpic
+	}
 
 	$scope.addProject = function(ev){
 
@@ -69,6 +74,8 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 
 	$scope.toProfile = function(){
 		$location.url("/userview");
+		$rootScope.userRefreshState = true;
+		$rootScope.userRefresh();
 	}
 
 	$scope.home = function(){
@@ -76,6 +83,7 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 	}
 
 	function getUser(){
+		$rootScope.userRefreshState = false;
 		$rootScope.user = {};
 		$rootScope.user.ready = false;
 		var request = gapi.client.plus.people.get({
@@ -96,10 +104,15 @@ app.controller('NavBarCtrl',function($rootScope,$timeout, $scope, $http, $locati
 			      	headers: { 'Content-Type': 'application/json' },
 			      	data: JSON.stringify($rootScope.user)
 			    }).success(function(data) {
+			    	console.log($state.current)
+			    	if($state.current.name == 'index.projectlist'){
+			    		$rootScope.refreshProjectList();
+			    	}
+			    	else{
+			    		$rootScope.userRefresh();
+			    	}
 			    });
-
 			});
-			
 		});
 	}
 
@@ -118,8 +131,9 @@ app.service('gapiService', function() {
 		gapi.client.load('plus', 'v1', postInitiation);
 	}
 });
-//keyword@@@ iterate through list and delimit it and then assign it to scope.keywords
-function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
+
+function addProjectModalCtrl($state,$scope, $rootScope, $http, $mdDialog) {
+
 
 	$scope.submitProject = function(){
 		$scope.project.email = $rootScope.user.email;
@@ -141,6 +155,13 @@ function addProjectModalCtrl($scope, $rootScope, $http, $mdDialog) {
 	    }).success(function(data) {
 	      	$rootScope.projectList = data.list;
 	      	$mdDialog.cancel();
+	      	if($state.current.name == 'index.projectlist'){
+	    		$rootScope.refreshProjectList();
+	    	}
+	    	else{
+	    		$rootScope.userRefreshState = true;
+				$rootScope.userRefresh();
+	    	}
 	    });
 	}
 

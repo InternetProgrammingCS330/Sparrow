@@ -5,20 +5,34 @@ app.controller('UserCtrl', ['$rootScope',
   function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
   	$rootScope.mainView = false;
 
+	$rootScope.total = {};
+	$rootScope.total.length = 0;
+
     var cw = $('.child').width();
 	$('.child').css({
 	    'height': cw + 'px'
 	});
 
-    function refresh(){
+    $rootScope.userRefresh = function(){
 
 		$http({
 	      	url: '/listUserProjects',
-	      	method: "GET",
-	      	headers: { 'Content-Type': 'application/json' }
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify($rootScope.user.email)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
-				$rootScope.projectList = data.list;
+				$rootScope.projectListUser = data.yourProjectList;
+				$rootScope.interestListUser = data.yourInterestList;
+
+				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
+				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
+				$rootScope.totalCount = data.total[0].totalCount
+				$rootScope.youGaveLikesTo = data.projectLikes;
+				console.log("YOU GAVE LIKES TO", $rootScope.youGaveLikesTo)
+
+				$rootScope.dataSource = data.yourProjectCounts;
+				console.log(data)
 			});
 	    });
 
@@ -33,24 +47,76 @@ app.controller('UserCtrl', ['$rootScope',
 	    });
 	}
 
-	refresh();
+	$rootScope.yourProjectsCount = 5;
 
-	$scope.dateSample = [
-	    {"date":"1-May-12","close":"612.33"},
-	    {"date":"30-Apr-12","close":"513.93"},
-	    {"date":"27-Apr-12","close":"693.00"},
-	    {"date":"26-Apr-12","close":"680.50"},
-	    {"date":"25-Apr-12","close":"630.33"},
-	    {"date":"24-Apr-12","close":"615.33"},
-	    {"date":"23-Apr-12","close":"600.33"},
-	    {"date":"22-Apr-12","close":"585.33"},
-	    {"date":"21-Apr-12","close":"570.33"},
-	    {"date":"20-Apr-12","close":"555.00"},
-	    {"date":"19-Apr-12","close":"540.00"},
-	    {"date":"18-Apr-12","close":"525.00"},
-	    {"date":"17-Apr-12","close":"510.00"},
-	    {"date":"16-Apr-12","close":"495.00"},
-	    {"date":"15-Apr-12","close":"480.00"}
-	]
-	
+	if($rootScope.userRefreshState){
+		$rootScope.userRefresh();
+	}
+
+	$scope.xAxis = "hour"
+
+	$scope.displayYourLikes = function(){
+		console.log("DISPLAYING LIKE GRAPH")
+    	$rootScope.yourLikesGraph = true;
+    	$rootScope.yourProjectsGraph = false;
+    }
+
+    $scope.yourProjects = function(){
+    	console.log("DISPLAYING LIKE GRAPH")
+    	$rootScope.yourLikesGraph = false;
+    	$rootScope.yourProjectsGraph = true;
+    }
+
+	$scope.delete = function(project){
+		console.log("PROJECT TO DELETE", project)
+		$http({
+	      	url: '/deleteUserProject',
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify(project)
+	    }).success(function(data) {
+	      	$scope.$applyAsync(function(){
+				$rootScope.projectListUser = data.yourProjectList;
+				$rootScope.interestListUser = data.yourInterestList;
+
+				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
+				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
+				$rootScope.youGaveLikesTo = data.projectLikes;
+				console.log("YOU GAVE LIKES TO", $rootScope.youGaveLikesTo)
+
+				$rootScope.dataSource = data.yourProjectCounts;
+				console.log(data)
+			});
+	    });
+	}
+
+	$scope.test = function(btnName) {
+		switch(btnName) {
+		case "Total Projects":
+			$scope.dataSource = [
+			    {time:1,count:9},
+				{time:2,count:7},
+				{time:3,count:12},
+			    {time:4,count:3}
+			]
+			break;
+		case "Your Interests": 
+			$scope.dataSource = [
+			    {time:1,count:4},
+				{time:2,count:3},
+				{time:3,count:2},
+			    {time:4,count:1}
+			]
+			break;
+		case "Blank": 
+			$scope.dataSource = [
+			    {time:1,count:7},
+				{time:2,count:3},
+				{time:3,count:2},
+			    {time:4,count:5}
+			]
+			break;
+		}
+	}
+
 }]);

@@ -1,8 +1,8 @@
 var app = angular.module('projectListApp',['ngMaterial']);
 
-app.controller('projectListCtrl', ['$rootScope',
+app.controller('projectListCtrl', ['$state','$rootScope',
   '$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
-  function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
+  function($state,$rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
   	
   	$rootScope.mainView = true; 
 
@@ -22,19 +22,41 @@ app.controller('projectListCtrl', ['$rootScope',
       return { lowername: chip};
     }
 
-    function refresh(){
+    $scope.viewProject = function(proj) {
+		$location.url("/projectView/pid="+proj.projectID);
+    }
+
+    $scope.checked = function(projectID){
+    	var toLike = {
+    		projectID:projectID,
+    		email:$rootScope.user.email
+    	}
+    	console.log("LIKE", $rootScope.user.email)
+    	$http({
+	      	url: '/addLike',
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify(toLike)
+	    }).success(function(data) {
+	    	$scope.$applyAsync(function(){
+				$rootScope.projectList = data.list;
+				console.log("NEW LIKES",data)
+	    	});
+	    });
+    }
+
+    $rootScope.refreshProjectList = function(){
 		console.log("REFRESHING");
 
 		$http({
 	      	url: '/listAllProjects',
-	      	method: "GET",
-	      	headers: { 'Content-Type': 'application/json' }
+	      	method: "POST",
+	      	headers: { 'Content-Type': 'application/json' },
+	      	data: JSON.stringify($rootScope.user)
 	    }).success(function(data) {
-	      	console.log(data.list);
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
-				console.log("HERE");
-				console.log($rootScope.projectList);
+				console.log("ProjectList:", $rootScope.projectList);
 			});
 	    });
 	    
@@ -58,13 +80,10 @@ app.controller('projectListCtrl', ['$rootScope',
 	      	method: "GET",
 	      	headers: { 'Content-Type': 'application/json' }
 	    }).success(function(data) {
-	      	console.log(data.list);
 	      	$scope.$applyAsync(function(){
   				$rootScope.Departments = data.list;
 			});
 	    });
 	}
-
-	refresh();
 	
 }]);
