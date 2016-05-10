@@ -23,8 +23,10 @@
 
 				<div id="sdf{{project.projectID}}">{{test1(project)}}</div>
 			</div>
-			<div ng-repeat="v in [0]">
-				<md-checkbox class="greenCheck md-secondary" ng-if="project.email != user.email" aria-label="Checkbox" ng-model="project.liked" style="display:inline-block;" ng-change="checked(project.projectID)"></md-checkbox>
+
+			<div class=padding ng-repeat="v in [0]">
+				<md-checkbox title ="Like it?" class=greenCheck ng-if="project.email != user.email" aria-label="Checkbox" ng-model="project.liked" style="display:inline-block;" ng-change="checked(project.projectID)">{{project.count}}</md-checkbox>
+
 			</div>
 		</md-list-item>
 		<!-- <md-list-item ng-repeat="person in people" ng-click="goToPerson(person.name, $event)">
