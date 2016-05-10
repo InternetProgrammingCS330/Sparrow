@@ -34,4 +34,3 @@ node_modules
 
 venv
 *.pyc
-SparrowApp/static/bower_components
