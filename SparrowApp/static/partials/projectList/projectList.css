@@ -68,3 +68,11 @@ p.projectDescription {
 md-checkbox.md-checked.greenCheck .md-icon {
  background-color: #006622;
 }
+.padding {
+  padding-left: 10px;
+}
+input+div{display:none;}
+input:hover+div{
+  display:inline;
+  background-color: transparent;
+}
