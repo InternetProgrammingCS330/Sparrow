@@ -17,6 +17,15 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 		$location.url("/projectView/pid="+proj.projectID);
     }
 
+    function populateDescription(projectID) {
+    	for (item in $rootScope.projectList) {
+    		if ($rootScope.projectList[item].projectID = projectID) {
+    			console.log(document.getElementById("1"));
+    			document.getElementById(projectID).innerHTML = $rootScope.projectList.description;
+    		}
+    	}
+    }
+
     $scope.checked = function(projectID){
     	var toLike = {
     		projectID:projectID,
@@ -35,7 +44,7 @@ app.controller('projectListCtrl', ['$state','$rootScope',
     }
 
     $rootScope.refreshProjectList = function(){
-
+    	console.log(document);
 		$http({
 	      	url: '/listAllProjects',
 	      	method: "POST",
@@ -44,6 +53,7 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
+				$scope.projectList = data.list;
 			});
 	    });
 
