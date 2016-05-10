@@ -368,6 +368,13 @@ def getEdit():
 			title=i.title,keywords=i.keywords,time_stamp=i.time_stamp,email=i.email))
 	return jsonify(project=project), 200
 
+@app.route('/saveEdit', methods=['POST'])
+def saveEdit():
+	req = request.get_json()
+	models.ProjectDB.query.filter_by(projectID=req["projectID"]).update({models.ProjectDB.description: req["description"]})
+	db.session.commit()
+	return jsonify(project="GOOD WORK"), 200
+
 # special file handlers and error handlers
 @app.route('/favicon.ico')
 def favicon():

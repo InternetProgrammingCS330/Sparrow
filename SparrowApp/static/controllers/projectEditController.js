@@ -26,6 +26,27 @@ app.controller('projectEditCtrl', ['$state','$rootScope',
     return $scope.tinymceModel;
   };
 
+  $scope.save = function(){
+
+    console.log("SAVING");
+
+    $rootScope.editingProject.description = $rootScope.getContent();
+
+    $http({
+          url: '/saveEdit',
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          data:$rootScope.editingProject
+      }).success(function(data) {
+          $scope.$applyAsync(function(){
+            $location.url("/");
+          });
+    });
+  }
+  $scope.cancel = function(){
+    $location.url("/");
+  }
+
   $scope.setContent = function() {
     $scope.tinymceModel = $rootScope.editingProject.description;
   };
@@ -45,10 +66,10 @@ app.controller('projectEditCtrl', ['$state','$rootScope',
     height: 500,
     plugins: [
       'advlist autolink lists link image charmap print preview anchor',
-      'searchreplace visualblocks code fullscreen',
-      'insertdatetime media table contextmenu paste save menusave'
+      'searchreplace visualblocks fullscreen',
+      'insertdatetime media table contextmenu paste'
     ],
-    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | save',
+    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
     content_css: [
       '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
       '//www.tinymce.com/css/codepen.min.css'
