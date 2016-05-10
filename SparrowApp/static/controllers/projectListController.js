@@ -6,19 +6,10 @@ app.controller('projectListCtrl', ['$state','$rootScope',
   	
   	$rootScope.mainView = true; 
 
-
-
-
-    console.log("HELLO FROM THE projectListCtrl");
-    console.log($scope.selectedKeyword);
    	function transformChip(chip) {
-      // If it is an object, it's already a known chip
       if (angular.isObject(chip)) {
-      	console.log(chip);
         return chip;
       }
-
-      // Otherwise, create a new one
       return { lowername: chip};
     }
 
@@ -31,7 +22,6 @@ app.controller('projectListCtrl', ['$state','$rootScope',
     		projectID:projectID,
     		email:$rootScope.user.email
     	}
-    	console.log("LIKE", $rootScope.user.email)
     	$http({
 	      	url: '/addLike',
 	      	method: "POST",
@@ -40,13 +30,11 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	    }).success(function(data) {
 	    	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
-				console.log("NEW LIKES",data)
 	    	});
 	    });
     }
 
     $rootScope.refreshProjectList = function(){
-		console.log("REFRESHING");
 
 		$http({
 	      	url: '/listAllProjects',
@@ -56,24 +44,8 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
-				console.log("ProjectList:", $rootScope.projectList);
 			});
 	    });
-	    
-	  //   $http({
-	  //     	url: '/listKeywords',
-	  //     	method: "GET",
-	  //     	headers: { 'Content-Type': 'application/json' }
-	  //   }).success(function(data) {
-	  //     	console.log(data.list);
-	  //     	$scope.$applyAsync(function(){
-  	// 			$rootScope.keywords = data.list;
-  	// 			console.log("heree " + $rootScope.keywords);
-			// });
-	  //   });
-
-
-
 
 	    $http({
 	      	url: '/listDepartments',

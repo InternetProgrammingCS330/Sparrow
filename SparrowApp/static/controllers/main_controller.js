@@ -88,11 +88,11 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
 					'main1@index': {
 						templateUrl : 'static/partials/projectEdit/projectEdit.html',
 						action : 'projectEditApp.projectEditCtrl'
-					},
-					'right@index': {
-						templateUrl : 'static/partials/projectEdit/projectEditSide.html',
-						action : 'projectEditApp.projectEditCtrl'
 					}
+					// 'right@index': {
+					// 	templateUrl : 'static/partials/projectEdit/projectEditSide.html',
+					// 	action : 'projectEditApp.projectEditCtrl'
+					// }
 				}
 			})
 			.state('index.userview', {

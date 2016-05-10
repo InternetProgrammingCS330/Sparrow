@@ -49,7 +49,6 @@ def view_of_test():
 @app.route('/listAllProjects', methods=['POST'])
 def listAllProjects():
 	req = request.get_json()
-	print(req)
 	reslist = []
 	query = db.engine.execute(text("select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,\
 		ProjectDB.department, ProjectDB.time_stamp, UserDB.email, UserDB.first_name,UserDB.last_name,\
@@ -72,8 +71,6 @@ def listAllProjects():
 def listUserProjects():
 
 	req = request.get_json()
-
-	print("USER REQUEST", req)
 
 	yourProjectList = []
 	test = db.engine.execute(text("Select ProjectDB.projectID,ProjectDB.title,ProjectDB.description,ProjectDB.department, \
@@ -168,8 +165,6 @@ def getTotalGraph():
 		totalCount FROM ProjectDB GROUP BY  DATE(time_stamp)"))
 	for row in query:
 		reslist.append(dict(time=row.time_stamp.isoformat(),count=row.totalCount))
-	print(reslist)
-	print(type(reslist))
 	return jsonify(list=reslist), 200
 
 @app.route('/showProject', methods=['POST'])
@@ -209,7 +204,6 @@ def addProject():
 	reslist = []
 	for i in projects:
 		reslist.append(dict(title=i.title,description=i.description, email=i.email, time_stamp=i.time_stamp))
-		# print (reslist)
 
 	return jsonify(list=reslist), 200
 
@@ -343,8 +337,6 @@ def deleteUserProject():
 def checkUser():
 	req = request.get_json()
 
-	print("USER REQUEST", req)
-
 	userStatus = models.UserDB.query.filter_by(email=req["email"])
 	userList = []
 	for i in userStatus:
@@ -365,6 +357,16 @@ def checkUser():
 			return jsonify(title="userEXISTS, ProfPic UPDATED"), 200
 		else:
 			return jsonify(title="userEXISTS"), 200
+
+@app.route('/getEdit', methods=['POST'])
+def getEdit():
+	req = request.get_json()
+	projectQuery = models.ProjectDB.query.filter_by(projectID=req)
+	project = []
+	for i in projectQuery:
+		project.append(dict(projectID=i.projectID,department=i.department,description=i.description,\
+			title=i.title,keywords=i.keywords,time_stamp=i.time_stamp,email=i.email))
+	return jsonify(project=project), 200
 
 # special file handlers and error handlers
 @app.route('/favicon.ico')

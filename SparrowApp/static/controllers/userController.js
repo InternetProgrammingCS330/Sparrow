@@ -32,7 +32,6 @@ app.controller('UserCtrl', ['$rootScope',
 				$rootScope.youGaveLikesTo = data.yourProjectLikes;
 
 				$rootScope.dataSource = data.yourProjectCounts;
-				console.log("FULL RESPONSE DATA",data)
 
 				$rootScope.departmentData = data.departmentLikeGraph;
 				$rootScope.departmentDataLikes = data.peopleLikeYourProjectsGraph;
@@ -59,10 +58,8 @@ app.controller('UserCtrl', ['$rootScope',
 	$scope.xAxis = "hour"
 
 	$rootScope.showDepartment = function(department){
-		console.log("HELLO FROM TEST", department);
 		$scope.$applyAsync(function(){
 			$rootScope.projectListUser = $.grep( $scope.mainListUser, function( n, i ) {
-				console.log(n);
 			  return n.department===department;
 			});
 		})

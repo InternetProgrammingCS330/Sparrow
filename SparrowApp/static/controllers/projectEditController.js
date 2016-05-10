@@ -1,21 +1,33 @@
 var app = angular.module('projectEditApp',['ngMaterial','ui.tinymce']);
 
-app.controller('projectEditCtrl', ['$rootScope',
+app.controller('projectEditCtrl', ['$state','$rootScope',
 	'$timeout', '$scope', '$http', '$location', "$mdSidenav", '$mdDialog','$animate','$filter',
-	function($rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
+	function($state,$rootScope,$timeout, $scope, $http, $location, $mdSidenav, $mdDialog,$animate,$filter) {
 
-  	console.log("EDITOR PAGE");
+  var curPID = $location.absUrl().split("=")[1];
 
+  $scope.refreshEdit = function(){
+    $http({
+          url: '/getEdit',
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          data:curPID
+      }).success(function(data) {
+          $scope.$applyAsync(function(){
+            $rootScope.editingProject = data.project[0];
+            $scope.setContent();
+      });
+    });
+  }
 
-  $scope.tinymceModel = '';
+  $scope.refreshEdit();  
 
   $rootScope.getContent = function() {
-    console.log($scope.tinymceModel);
     return $scope.tinymceModel;
   };
 
   $scope.setContent = function() {
-    $scope.tinymceModel = $rootScope.currentProject.description;
+    $scope.tinymceModel = $rootScope.editingProject.description;
   };
 
   tinymce.PluginManager.add('menusave', function(editor, url) {
@@ -24,7 +36,6 @@ app.controller('projectEditCtrl', ['$rootScope',
           context: 'file',
           onclick: function() {
               $('.mce-i-save').closest('button').trigger('click');
-              console.log("ScopeContent:",$scope.getContent())
           }
       });
   });

@@ -3,7 +3,7 @@
 		<div flex-xs flex-gt-xs="50" layout="column">
 			<md-card>
 				<md-toolbar layout="row" class="md-hue-3">
-					<md-button class="md-raised md-primary" style="border-radius: 0; margin: 0; margin-right: 10px;">
+					<md-button ng-click="back()" class="md-raised md-primary" style="border-radius: 0; margin: 0; margin-right: 10px;">
 						<md-icon md-svg-icon="static/img/returnWhite48.svg" style="padding: 0;"></md-icon>BACK
 					</md-button>
 					<h1>{{currentProject.title}}</h1><span flex></span><h4 style="margin-right: 10px;">{{currentProject.first_name}} {{currentProject.last_name}}</h4>
@@ -12,8 +12,7 @@
 					<md-toolbar class="md-hue-1">
 						<div class="md-toolbar-tools">
 							<md-card-actions layout="row" layout-align="end center">
-								<md-button class="md-raised" ng-click="edit()">Edit</md-button>
-								<md-button aria-label="Cancel">Cancel</md-button>
+								<md-button ng-if="!viewOnly" class="md-raised" ng-click="edit()">Edit</md-button>
 							</md-card-actions>
 						</div>
 					</md-toolbar>
