@@ -10,3 +10,26 @@ md-card.statsPreview {
 	width: 30%;
 	min-width: 200px;
 }
+.deletion {
+	display:inline-block ;
+	background-color:rgb(160,93,86) ;
+	color: white;
+}	
+#description {
+	padding-right: 30px;
+}
+.statsPreview {
+	background-color:(160,93,86) ;
+}
+h1 {
+	text-decoration: underline;
+	color:rgb(107,72,107);
+}
+h4{
+	text-align: right;
+	color:rgb(208,116,60);
+}
+.viewGraph { 
+	background-color: rgb(152,171,197);
+	color: white;
+ }

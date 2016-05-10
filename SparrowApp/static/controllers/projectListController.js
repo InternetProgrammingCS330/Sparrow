@@ -13,7 +13,7 @@ app.controller('projectListCtrl', ['$state','$rootScope',
       return { lowername: chip};
     }
 
-    $scope.test1 = function(data){
+    $scope.htmlDesc = function(data){
     	var el = document.getElementById(data.projectID);
     	$('#'+data.projectID).html(data.description)
     }
