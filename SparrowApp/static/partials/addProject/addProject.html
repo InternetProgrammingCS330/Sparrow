@@ -5,7 +5,17 @@
 			<h2>Add Project Proposal&nbsp; </h2>
 		</div>
 	</md-toolbar>
-	<div layout-gt-xs="row">
+	<table>
+	<tr>
+	<td>
+	<div ng-controller="projectEditCtrl" ng-cloak id=left >
+   <!-- <form ng-app="textEditApp" method="post" ng-controller="TextEditCtrl"> -->
+    <textarea id="proposal" ui-tinymce="tinymceOptionsAdd" ng-model="tinymceModel"></textarea>
+	</div>
+	</td>
+	<td id=right>
+    <!-- </form> -->
+	<div >
 		<center><h4 style="color:red;">{{errorMessage}}</h4></center>
 		<md-input-container class="md-block" flex-gt-xs>
 			<label >Title</label>
@@ -26,21 +36,21 @@
             <span id=padding md-highlight-text="searchText">{{item.department_name}}</span>
           </md-item-template>      
         </md-autocomplete>
-		<md-input-container class="md-block" flex-gt-xs>
-			<label >Project Proposal</label>
-			<textarea id =desc ng-model="project.description"></textarea>
-		</md-input-container>
       <md-chips ng-model = "selectedKeyword" placeholder="Related Descriptors">
       </md-chips>
+      <div id=buttonholder>
+			<md-button id=submit aria-label="Submit" ng-click="submitProject()" id="submit">Submit</md-button>
+			<md-button id=cancel aria-label="Remove" ng-click="cancel()" id="cancel">Cancel</md-button>
+	</div>
+      </div>
+      </td>
+     </tr>
+     </table>
 
 		<!-- <div id=center>
 		<div id=desc contenteditable="true" placeholder="Project Proposal"  ></div>
 		</div> -->
 
-	<md-dialog-actions layout="row">
-		<md-button aria-label="Submit" ng-click="submitProject()" id="submit">Submit</md-button>
-		<md-button aria-label="Remove" ng-click="cancel()" id="cancel">Cancel</md-button>
-	</md-dialog-actions>{{selectedKeyword}}
-	</div>
+
 
 </form>

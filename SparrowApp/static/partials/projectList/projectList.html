@@ -22,7 +22,7 @@
 				<p class="projectDescription" style="margin-bottom: 50px;">{{ project.description.slice(0,300)}}...</p>
 			</div>
 			<div ng-repeat="v in [0]">
-				<md-checkbox ng-if="project.email != user.email" aria-label="Checkbox" ng-model="project.liked" style="display:inline-block;" ng-change="checked(project.projectID)">{{project.count}}</md-checkbox>
+				<md-checkbox class=greenCheck ng-if="project.email != user.email" aria-label="Checkbox" ng-model="project.liked" style="display:inline-block;" ng-change="checked(project.projectID)">{{project.count}}</md-checkbox>
 			</div>
 		</md-list-item>
 	</md-list>
