@@ -13,6 +13,10 @@ app.controller('projectListCtrl', ['$state','$rootScope',
       return { lowername: chip};
     }
 
+    $scope.test1 = function(data){
+    	return data
+    }
+
     $scope.viewProject = function(proj) {
 		$location.url("/projectView/pid="+proj.projectID);
     }
