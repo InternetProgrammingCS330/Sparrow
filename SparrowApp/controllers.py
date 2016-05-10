@@ -319,9 +319,25 @@ def deleteUserProject():
 	for row in userProjectCounts:
 		totalCount.append(dict(totalCount=row.totalCount))
 
+	departmentLikeGraph = []
+	departmentLikeGraphCounts = db.engine.execute(text("SELECT department, COUNT(DISTINCT projectID) projectCount \
+	FROM ProjectDB WHERE email = '"+req['email']+"' GROUP BY department"))
+	for row in departmentLikeGraphCounts:
+		departmentLikeGraph.append(dict(department=row.department,likes=row.projectCount))
+
+	peopleLikeYourProjectsGraph = []
+	peopleLikeYourProjectsGraphCounts = db.engine.execute(text("SELECT department, \
+		COUNT(DISTINCT InterestDB.email) likeCount FROM ProjectDB, InterestDB \
+		WHERE ProjectDB.projectID = InterestDB.projectID and \
+		ProjectDB.email = '"+req['email']+"' GROUP BY department;"))
+	for row in peopleLikeYourProjectsGraphCounts:
+		peopleLikeYourProjectsGraph.append(dict(department=row.department,likes=row.likeCount))
+
 	return jsonify(yourProjectList=yourProjectList,yourInterestList=yourInterestList,\
 		yourProjectCounts=reslistCounts,yourProjectsTotal=yourProjectsCount,\
-		yourInterestsTotal=yourInterestsCount,total=totalCount, yourProjectLikes=yourProjectLikes), 200
+		yourInterestsTotal=yourInterestsCount,total=totalCount, \
+		yourProjectLikes=yourProjectLikes,departmentLikeGraph=departmentLikeGraph,\
+		peopleLikeYourProjectsGraph=peopleLikeYourProjectsGraph), 200
 
 @app.route('/checkUser', methods=['POST'])
 def checkUser():
