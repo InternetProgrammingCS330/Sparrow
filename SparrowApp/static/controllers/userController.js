@@ -13,6 +13,10 @@ app.controller('UserCtrl', ['$rootScope',
 	    'height': cw + 'px'
 	});
 
+	$scope.viewProject = function(proj) {
+		$location.url("/projectView/pid="+proj.projectID);
+    }
+
     $rootScope.userRefresh = function(){
 
 		$http({
