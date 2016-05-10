@@ -374,7 +374,10 @@ angular.module('SparrowApp').directive("piechart", function($compile,$window) {
 				var g = svg.selectAll(".arc")
                   	.data(pie(data))
                 	.enter().append("g")
-                  	.attr("class", "arc");
+                  	.attr("class", "arc")
+                  	.on('mouseover', function (d){
+                  		console.log("HELLO WORLD")
+                  	});
 
                 g.append("path")
                   .attr("d", arc)
@@ -394,7 +397,7 @@ angular.module('SparrowApp').directive("piechart", function($compile,$window) {
 	};
 });
 
-angular.module('SparrowApp').directive("departmentchart", function($compile,$window) {
+angular.module('SparrowApp').directive("departmentchart", function($compile,$window, $rootScope) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -446,7 +449,7 @@ angular.module('SparrowApp').directive("departmentchart", function($compile,$win
                   .attr("d", arc)
                   .style("fill", function(d) { return color(d.data.department); })
                   .on("click", function (d) {
-		            console.log("HELLO");
+                  	$rootScope.showDepartment(d.data.department);
 		          });
 
                 g.append("text")

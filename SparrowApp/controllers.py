@@ -132,11 +132,25 @@ def listUserProjects():
 	for row in userProjectCounts:
 		totalCount.append(dict(totalCount=row.totalCount))
 
-	departmentLikeGraph = 
+	departmentLikeGraph = []
+	departmentLikeGraphCounts = db.engine.execute(text("SELECT department, COUNT(DISTINCT projectID) projectCount \
+	FROM ProjectDB WHERE email = '"+req+"' GROUP BY department"))
+	for row in departmentLikeGraphCounts:
+		departmentLikeGraph.append(dict(department=row.department,likes=row.projectCount))
+
+	peopleLikeYourProjectsGraph = []
+	peopleLikeYourProjectsGraphCounts = db.engine.execute(text("SELECT department, \
+		COUNT(DISTINCT InterestDB.email) likeCount FROM ProjectDB, InterestDB \
+		WHERE ProjectDB.projectID = InterestDB.projectID and \
+		ProjectDB.email = '"+req+"' GROUP BY department;"))
+	for row in peopleLikeYourProjectsGraphCounts:
+		peopleLikeYourProjectsGraph.append(dict(department=row.department,likes=row.likeCount))
 
 	return jsonify(yourProjectList=yourProjectList,yourInterestList=yourInterestList,\
 		yourProjectCounts=reslistCounts,yourProjectsTotal=yourProjectsCount,\
-		yourInterestsTotal=yourInterestsCount,total=totalCount, yourProjectLikes=yourProjectLikes), 200
+		yourInterestsTotal=yourInterestsCount,total=totalCount, \
+		yourProjectLikes=yourProjectLikes,departmentLikeGraph=departmentLikeGraph,\
+		peopleLikeYourProjectsGraph=peopleLikeYourProjectsGraph), 200
 
 @app.route('/listDepartments', methods=['GET'])
 def listDepartments():
@@ -171,8 +185,10 @@ def showProject():
 
 	reslist = []
 	for i in project:
-		reslist.append(dict(projectID=i.projectID,title=i.title,description=i.description,department=i.department,email=i.email, time_stamp=i.time_stamp,\
-			first_name=users[i.email][0], last_name=users[i.email][1], profile_picture=users[i.email][2]))
+		reslist.append(dict(projectID=i.projectID,title=i.title,description=i.description,\
+			department=i.department,email=i.email, time_stamp=i.time_stamp,\
+			first_name=users[i.email][0], last_name=users[i.email][1],\
+			profile_picture=users[i.email][2]))
 	
 	return jsonify(list=reslist), 200
 

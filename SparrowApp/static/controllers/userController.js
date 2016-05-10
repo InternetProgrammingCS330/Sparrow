@@ -22,6 +22,7 @@ app.controller('UserCtrl', ['$rootScope',
 	      	data: JSON.stringify($rootScope.user.email)
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
+	      		$scope.mainListUser = data.yourProjectList;
 				$rootScope.projectListUser = data.yourProjectList;
 				$rootScope.interestListUser = data.yourInterestList;
 
@@ -33,11 +34,8 @@ app.controller('UserCtrl', ['$rootScope',
 				$rootScope.dataSource = data.yourProjectCounts;
 				console.log("FULL RESPONSE DATA",data)
 
-				$rootScope.departmentData = [
-					{"department":"computer_science","likes":"2704659"},
-					{"department":"mathematics","likes":"4499890"},
-					{"department":"environmental_science","likes":"2159981"}
-				];
+				$rootScope.departmentData = data.departmentLikeGraph;
+				$rootScope.departmentDataLikes = data.peopleLikeYourProjectsGraph;
 			});
 	    });
 
@@ -59,6 +57,16 @@ app.controller('UserCtrl', ['$rootScope',
 	}
 
 	$scope.xAxis = "hour"
+
+	$rootScope.showDepartment = function(department){
+		console.log("HELLO FROM TEST", department);
+		$scope.$applyAsync(function(){
+			$rootScope.projectListUser = $.grep( $scope.mainListUser, function( n, i ) {
+				console.log(n);
+			  return n.department===department;
+			});
+		})
+	};
 
 	$scope.displayYourLikes = function(){
     	$rootScope.yourLikesGraph = true;
