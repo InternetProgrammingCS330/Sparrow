@@ -15,17 +15,12 @@ app.controller('projectListCtrl', ['$state','$rootScope',
       return { lowername: chip};
     }
 
-    $scope.viewProject = function(proj) {
-		$location.url("/projectView/pid="+proj.projectID);
+    $scope.test1 = function(data){
+    	return data
     }
 
-    function populateDescription(projectID) {
-    	for (item in $rootScope.projectList) {
-    		if ($rootScope.projectList[item].projectID = projectID) {
-    			console.log(document.getElementById("1"));
-    			document.getElementById(projectID).innerHTML = $rootScope.projectList.description;
-    		}
-    	}
+    $scope.viewProject = function(proj) {
+		$location.url("/projectView/pid="+proj.projectID);
     }
 
     $scope.checked = function(projectID){
@@ -46,7 +41,7 @@ app.controller('projectListCtrl', ['$state','$rootScope',
     }
 
     $rootScope.refreshProjectList = function(){
-    	console.log(document);
+
 		$http({
 	      	url: '/listAllProjects',
 	      	method: "POST",
@@ -55,7 +50,6 @@ app.controller('projectListCtrl', ['$state','$rootScope',
 	    }).success(function(data) {
 	      	$scope.$applyAsync(function(){
 				$rootScope.projectList = data.list;
-				$scope.projectList = data.list;
 			});
 	    });
 

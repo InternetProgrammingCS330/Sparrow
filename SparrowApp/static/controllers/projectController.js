@@ -27,6 +27,11 @@ app.controller('projectCtrl', ['$rootScope',
 	      	data: currentProject()
 	    }).success(function(data) {
 	      	$rootScope.currentProject = data.list[0];
+	      	var el = document.getElementById("viewDescription");
+	      	el.insertAdjacentHTML ("beforeBegin", $rootScope.currentProject.description);
+
+	      	console.log(compress($rootScope.currentProject.description))
+
 	      	if($rootScope.currentProject.email == $rootScope.user.email){
 	      		$rootScope.viewOnly = false;
 	      	}
@@ -36,4 +41,5 @@ app.controller('projectCtrl', ['$rootScope',
 	    });
 	}
 	refresh();
+
 }]);

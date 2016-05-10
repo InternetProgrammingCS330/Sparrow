@@ -371,7 +371,10 @@ def getEdit():
 @app.route('/saveEdit', methods=['POST'])
 def saveEdit():
 	req = request.get_json()
-	models.ProjectDB.query.filter_by(projectID=req["projectID"]).update({models.ProjectDB.description: req["description"]})
+
+	newDesc = req['description']
+
+	models.ProjectDB.query.filter_by(projectID=req["projectID"]).update({models.ProjectDB.description: newDesc})
 	db.session.commit()
 	return jsonify(project="GOOD WORK"), 200
 

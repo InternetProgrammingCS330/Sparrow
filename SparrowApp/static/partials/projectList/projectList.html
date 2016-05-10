@@ -15,11 +15,13 @@
 			</div>
 			<div class="md-list-item-text">
 				<h3 class="projectTitle">{{project.title}}</h3>
-				<p>{{project.count}}</p>
+				<p><b>LIKES</b> {{project.count}}</p>
 
 				<h6 style="display:inline-block;" class="projectTimeStamp">{{project.time_stamp.slice(0,-15)}}</h6>
 				<span flex></span>
-				<p>{{project.description.replace(/(<([^>]+)>)/ig,"")}}</p>
+				<!-- <p>{{project.description.replace(/(<([^>]+)>)/ig,"")}}</p> -->
+
+				<div id="prD">{{test1(project.description)}}</div>
 			</div>
 			<div ng-repeat="v in [0]">
 				<md-checkbox class="greenCheck md-secondary" ng-if="project.email != user.email" aria-label="Checkbox" ng-model="project.liked" style="display:inline-block;" ng-change="checked(project.projectID)"></md-checkbox>

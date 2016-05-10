@@ -26,6 +26,26 @@ app.controller('projectEditCtrl', ['$state','$rootScope',
     return $scope.tinymceModel;
   };
 
+  function compress(s) {
+    var i, l, out='';
+    if (s.length % 2 !== 0) s += ' ';
+    for (i = 0, l = s.length; i < l; i+=2) {
+      out += String.fromCharCode((s.charCodeAt(i)*256) + s.charCodeAt(i+1));
+    }
+    return String.fromCharCode(9731)+out;
+  }
+
+  function decompress(s) {
+    var i, l, n, m, out = '';
+    if (s.charCodeAt(0) !== 9731) return s;
+    for (i = 1, l = s.length; i < l; i++) {
+      n = s.charCodeAt(i);
+      m = Math.floor(n/256);
+      out += String.fromCharCode(m, n%256);
+    }
+    return out;
+  }
+
   $scope.save = function(){
 
     console.log("SAVING");
