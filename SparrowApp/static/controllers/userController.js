@@ -28,11 +28,16 @@ app.controller('UserCtrl', ['$rootScope',
 				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
 				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
 				$rootScope.totalCount = data.total[0].totalCount
-				$rootScope.youGaveLikesTo = data.projectLikes;
-				console.log("YOU GAVE LIKES TO", $rootScope.youGaveLikesTo)
+				$rootScope.youGaveLikesTo = data.yourProjectLikes;
 
 				$rootScope.dataSource = data.yourProjectCounts;
-				console.log(data)
+				console.log("FULL RESPONSE DATA",data)
+
+				$rootScope.departmentData = [
+					{"department":"computer_science","likes":"2704659"},
+					{"department":"mathematics","likes":"4499890"},
+					{"department":"environmental_science","likes":"2159981"}
+				];
 			});
 	    });
 
@@ -56,19 +61,16 @@ app.controller('UserCtrl', ['$rootScope',
 	$scope.xAxis = "hour"
 
 	$scope.displayYourLikes = function(){
-		console.log("DISPLAYING LIKE GRAPH")
     	$rootScope.yourLikesGraph = true;
     	$rootScope.yourProjectsGraph = false;
     }
 
     $scope.yourProjects = function(){
-    	console.log("DISPLAYING LIKE GRAPH")
     	$rootScope.yourLikesGraph = false;
     	$rootScope.yourProjectsGraph = true;
     }
 
 	$scope.delete = function(project){
-		console.log("PROJECT TO DELETE", project)
 		$http({
 	      	url: '/deleteUserProject',
 	      	method: "POST",
@@ -82,41 +84,15 @@ app.controller('UserCtrl', ['$rootScope',
 				$rootScope.yourProjectsCount = data.yourProjectsTotal[0].yourProjectsCount
 				$rootScope.yourInterestsCount = data.yourInterestsTotal[0].yourInterestsCount
 				$rootScope.youGaveLikesTo = data.projectLikes;
-				console.log("YOU GAVE LIKES TO", $rootScope.youGaveLikesTo)
 
 				$rootScope.dataSource = data.yourProjectCounts;
-				console.log(data)
 			});
 	    });
-	}
 
-	$scope.test = function(btnName) {
-		switch(btnName) {
-		case "Total Projects":
-			$scope.dataSource = [
-			    {time:1,count:9},
-				{time:2,count:7},
-				{time:3,count:12},
-			    {time:4,count:3}
-			]
-			break;
-		case "Your Interests": 
-			$scope.dataSource = [
-			    {time:1,count:4},
-				{time:2,count:3},
-				{time:3,count:2},
-			    {time:4,count:1}
-			]
-			break;
-		case "Blank": 
-			$scope.dataSource = [
-			    {time:1,count:7},
-				{time:2,count:3},
-				{time:3,count:2},
-			    {time:4,count:5}
-			]
-			break;
-		}
+	    $rootScope.departmentData = [
+			{"department":"computer_science","likes":"2704659"},
+			{"department":"mathematics","likes":"4499890"},
+			{"department":"environmental_science","likes":"2159981"}
+		];
 	}
-
 }]);

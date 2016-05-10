@@ -6,7 +6,7 @@
 	          	<h4> {{totalCount}} </h4>
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
-        		<md-button ng-click="test(card.title)">View</md-button>
+        		<md-button ng-click="yourProjects()">View</md-button>
          	</div>
        	</md-card>
       	<md-card class="statsPreview" style="width:auto">
@@ -15,7 +15,7 @@
 	          	<h4> {{yourProjectsCount}} </h4>
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
-        		<md-button ng-click="yourProjects()">View</md-button>
+        		<md-button ng-click="displayYourLikes()">View</md-button>
          	</div>
        	</md-card>
        	<md-card class="statsPreview" style="width:auto">
@@ -25,15 +25,6 @@
           	</md-card-content>
           	<div class="md-actions" layout="row" layout-align="end center">
         		<md-button ng-click="test(card.title)">View</md-button>
-         	</div>
-       	</md-card>
-       	<md-card class="statsPreview" style="width:auto">
-          	<md-card-content>
-	            <h1> You Received Likes </h1>
-	          	<h4> {{totalCount}} </h4>
-          	</md-card-content>
-          	<div class="md-actions" layout="row" layout-align="end center">
-        		<md-button ng-click="displayYourLikes()">View</md-button>
          	</div>
        	</md-card>
     </div>
