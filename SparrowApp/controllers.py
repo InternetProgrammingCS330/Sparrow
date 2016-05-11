@@ -56,7 +56,7 @@ def listAllProjects():
 	"UserDB"."first_name","UserDB"."last_name",	"UserDB"."profile_picture", 
 	( select count("InterestDB"."email") from "InterestDB" where 
 		"InterestDB"."projectID" = "ProjectDB"."projectID") count,
-	 MAX(CASE WHEN "InterestDB"."email" = '"""+req+"""' THEN 1 ELSE 0 END) as liked FROM "UserDB", 
+	 MAX(CASE WHEN "InterestDB"."email" = '"""+req['email']+"""' THEN 1 ELSE 0 END) as liked FROM "UserDB", 
 "ProjectDB" LEFT JOIN "InterestDB" ON ("ProjectDB"."projectID" = "InterestDB"."projectID") 
 where "ProjectDB"."email" = "UserDB"."email" GROUP BY "ProjectDB"."projectID", "UserDB"."email";"""))
 	
