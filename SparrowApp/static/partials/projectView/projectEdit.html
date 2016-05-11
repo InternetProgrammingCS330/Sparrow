@@ -4,7 +4,7 @@
 			<md-card>
 				<md-toolbar layout="row" class="md-hue-3">
 					<md-button class="md-raised md-primary" style="border-radius: 0; margin: 0; margin-right: 10px;">
-						<md-icon md-svg-icon="static/img/returnWhite48.svg" style="padding: 0;"></md-icon>BACK
+						<md-icon ng-click="back()" md-svg-icon="static/img/returnWhite48.svg" style="padding: 0;"></md-icon>BACK
 					</md-button>
 					<h1>{{currentProject.title}}</h1><span flex></span><h4 style="margin-right: 10px;">{{currentProject.first_name}} {{currentProject.last_name}}</h4>
 				</md-toolbar>

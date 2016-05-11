@@ -6,6 +6,10 @@ app.controller('projectEditCtrl', ['$state','$rootScope',
 
   var curPID = $location.absUrl().split("=")[1];
 
+  $scope.back = function(){
+    $location.url("/");
+  }
+
   $scope.refreshEdit = function(){
     $http({
           url: '/getEdit',
