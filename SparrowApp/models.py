@@ -60,8 +60,8 @@ class CommentsDB(db.Model):
 
 class InterestDB(db.Model):
 	__tablename__ = 'InterestDB'
-	projectID = db.Column(INTEGER, nullable=False, primary_key=True, index=True, unique=True)
-	email = db.Column(VARCHAR(30), nullable=False, primary_key=True, index=True, unique=True)
+	projectID = db.Column(INTEGER, nullable=False, primary_key=True, index=True)
+	email = db.Column(VARCHAR(30), nullable=False, primary_key=True, index=True)
 
 	# def __init__( self, projectID,email ):
 	# 	self.name = name
